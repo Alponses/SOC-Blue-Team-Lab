@@ -1,98 +1,98 @@
 # SOC Blue Team Lab
 
-A hands-on portfolio project for SOC Analyst L1 and Junior Security Operations roles, built around evidence-backed alert triage, investigation, detection improvement, and escalation decisions.
+Proyecto práctico de portafolio orientado a puestos de Analista SOC L1 y Operaciones de Seguridad Junior. Se centra en la evaluación inicial de alertas, la investigación, la mejora de detecciones y las decisiones de escalamiento, siempre con respaldo en evidencias.
 
-**Current status: Deliverable 0 complete — repository skeleton and proposed architecture only.** No lab infrastructure has been deployed or validated. No simulations, alerts, incident outcomes, or screenshots have been produced. All investigations below are planned. Infrastructure steps are **REQUIRES MANUAL EXECUTION** until access and execution are documented.
+**Estado actual: entregable 0 completado — estructura del repositorio y arquitectura propuesta.** Todavía no se ha desplegado ni validado la infraestructura del laboratorio. No se han generado simulaciones, alertas, resultados de incidentes ni capturas de pantalla. Todas las investigaciones siguientes están planificadas. Los pasos de infraestructura quedan marcados como **REQUIERE EJECUCIÓN MANUAL** hasta documentar el acceso y su ejecución.
 
-Start with the [architecture](docs/architecture.md), [implementation checklist](docs/implementation-checklist.md), and [Deliverable 0 execution report](docs/deliverables/deliverable-0.md).
+Comienza por la [arquitectura](docs/architecture.md), la [lista de implementación](docs/implementation-checklist.md) y el [informe de ejecución del entregable 0](docs/deliverables/deliverable-0.md).
 
-## Architecture
+## Arquitectura
 
-Proposed addresses, not discovered hosts. Solid arrows describe planned telemetry or DNS flows; dotted arrows describe controlled tests or later data reuse.
+Las direcciones son propuestas; no corresponden a equipos descubiertos. Las flechas continuas representan flujos previstos de telemetría o DNS; las discontinuas, pruebas controladas o reutilización posterior de datos.
 
 ```mermaid
 flowchart LR
-    analyst["Analyst host — management only"]
-    subgraph lab["Isolated virtual network — 10.10.10.0/24 — no Internet route during tests"]
-        wazuh["10.10.10.10 — Wazuh all-in-one"]
+    analyst["Equipo del analista — solo administración"]
+    subgraph lab["Red virtual aislada — 10.10.10.0/24 — sin ruta a Internet durante las pruebas"]
+        wazuh["10.10.10.10 — Wazuh todo en uno"]
         dc["10.10.10.20 — Windows Server 2025 / AD DS / DNS"]
         win["10.10.10.30 — Windows 11 / Sysmon / Defender"]
         linux["10.10.10.40 — Ubuntu / SSH / Suricata"]
-        sim["10.10.10.50 — simulation VM"]
-        dc -->|Wazuh agent| wazuh
-        win -->|Wazuh agent| wazuh
-        linux -->|Auth, audit, FIM, EVE JSON| wazuh
-        win -->|Lab DNS and domain services| dc
-        sim -.->|Scoped SSH failures and scan| linux
-        win -.->|Safe local connection| linux
+        sim["10.10.10.50 — máquina virtual de simulación"]
+        dc -->|Agente Wazuh| wazuh
+        win -->|Agente Wazuh| wazuh
+        linux -->|Autenticación, auditoría, FIM, EVE JSON| wazuh
+        win -->|DNS y servicios de dominio del laboratorio| dc
+        sim -.->|Fallos SSH y escaneo con alcance limitado| linux
+        win -.->|Conexión local segura| linux
     end
-    analyst -->|Host-only management| wazuh
-    aws["Separate phase — owner AWS lab account"]
-    curated["Reviewed, sanitized evidence"]
-    splunk["Later phase — Splunk Enterprise / SPL"]
-    wazuh -.->|Selected evidence export| curated
-    aws -.->|Selected CloudTrail export| curated
-    curated -.->|Offline dataset import| splunk
+    analyst -->|Administración por red solo anfitrión| wazuh
+    aws["Fase independiente — cuenta AWS de laboratorio del propietario"]
+    curated["Evidencias revisadas y sin datos sensibles"]
+    splunk["Fase posterior — Splunk Enterprise / SPL"]
+    wazuh -.->|Exportación de evidencias seleccionadas| curated
+    aws -.->|Exportación seleccionada de CloudTrail| curated
+    curated -.->|Importación de datos sin conexión| splunk
 ```
 
-Suricata is initially colocated on Ubuntu and observes traffic to/from that endpoint. This does **not** provide whole-network visibility. AWS is a separate environment, outside the isolated virtual network. See [network boundaries and visibility](docs/architecture.md#network-boundaries-and-visibility).
+Está previsto instalar Suricata inicialmente en Ubuntu para observar el tráfico entrante y saliente de ese equipo. Esto **no** proporciona visibilidad de toda la red. AWS será un entorno independiente, fuera de la red virtual aislada. Consulta los [límites y la visibilidad de la red](docs/architecture.md#network-boundaries-and-visibility).
 
-## Environment
+## Entorno
 
-| Component | Planned purpose | Status |
+| Componente | Propósito previsto | Estado |
 | --- | --- | --- |
-| Wazuh all-in-one | Central collection, alerts, investigation, custom rules | Not deployed |
-| Windows 11 Enterprise evaluation | Security/System, PowerShell, Sysmon, Defender telemetry | Not deployed |
-| Ubuntu Server | SSH, authentication, sudo, audit, system logs, file integrity | Not deployed |
-| Windows Server 2025 evaluation | AD DS, DNS, test users/groups, identity changes | Not deployed |
-| Suricata / Wireshark | IDS events, flow analysis, selected private packet inspection | Not deployed |
-| Simulation VM | Bounded lab-only events; safe Atomic Red Team tests where appropriate | Not deployed |
-| AWS IAM / CloudTrail / CloudWatch | Owner-account cloud activity investigation | Not configured |
-| Splunk Enterprise / SPL | Secondary SIEM analysis of sanitized lab datasets | Deferred; Enterprise Security not used |
+| Wazuh todo en uno | Recopilación centralizada, alertas, investigación y reglas personalizadas | Sin desplegar |
+| Windows 11 Enterprise de evaluación | Telemetría de Security/System, PowerShell, Sysmon y Defender | Sin desplegar |
+| Ubuntu Server | SSH, autenticación, sudo, auditoría, registros del sistema e integridad de archivos | Sin desplegar |
+| Windows Server 2025 de evaluación | AD DS, DNS, usuarios y grupos de prueba, cambios de identidad | Sin desplegar |
+| Suricata / Wireshark | Eventos IDS, análisis de flujos e inspección privada de paquetes seleccionados | Sin desplegar |
+| Máquina virtual de simulación | Eventos limitados al laboratorio; pruebas seguras con Atomic Red Team cuando corresponda | Sin desplegar |
+| AWS IAM / CloudTrail / CloudWatch | Investigación de actividad en la nube dentro de la cuenta del propietario | Sin configurar |
+| Splunk Enterprise / SPL | Análisis en un SIEM secundario con datos del laboratorio sin información sensible | Fase posterior; Enterprise Security no utilizado |
 
-## SOC Workflow
+## Flujo de trabajo SOC
 
-Alert → Triage → Investigation → Correlation → IOC Analysis → Timeline → MITRE ATT&CK → Classification → Documentation → Escalation / Closure.
+Alerta → Evaluación inicial → Investigación → Correlación → Análisis de IOC → Línea de tiempo → MITRE ATT&CK → Clasificación → Documentación → Escalamiento / Cierre.
 
-Every completed report will link evidence to a reasoned verdict, severity, and decision. An expected alert that fails to appear is recorded as a **Detection Gap**. Approved simulations are not evidence of a real compromise.
+Cada informe completado relacionará las evidencias con una conclusión, una severidad y una decisión justificadas. Si una alerta esperada no aparece, se registrará una **brecha de detección (Detection Gap)**. Las simulaciones autorizadas no constituyen evidencia de una intrusión real.
 
-## Investigations
+## Investigaciones
 
-These links open planning stubs, not completed investigations. Detection names describe intended coverage, not rules proven to fire. ATT&CK mappings and outcomes will be added after evidence review.
+Estos enlaces abren fichas de planificación. Las detecciones describen la cobertura prevista; todavía no se ha demostrado que las reglas se activen. Las correspondencias con ATT&CK y los resultados se incorporarán después de revisar las evidencias.
 
-| ID | Scenario | Planned data source | Planned detection | ATT&CK | Result |
+| ID | Escenario | Fuente de datos prevista | Detección prevista | ATT&CK | Resultado |
 | --- | --- | --- | --- | --- | --- |
-| SOC-001 | [SSH brute force](incidents/SOC-001-ssh-brute-force/README.md) | SSH/auth logs, Wazuh | Repeated failures; subsequent success | Pending | Not run |
-| SOC-002 | [Windows authentication failures](incidents/SOC-002-windows-authentication/README.md) | Windows Security, Wazuh | Authentication failure burst | Pending | Not run |
-| SOC-003 | [Suspicious PowerShell](incidents/SOC-003-suspicious-powershell/README.md) | Sysmon, PowerShell | Suspicious execution pattern | Pending | Not run |
-| SOC-004 | [Account / privilege change](incidents/SOC-004-account-privilege-change/README.md) | Security logs on workstation/DC | User creation; privileged group change | Pending | Not run |
-| SOC-005 | [Network scanning](incidents/SOC-005-network-scanning/README.md) | Suricata EVE, Wazuh | Port fan-out within a bounded interval | Pending | Not run |
-| SOC-006 | [Suspicious network connection](incidents/SOC-006-suspicious-network-connection/README.md) | Sysmon, Suricata, local service | Process-to-destination correlation | Pending | Not run |
-| SOC-007 | [DNS investigation](incidents/SOC-007-dns-investigation/README.md) | Sysmon DNS, lab DNS/packet evidence | Query and response analysis | Pending | Not run |
-| SOC-008 | [File integrity change](incidents/SOC-008-file-integrity/README.md) | Wazuh FIM, audit | Protected test-file modification | Pending | Not run |
-| SOC-009 | [Phishing](incidents/SOC-009-phishing/README.md) | Synthetic email and metadata | Header, URL, attachment analysis | Pending | Not run |
-| SOC-010 | [AWS CloudTrail](incidents/SOC-010-aws-cloudtrail/README.md) | CloudTrail, IAM, CloudWatch | Identity/API/change reconstruction | Pending | Not run |
+| SOC-001 | [Fuerza bruta SSH](incidents/SOC-001-ssh-brute-force/README.md) | Registros SSH y de autenticación, Wazuh | Fallos repetidos y acceso exitoso posterior | Pendiente | Sin ejecutar |
+| SOC-002 | [Fallos de autenticación en Windows](incidents/SOC-002-windows-authentication/README.md) | Windows Security, Wazuh | Concentración de fallos de autenticación | Pendiente | Sin ejecutar |
+| SOC-003 | [PowerShell sospechoso](incidents/SOC-003-suspicious-powershell/README.md) | Sysmon, PowerShell | Patrón de ejecución sospechoso | Pendiente | Sin ejecutar |
+| SOC-004 | [Cambio de cuenta o privilegios](incidents/SOC-004-account-privilege-change/README.md) | Registros Security de la estación y del controlador de dominio | Creación de usuarios y cambios en grupos privilegiados | Pendiente | Sin ejecutar |
+| SOC-005 | [Escaneo de red](incidents/SOC-005-network-scanning/README.md) | Suricata EVE, Wazuh | Intentos contra múltiples puertos en un intervalo acotado | Pendiente | Sin ejecutar |
+| SOC-006 | [Conexión de red sospechosa](incidents/SOC-006-suspicious-network-connection/README.md) | Sysmon, Suricata, servicio local | Correlación entre proceso y destino | Pendiente | Sin ejecutar |
+| SOC-007 | [Investigación DNS](incidents/SOC-007-dns-investigation/README.md) | Sysmon DNS, DNS del laboratorio y evidencias de paquetes | Análisis de consultas y respuestas | Pendiente | Sin ejecutar |
+| SOC-008 | [Cambio en la integridad de archivos](incidents/SOC-008-file-integrity/README.md) | Wazuh FIM, auditoría | Modificación de un archivo de prueba protegido | Pendiente | Sin ejecutar |
+| SOC-009 | [Phishing](incidents/SOC-009-phishing/README.md) | Correo sintético y metadatos | Análisis de encabezados, URL y archivos adjuntos | Pendiente | Sin ejecutar |
+| SOC-010 | [AWS CloudTrail](incidents/SOC-010-aws-cloudtrail/README.md) | CloudTrail, IAM, CloudWatch | Reconstrucción de identidades, llamadas API y cambios | Pendiente | Sin ejecutar |
 
-## Detection Engineering
+## Ingeniería de detecciones
 
-[Wazuh](detections/wazuh/README.md), [Sigma](detections/sigma/README.md), and [Suricata](detections/suricata/README.md) directories are reserved for detections developed from lab evidence. Each rule must explain its objective, source, logic, ATT&CK rationale, expected true positives, false positives, and validation. No custom rules exist yet.
+Los directorios de [Wazuh](detections/wazuh/README.md), [Sigma](detections/sigma/README.md) y [Suricata](detections/suricata/README.md) están reservados para detecciones desarrolladas a partir de evidencias del laboratorio. Cada regla deberá explicar su objetivo, fuente, lógica, justificación de ATT&CK, verdaderos positivos esperados, posibles falsos positivos y validación. Todavía no existen reglas personalizadas.
 
-[Analyst playbooks](playbooks/README.md) and [Splunk investigations](queries/splunk/README.md) have defined future scope. Splunk Enterprise and SPL practice will not be presented as Splunk Enterprise Security experience.
+Los [procedimientos para analistas](playbooks/README.md) y las [investigaciones con Splunk](queries/splunk/README.md) tienen un alcance futuro definido. La práctica con Splunk Enterprise y SPL no se presentará como experiencia con Splunk Enterprise Security.
 
-## Skills Demonstrated
+## Habilidades demostradas
 
-Deliverable 0 demonstrates lab architecture planning, telemetry requirements, evidence handling, and repeatable reporting structure. Operational skills will be claimed only when linked to completed evidence: Windows/Linux log correlation, IOC analysis, timelines, justified classifications, detection tuning, and escalation decisions.
+El entregable 0 demuestra planificación de arquitectura de laboratorio, definición de requisitos de telemetría, manejo de evidencias y una estructura reutilizable de informes. Las habilidades operativas se acreditarán únicamente cuando existan evidencias: correlación de registros Windows/Linux, análisis de IOC, líneas de tiempo, clasificaciones justificadas, ajuste de detecciones y decisiones de escalamiento.
 
-## Screenshots
+## Capturas de pantalla
 
-None yet. Future screenshots in [screenshots](screenshots/README.md) must support a specific finding and include a caption explaining the evidence. Logs, queries, and analysis remain the primary artifacts.
+Todavía no hay capturas. Las futuras imágenes del directorio de [capturas de pantalla](screenshots/README.md) deberán respaldar un hallazgo concreto e incluir una descripción de la evidencia que muestran. Los registros, las consultas y el análisis seguirán siendo los elementos principales.
 
-## Reproducing the Lab
+## Cómo reproducir el laboratorio
 
-1. Review the [architecture and prerequisites](docs/architecture.md) and [evidence-handling rules](docs/evidence-handling.md).
-2. Follow the [implementation checklist](docs/implementation-checklist.md) in deliverable order. Deliverable 1 is Wazuh + Windows + Sysmon telemetry.
-3. Validate isolation and time synchronization before each test. Snapshot before state changes; document cleanup.
-4. Use the [incident template](templates/incident-report.md) and [playbook template](templates/soc-playbook.md). Preserve uncertainty and failed detections.
-5. Validate local documentation links from the repository root with `python3 scripts/validate_repository.py`.
+1. Revisa la [arquitectura y los requisitos previos](docs/architecture.md) y las [reglas de manejo de evidencias](docs/evidence-handling.md).
+2. Sigue la [lista de implementación](docs/implementation-checklist.md) en el orden de los entregables. El entregable 1 corresponde a Wazuh, Windows y telemetría de Sysmon.
+3. Valida el aislamiento y la sincronización horaria antes de cada prueba. Crea una instantánea antes de modificar el estado del sistema y documenta la limpieza posterior.
+4. Utiliza la [plantilla de informe de incidentes](templates/incident-report.md) y la [plantilla de procedimiento SOC](templates/soc-playbook.md). Documenta las incertidumbres y los fallos de detección.
+5. Valida los enlaces internos de la documentación desde la raíz del repositorio con `python3 scripts/validate_repository.py`.
 
-All simulation targets must be specifically owned lab VMs. No public targets, real malware, credentials, VM images, raw log dumps, or sensitive packet captures belong in this repository. The [publication checklist](docs/evidence-handling.md#publication-checklist) supplements `.gitignore`; ignoring files does not sanitize their contents.
+Todas las simulaciones deben dirigirse exclusivamente a máquinas virtuales propias creadas para este laboratorio. No se deben incluir objetivos públicos, malware real, credenciales, imágenes de máquinas virtuales, volcados de registros sin procesar ni capturas de paquetes sensibles. La [lista de revisión para publicar](docs/evidence-handling.md#publication-checklist) complementa `.gitignore`; ignorar archivos no elimina los datos sensibles de su contenido.

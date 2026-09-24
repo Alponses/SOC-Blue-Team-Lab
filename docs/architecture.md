@@ -1,6 +1,6 @@
 # Proposed lab architecture
 
-Status: **DESIGN ONLY — REQUIRES MANUAL EXECUTION**. No hypervisor, VM, interface, firewall rule, collection pipeline, or detection has been validated. The [README diagram](../README.md#architecture) is the canonical Mermaid topology.
+Status: **DESIGN ONLY — REQUIRES MANUAL EXECUTION**. No hypervisor, VM, interface, firewall rule, collection pipeline, or detection has been validated. The [README diagram](../README.md#arquitectura) is the canonical Mermaid topology.
 
 ## Design goals and constraints
 
