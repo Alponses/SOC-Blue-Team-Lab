@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Check local inline Markdown links and GitHub-style heading anchors.
+"""Comprueba enlaces Markdown internos y anclas de encabezados de GitHub.
 
-Uses only Python's standard library and Git. This repository deliberately uses
-inline links, not reference-link definitions or HTML links. Fenced code is not
-treated as Markdown. Remote URLs, Mermaid rendering, and secrets are not checked.
+Utiliza la biblioteca estándar de Python y Git. El repositorio emplea enlaces
+Markdown en línea, sin referencias ni enlaces HTML. Omite los bloques de código.
+No comprueba URL externas, representación visual de Mermaid ni secretos.
 """
 
 from collections import Counter
@@ -21,7 +21,7 @@ FENCE = re.compile(r"^ {0,3}(`{3,}|~{3,})")
 
 
 def prose_lines(content):
-    """Preserve source line numbers, omitting fenced code blocks."""
+    """Conserva los números de línea y omite los bloques de código."""
     fence_char = None
     fence_length = 0
     for number, line in enumerate(content.splitlines(), 1):
@@ -60,12 +60,12 @@ def main():
             cwd=ROOT, check=True, capture_output=True, text=True,
         ).stdout
     except (OSError, subprocess.CalledProcessError) as exc:
-        print(f"ERROR: run inside an initialized Git repository: {exc}", file=sys.stderr)
+        print(f"ERROR: se necesita un repositorio Git inicializado: {exc}", file=sys.stderr)
         return 2
 
     paths = sorted({ROOT / name for name in listing.split("\0") if name.endswith(".md")})
     if not paths:
-        print("ERROR: no Markdown files found", file=sys.stderr)
+        print("ERROR: no se encontraron archivos Markdown", file=sys.stderr)
         return 2
     documents = {path: path.read_text(encoding="utf-8") for path in paths}
     heading_index = {path: anchors(content) for path, content in documents.items()}
@@ -84,21 +84,21 @@ def main():
                 target = (source.parent / path_text).resolve() if path_text else source
                 label = f"{source.relative_to(ROOT)}:{number}: {destination}"
                 if path_text.startswith("/") or not target.is_relative_to(ROOT):
-                    errors.append(f"{label} — local link leaves repository")
+                    errors.append(f"{label} — el enlace local sale del repositorio")
                 elif not target.exists():
-                    errors.append(f"{label} — target does not exist")
+                    errors.append(f"{label} — el destino no existe")
                 elif parts.fragment:
                     document = target / "README.md" if target.is_dir() else target
                     fragment = unquote(parts.fragment)
                     if document not in heading_index or fragment not in heading_index[document]:
-                        errors.append(f"{label} — heading anchor does not exist")
+                        errors.append(f"{label} — el ancla del encabezado no existe")
 
     if errors:
-        print("FAIL: internal Markdown links")
+        print("ERROR: enlaces internos de Markdown")
         print("\n".join(errors))
         return 1
-    print(f"PASS: {checked} internal links across {len(paths)} Markdown files (paths and heading anchors).")
-    print("Scope: inline Markdown links; remote URLs, Mermaid rendering, and secrets are not checked.")
+    print(f"CORRECTO: {checked} enlaces internos en {len(paths)} archivos Markdown (rutas y anclas de encabezados).")
+    print("Alcance: enlaces Markdown en línea; no se comprueban URL externas, representación de Mermaid ni secretos.")
     return 0
 
 

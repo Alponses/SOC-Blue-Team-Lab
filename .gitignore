@@ -1,4 +1,4 @@
-# Local secrets and environment-specific material
+# Secretos y archivos propios del entorno local
 .env
 .env.*
 !.env.example
@@ -25,7 +25,7 @@ wazuh-passwords.txt
 *.tfstate.*
 .terraform/
 
-# VM media, snapshots, installers, and binary samples
+# Imágenes de máquinas virtuales, instantáneas, instaladores y binarios
 *.iso
 *.dmg
 *.img
@@ -64,7 +64,7 @@ vms/
 snapshots/
 malware/
 
-# Raw evidence stays private. Publish small sanitized excerpts as JSON/CSV/TXT.
+# Evidencias completas en privado. Publicar fragmentos JSON/CSV/TXT sin datos sensibles.
 raw/
 exports/
 captures/
@@ -79,7 +79,7 @@ captures/
 *.eml
 *.msg
 
-# Workstation and tooling output
+# Archivos del equipo de trabajo y de las herramientas
 .DS_Store
 ._*
 .idea/
@@ -92,4 +92,4 @@ node_modules/
 *.swp
 *.swo
 
-# This is not a content/size/secret scanner. Review everything before staging.
+# No analiza contenido, tamaños ni secretos. Revisar archivos antes de prepararlos para Git.

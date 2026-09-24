@@ -1,20 +1,22 @@
-# Investigation index
+# Investigaciones del laboratorio
 
-Status: **10 scenarios planned; 0 executed; 0 reports completed**. All scenario links open scope stubs. They contain no fabricated alerts, logs, outcomes, or evidence. ATT&CK mappings remain unassigned until observed behavior can justify them.
+El objetivo de estos casos es practicar el recorrido desde una alerta hasta una decisión documentada, utilizando registros de equipos, identidades, red y nube.
 
-| Scenario | Planned phase |
+**Avance: 10 escenarios definidos; 0 ejecutados; 0 informes completados.** Cada ficha recoge el objetivo, las evidencias necesarias y sus dependencias. Las técnicas ATT&CK y la clasificación se incorporarán durante el análisis de los eventos observados.
+
+| Caso | Etapa prevista |
 | --- | --- |
-| [SOC-001 — SSH brute force](SOC-001-ssh-brute-force/README.md) | 3 |
-| [SOC-002 — Windows authentication failures](SOC-002-windows-authentication/README.md) | 4 |
-| [SOC-003 — Suspicious PowerShell execution](SOC-003-suspicious-powershell/README.md) | 5 |
-| [SOC-004 — Account / privilege change](SOC-004-account-privilege-change/README.md) | 7 |
-| [SOC-005 — Network scanning](SOC-005-network-scanning/README.md) | 6 |
-| [SOC-006 — Suspicious network connection](SOC-006-suspicious-network-connection/README.md) | 6 |
-| [SOC-007 — DNS investigation](SOC-007-dns-investigation/README.md) | 6, or 7 if waiting for AD DNS |
-| [SOC-008 — File integrity / unexpected change](SOC-008-file-integrity/README.md) | 8 |
-| [SOC-009 — Phishing investigation](SOC-009-phishing/README.md) | 9 |
-| [SOC-010 — AWS CloudTrail investigation](SOC-010-aws-cloudtrail/README.md) | 10 |
+| [SOC-001 — Fuerza bruta SSH](SOC-001-ssh-brute-force/README.md) | 3 |
+| [SOC-002 — Fallos de autenticación en Windows](SOC-002-windows-authentication/README.md) | 4 |
+| [SOC-003 — Ejecución sospechosa de PowerShell](SOC-003-suspicious-powershell/README.md) | 5 |
+| [SOC-004 — Cambios de cuentas y privilegios](SOC-004-account-privilege-change/README.md) | 7 |
+| [SOC-005 — Escaneo de red](SOC-005-network-scanning/README.md) | 6 |
+| [SOC-006 — Conexión de red sospechosa](SOC-006-suspicious-network-connection/README.md) | 6 |
+| [SOC-007 — Investigación DNS](SOC-007-dns-investigation/README.md) | 6; 7 si depende de AD DNS |
+| [SOC-008 — Integridad de archivos](SOC-008-file-integrity/README.md) | 8 |
+| [SOC-009 — Investigación de phishing](SOC-009-phishing/README.md) | 9 |
+| [SOC-010 — Investigación de AWS CloudTrail](SOC-010-aws-cloudtrail/README.md) | 10 |
 
-Use the [incident report template](../templates/incident-report.md) when executing a scenario. Every completed investigation must include alert, triage, scope, evidence, timeline, indicators, ATT&CK rationale, analysis, classification, justified severity, Close/Escalate decision, actions, and lessons/detection improvement. The phishing report also needs an executive summary; the template includes it for all cases.
+Los informes seguirán la [plantilla de incidente](../templates/incident-report.md): resumen, alerta, evaluación inicial, alcance, evidencias, línea de tiempo, indicadores, ATT&CK, análisis, clasificación, severidad, decisión, acciones y lecciones aprendidas.
 
-Keep source evidence private and publish reviewed excerpts only. See [evidence handling](../docs/evidence-handling.md) and the [ordered checklist](../docs/implementation-checklist.md).
+La primera investigación será SOC-001, después de validar la recopilación SSH en Linux. Los originales se conservarán de forma privada y solo se publicarán fragmentos revisados. Consulta el [manejo de evidencias](../docs/evidence-handling.md) y el [plan de implementación](../docs/implementation-checklist.md).

@@ -1,7 +1,11 @@
-# Wazuh detections
+# Detecciones de Wazuh
 
-Status: **PLANNED — no rules created, loaded, or validated**.
+**Objetivo:** Crear reglas y decodificadores a partir de eventos observados en los agentes.
 
-Rules/decoders tied to observed agent events. Record the installed Wazuh version, custom rule IDs, field/decoder prerequisites, and actual rule-testing plus end-to-end ingestion results. Do not assume a rule test proves dashboard delivery.
+**Avance:** reglas pendientes de creación, carga y validación.
 
-Follow the [detection documentation contract](../README.md). Build from an actual investigation and include objective, source, logic, ATT&CK rationale, expected true positives, false positives, validation procedure, and observed results. Preserve failed tests as **Detection Gap**.
+## Comprobaciones previstas
+
+Registrar versión de Wazuh, ID de reglas personalizadas, campos y decodificadores necesarios, pruebas de reglas y resultados de ingestión de extremo a extremo. La prueba de una regla y la llegada del evento al panel se verificarán por separado.
+
+Cada regla seguirá los [criterios de documentación](../README.md), con objetivo, fuente, lógica, ATT&CK, verdaderos positivos esperados, falsos positivos, procedimiento de prueba y resultados. Los fallos de detección quedarán registrados junto al caso que motivó la regla.

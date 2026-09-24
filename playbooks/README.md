@@ -1,18 +1,18 @@
-# Analyst playbooks
+# Procedimientos de investigación SOC
 
-Status: **PLANNED — only the reusable template exists**.
+Los procedimientos servirán para decidir qué comprobar primero, qué registros consultar y cuándo cerrar o escalar un caso. **Avance:** plantilla preparada; procedimientos específicos pendientes.
 
-Use the [SOC playbook template](../templates/soc-playbook.md). Complete operational checklists in Deliverable 8 using real investigation findings; validate phishing and AWS specifics in their later phases. No playbook is operationally validated yet.
+Se desarrollarán en la etapa 8 a partir de los casos investigados, utilizando la [plantilla SOC](../templates/soc-playbook.md). Los apartados de phishing y AWS se validarán después de ejecutar sus respectivas investigaciones.
 
-| Planned playbook | Core decision |
+| Procedimiento previsto | Pregunta principal |
 | --- | --- |
-| Brute force | Are failures bounded/expected, and was access subsequently gained? |
-| Suspicious PowerShell | What process/script executed, by whom, with what effect and authorization? |
-| Suspicious login | Is the source, authentication method, account, and timing consistent with authorized access? |
-| Privilege / account changes | Who changed which identity or privilege, and was it approved? |
-| Phishing | What do trusted headers and content establish, and was there user interaction? |
-| Network scanning | Does the observed port/host pattern match an approved inventory or a suspicious probe? |
-| Suspicious outbound connection | Which process contacted which destination, and what supports escalation? |
-| AWS IAM activity | Which principal/session performed which API change against which resource? |
+| Fuerza bruta | ¿Los fallos eran esperados y hubo un acceso exitoso posterior? |
+| PowerShell sospechoso | ¿Qué se ejecutó, quién lo hizo, con qué autorización y qué efecto tuvo? |
+| Inicio de sesión sospechoso | ¿El origen, el método, la cuenta y el horario corresponden a un acceso autorizado? |
+| Cambios de cuentas o privilegios | ¿Quién modificó la identidad o sus permisos y estaba aprobado? |
+| Phishing | ¿Qué demuestran los encabezados confiables y el contenido, y hubo interacción? |
+| Escaneo de red | ¿El patrón corresponde a un inventario aprobado o a una exploración sospechosa? |
+| Conexión saliente sospechosa | ¿Qué proceso contactó con qué destino y qué justifica escalar? |
+| Actividad IAM en AWS | ¿Qué principal o sesión realizó qué cambio de API y sobre qué recurso? |
 
-Each checklist must specify first checks, exact logs/fields, queries/pivots, enrichment handling, common false/benign positives, escalation criteria, and closure requirements. Link cases and commands only after they exist and have been reviewed.
+Cada procedimiento incluirá comprobaciones iniciales, fuentes y campos concretos, consultas, enriquecimiento, explicaciones benignas frecuentes, criterios de escalamiento y requisitos de cierre. Los enlaces a casos y comandos se incorporarán cuando estén disponibles y revisados.

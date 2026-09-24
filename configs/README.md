@@ -1,14 +1,14 @@
-# Configuration locations
+# Configuraciones del laboratorio
 
-Status: **RESERVED — no deployment configurations have been created or applied**.
+Este directorio reunirá las configuraciones necesarias para reproducir la recopilación y las pruebas. **Avance:** carpetas preparadas; todavía no hay configuraciones desplegadas.
 
-| Directory | Future content | Phase |
+| Directorio | Contenido previsto | Etapa |
 | --- | --- | --- |
-| [wazuh](wazuh/) | Reviewed central/agent collection configuration, retention and validation notes | 1 onward |
-| [windows](windows/) | Audit/PowerShell logging, Sysmon filters, agent event channels | 1 |
-| [linux](linux/) | Auth/journal collection, audit, SSH, dedicated FIM test path | 2 |
-| [suricata](suricata/) | Capture interface assumptions and selected EVE output | 6 |
-| [active-directory](active-directory/) | Lab identity/DNS/audit configuration and change procedures | 7 |
-| [aws](aws/) | Sanitized lab logging/IAM configuration with no credentials or live resource identifiers | 10 |
+| [wazuh](wazuh/) | Recopilación del servidor y los agentes, retención y comprobaciones | Desde la 1 |
+| [windows](windows/) | Auditoría, registro PowerShell, filtros Sysmon y canales del agente | 1 |
+| [linux](linux/) | Autenticación, diario del sistema, auditoría, SSH y ruta de prueba FIM | 2 |
+| [suricata](suricata/) | Interfaz de captura y selección de salida EVE | 6 |
+| [active-directory](active-directory/) | Identidades, DNS, auditoría y procedimientos de cambio | 7 |
+| [aws](aws/) | Registro e IAM del laboratorio sin credenciales ni identificadores reales | 10 |
 
-Record exact versions and validation when adding files. Use obvious placeholders for per-installation secrets and inject their real values privately. Never commit enrollment keys, generated passwords, cloud access keys, or private certificates. A configuration file in Git is not proof it was applied.
+Cada archivo indicará versión, propósito y comprobaciones realizadas. Los secretos se sustituirán por marcadores y sus valores se introducirán de forma privada. Las claves de registro de agentes, contraseñas, claves de nube y certificados privados permanecerán fuera de Git. El informe de la etapa dejará constancia de qué configuración se aplicó y con qué resultado.

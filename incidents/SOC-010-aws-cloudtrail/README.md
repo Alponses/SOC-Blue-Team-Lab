@@ -1,16 +1,27 @@
-# SOC-010 — AWS CloudTrail investigation
+# SOC-010 — Investigación de AWS CloudTrail
 
-**PLANNED — NOT RUN — REQUIRES MANUAL EXECUTION**
+**Estado: pendiente de ejecución.** Etapa prevista: 10. Todavía no hay evidencias ni una clasificación del caso.
 
-This is a scope stub, not an incident report. No alert, collected evidence, ATT&CK mapping, classification, severity, or closure decision is claimed.
+## Objetivo
 
-- **Implementation phase:** 10.
-- **Controlled scenario:** Reconstruct controlled IAM/API/resource changes in the owner's AWS lab account.
-- **Planned sources:** IAM state, CloudTrail events, and separately verified CloudWatch delivery.
-- **Evidence needed:** Who, what, when, from where, resource, change, API outcome, permission context, and cleanup. Publish only sanitized samples; never keys or live account/resource identifiers.
+Reconstruir quién hizo qué, cuándo, desde dónde, contra qué recurso y qué cambió en la cuenta de laboratorio.
 
-Before execution, verify telemetry, isolation, exact owned target scope, time synchronization, snapshots, stop conditions, and cleanup. Follow the [implementation checklist](../../docs/implementation-checklist.md).
+## Actividad prevista
 
-When evidence exists, replace this stub with a completed [incident report](../../templates/incident-report.md), retaining every required section. Add small sanitized artifacts with provenance under this case's `evidence/` directory and follow the [evidence policy](../../docs/evidence-handling.md). Document missing expected alerts as **Detection Gap**. Do not fill unknown fields or results with invented data.
+Generar cambios controlados de IAM, llamadas API y operaciones sobre recursos en la cuenta propia de AWS.
 
-[Investigation index](../README.md)
+## Evidencias necesarias
+
+**Fuentes:** Estado de IAM, eventos CloudTrail y entrega a CloudWatch comprobada por separado.
+
+Principal o sesión, acción, tiempo, origen, recurso, cambio, resultado de la API, permisos y limpieza. Solo se publicarán muestras sin claves ni identificadores reales.
+
+## Dependencias y siguiente paso
+
+Requiere delimitar cuenta, regiones, permisos, costes y recursos, y verificar la cobertura de registro antes de ejecutar cambios.
+
+Antes de ejecutar la prueba se comprobarán aislamiento, objetivos propios, sincronización horaria, instantáneas, condiciones de parada y limpieza. El orden de trabajo está en la [lista de implementación](../../docs/implementation-checklist.md). Esta etapa **requiere ejecución manual**.
+
+Durante la investigación se completará la [plantilla de informe](../../templates/incident-report.md), con fragmentos revisados en `evidence/` y su procedencia según las [reglas de manejo de evidencias](../../docs/evidence-handling.md). Las alertas esperadas que no aparezcan se documentarán como brechas de detección.
+
+[Volver al índice de investigaciones](../README.md)

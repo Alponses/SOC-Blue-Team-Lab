@@ -1,16 +1,27 @@
-# SOC-009 — Phishing investigation
+# SOC-009 — Investigación de phishing
 
-**PLANNED — NOT RUN — REQUIRES MANUAL EXECUTION**
+**Estado: pendiente de ejecución.** Etapa prevista: 9. Todavía no hay evidencias ni una clasificación del caso.
 
-This is a scope stub, not an incident report. No alert, collected evidence, ATT&CK mapping, classification, severity, or closure decision is claimed.
+## Objetivo
 
-- **Implementation phase:** 9.
-- **Controlled scenario:** Analyze a clearly labeled synthetic email or safe training sample without visiting malicious infrastructure.
-- **Planned sources:** Email headers/content, attachment metadata, local analysis, and permitted enrichment.
-- **Evidence needed:** Executive summary, From/Reply-To/Return-Path/Received, SPF/DKIM/DMARC trust limits, defanged URLs/domains, hashes, metadata, IOC table, timeline, verdict, and actions. Record reputation checks as not performed unless actually obtained.
+Evaluar un correo y justificar una conclusión a partir de sus encabezados, contenido, enlaces y adjuntos.
 
-Before execution, verify telemetry, isolation, exact owned target scope, time synchronization, snapshots, stop conditions, and cleanup. Follow the [implementation checklist](../../docs/implementation-checklist.md).
+## Actividad prevista
 
-When evidence exists, replace this stub with a completed [incident report](../../templates/incident-report.md), retaining every required section. Add small sanitized artifacts with provenance under this case's `evidence/` directory and follow the [evidence policy](../../docs/evidence-handling.md). Document missing expected alerts as **Detection Gap**. Do not fill unknown fields or results with invented data.
+Analizar un correo sintético identificado como tal o una muestra segura de entrenamiento, sin visitar infraestructura maliciosa.
 
-[Investigation index](../README.md)
+## Evidencias necesarias
+
+**Fuentes:** Encabezados y contenido del correo, metadatos de adjuntos, análisis local y enriquecimiento permitido.
+
+Resumen ejecutivo, From, Reply-To, Return-Path, Received, límites de confianza de SPF/DKIM/DMARC, URL no navegables, dominios, hashes, metadatos, tabla de IOC, línea de tiempo, conclusión y acciones.
+
+## Dependencias y siguiente paso
+
+La procedencia de la muestra debe quedar documentada. Los resultados de reputación solo se incluirán si se obtienen; los encabezados sintéticos no prueban autenticación real.
+
+Antes de ejecutar la prueba se comprobarán aislamiento, objetivos propios, sincronización horaria, instantáneas, condiciones de parada y limpieza. El orden de trabajo está en la [lista de implementación](../../docs/implementation-checklist.md). Esta etapa **requiere ejecución manual**.
+
+Durante la investigación se completará la [plantilla de informe](../../templates/incident-report.md), con fragmentos revisados en `evidence/` y su procedencia según las [reglas de manejo de evidencias](../../docs/evidence-handling.md). Las alertas esperadas que no aparezcan se documentarán como brechas de detección.
+
+[Volver al índice de investigaciones](../README.md)

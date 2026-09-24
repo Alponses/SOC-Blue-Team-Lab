@@ -1,67 +1,76 @@
-# Deliverable 0 — Execution report
+# Entregable 0 — Estructura y arquitectura
 
-Date: 2026-09-24. Scope: repository skeleton and architecture only.
+**Fecha de cierre:** 24 de septiembre de 2026. **Estado:** completado.
 
-## What was created
+## Objetivo de la etapa
 
-The supplied workspace was empty and outside an existing Git repository. A new `SOC-Blue-Team-Lab` child directory was created; no unrelated files were overwritten. No applicable parent `AGENTS.md` instructions were found. Git is available. Infrastructure installation, simulation, and remote publication were not performed.
+Dejar preparada la base del proyecto: organización del repositorio, arquitectura del laboratorio, orden de implementación y formato de las investigaciones. Esta etapa permite comenzar la instalación con un alcance definido y criterios claros para comprobar los resultados.
 
-Created an initial recruiter-facing README, proposed architecture with Mermaid diagram, telemetry and network visibility plan, publication safeguards, reusable report/playbook templates, an ordered implementation checklist, future-content locations, and a local Markdown link validator.
+## Trabajo realizado
 
-## Files created or modified
+Se creó `SOC-Blue-Team-Lab` en un directorio de trabajo vacío y se inicializó Git en la rama `main`. Quedaron definidos los equipos y direcciones propuestos, las fuentes de telemetría, los límites de visibilidad del sensor y los criterios de publicación de evidencias.
 
-All changes are new files inside the project directory:
+También se prepararon diez fichas de investigación, plantillas reutilizables y espacios para configuraciones, detecciones, consultas y capturas. El repositorio continúa siendo local y la infraestructura está pendiente de despliegue.
 
-| Location | Contents |
+## Archivos preparados
+
+| Ubicación | Contenido |
 | --- | --- |
-| [README](../../README.md) | Current scope, Mermaid topology, environment, workflow, planned cases, skills and reproduction route |
-| [.gitignore](../../.gitignore) | Secret/local-state, image/binary, raw-log and packet-capture exclusions |
-| [Architecture](../architecture.md) | Proposed addresses/sizing, boundaries, sensor visibility, telemetry, dependencies |
-| [Implementation checklist](../implementation-checklist.md) | Deliverables 0–12 and exact next scope |
-| [Evidence policy](../evidence-handling.md) | Provenance, sanitization, publication review and limitations |
-| [Incident template](../../templates/incident-report.md) | Required report sections plus executive summary and provenance |
-| [Playbook template](../../templates/soc-playbook.md) | Operational triage, evidence, enrichment, escalation, closure and validation checklists |
-| [Incident index](../../incidents/README.md) | Ten clearly marked planning stubs, including the required phishing and CloudTrail directories |
-| [Detection index](../../detections/README.md) | Wazuh, Sigma and Suricata locations and documentation contract |
-| [Playbook index](../../playbooks/README.md) | Eight planned scenario playbooks |
-| [Splunk query index](../../queries/splunk/README.md) | Seven planned searches; Enterprise/ES distinction |
-| [Configuration index](../../configs/README.md) | Six reserved directories, each with `.gitkeep`; no applied configuration |
-| [Screenshot index](../../screenshots/README.md) | Evidence/caption requirements; no images |
-| [Validation script](../../scripts/validate_repository.py) and [instructions](../../scripts/README.md) | Standard-library local link/anchor checks |
-| This report | Scope, observed validation, evidence, remaining work, and next deliverable |
+| [README](../../README.md) | Objetivo, avance, topología Mermaid, entorno, flujo SOC y casos previstos |
+| [.gitignore](../../.gitignore) | Exclusiones de secretos, archivos locales, imágenes, binarios, registros completos y capturas |
+| [Arquitectura](../architecture.md) | Direcciones y recursos previstos, aislamiento, visibilidad, telemetría y dependencias |
+| [Plan de implementación](../implementation-checklist.md) | Entregables 0–12, avance y criterios de cierre |
+| [Manejo de evidencias](../evidence-handling.md) | Procedencia, retirada de datos sensibles y revisión antes de publicar |
+| [Plantilla de incidente](../../templates/incident-report.md) | Secciones de investigación, resumen ejecutivo y procedencia de evidencias |
+| [Plantilla SOC](../../templates/soc-playbook.md) | Comprobaciones, registros, enriquecimiento, escalamiento, cierre y validación |
+| [Índice de investigaciones](../../incidents/README.md) | Diez casos planificados, incluidos phishing y CloudTrail |
+| [Detecciones](../../detections/README.md) | Directorios Wazuh, Sigma y Suricata, y criterios de documentación |
+| [Procedimientos SOC](../../playbooks/README.md) | Alcance de ocho procedimientos para analistas |
+| [Consultas Splunk](../../queries/splunk/README.md) | Siete búsquedas previstas y alcance de Enterprise/SPL |
+| [Configuraciones](../../configs/README.md) | Seis directorios reservados mediante `.gitkeep` |
+| [Capturas](../../screenshots/README.md) | Criterios para seleccionar y describir imágenes de evidencia |
+| [Validador](../../scripts/validate_repository.py) e [instrucciones](../../scripts/README.md) | Comprobación local de enlaces y anclas |
+| Este informe | Resultado de la etapa, comprobaciones, pendientes y siguiente paso |
 
-## Validation performed
+## Comprobaciones al cerrar la etapa
 
-| Check | Observed result |
+Estos resultados corresponden a la estructura inicial guardada en el commit `193e902`. La documentación se ha revisado y traducido posteriormente; el validador permite comprobar los enlaces de la versión actual.
+
+| Comprobación | Resultado registrado |
 | --- | --- |
-| `python3 scripts/validate_repository.py` | PASS: 112 internal links across 27 Markdown files; targets and heading anchors resolved |
-| Link-checker negative control in an isolated temporary repository | Correctly rejected a missing file and a missing heading; passed after both links were repaired |
-| `git check-ignore --stdin` using filename probes | PASS: 28 sensitive/raw/binary paths ignored; 9 intended source/sanitized artifact paths allowed; no sensitive files created |
-| Required report structure | PASS: all 13 required incident sections present in the template |
-| Case planning status | PASS: all 10 case stubs explicitly marked planned, not run, and requiring manual execution |
-| Source-file inventory | 35 UTF-8 text/empty files, including 27 Markdown files; every file below 1 MiB; no binary evidence/media included |
-| `git diff --cached --check` | PASS: no whitespace errors in staged files |
-| Initial staged-change review | New scaffold files only; no unrelated modifications |
-| Git initialization / remote review | Local `main` branch initialized; no remote configured |
+| Enlaces internos | 112 enlaces válidos en 27 archivos Markdown, incluidas rutas y anclas |
+| Control negativo del validador en un repositorio temporal | Rechazó un archivo inexistente y un encabezado inexistente; aceptó los enlaces corregidos |
+| Exclusiones mediante `git check-ignore --stdin` | 28 rutas sensibles, de datos completos o binarios excluidas; 9 rutas previstas para fuentes y fragmentos revisados permitidas |
+| Plantilla de informe | Presentes las 13 secciones requeridas, además del resumen ejecutivo |
+| Estado de los casos | Las diez fichas indicaban que los escenarios estaban pendientes de ejecución |
+| Inventario de archivos | 35 archivos de texto UTF-8 o vacíos, incluidos 27 Markdown; todos menores de 1 MiB |
+| `git diff --cached --check` | Sin errores de espacios en los archivos preparados para el commit |
+| Revisión de cambios | Solo archivos nuevos del proyecto, sin modificaciones ajenas |
+| Git | Rama local `main`, sin remoto configurado |
 
-The local initial commit is `chore: scaffold SOC lab architecture and documentation`. It uses the generic author `SOC Lab Maintainer <soc-lab@example.invalid>` rather than personal identity. Read its identifier with `git log -1 --oneline`; no remote push is part of this task.
+El commit inicial utiliza el autor genérico `SOC Lab Maintainer` y la dirección reservada `soc-lab@example.invalid` para evitar datos personales en el historial.
 
-Validation scope: inline Markdown links used by this repository, ignore behavior, required document sections, and local file hygiene. External URL reachability, full Markdown/Mermaid rendering, a dedicated secret scan, and all lab operations are outside these results. Architecture references were consulted in official vendor/RFC documentation; proposed configurations still require version-specific implementation validation.
+Estas comprobaciones cubren la documentación y la organización local. No validan el funcionamiento del laboratorio, las reglas de detección, la representación visual de Mermaid, los enlaces externos ni la ausencia de secretos mediante un analizador especializado. Las referencias de arquitectura están enlazadas en el documento correspondiente.
 
-## Evidence obtained
+## Evidencias disponibles
 
-Repository-only evidence: initial directory inspection, Git availability and initial non-repository status, created source documents, and local validation output. No deployed host inventory, network isolation proof, source event, alert, detection result, incident verdict, or screenshot exists yet. Documentation validation is not operational validation.
+La evidencia de esta etapa consiste en los archivos del repositorio, el historial Git y los resultados de las comprobaciones documentales. Los registros operativos, alertas, capturas, resultados de detección e informes de incidentes se recopilarán durante las siguientes etapas.
 
-## Remaining issues
+## Pendientes
 
-- Host capacity, chosen hypervisor, guest compatibility/media, and VM access require confirmation during Deliverable 1.
-- All guest installation, routes/firewalls, telemetry pipelines, simulations, rules, incident reports, and cloud activity remain **REQUIRES MANUAL EXECUTION**.
-- Suricata initially covers only traffic visible on SOC-LINUX. DNS query/response validation needs a local resolver or the later DC; neither exists yet.
-- Mermaid rendering in GitHub has not been visually verified; the graph is source content only at this stage.
-- Public GitHub creation/publishing and a full evidence/history secret review remain later actions. `.gitignore` and link checks cannot certify future artifacts are secret-free.
+- Comprobar capacidad del equipo, hipervisor, compatibilidad de invitados, medios de instalación y acceso a las máquinas.
+- Ejecutar y validar instalación, aislamiento, cortafuegos y recopilación. Estas tareas **requieren ejecución manual**.
+- Verificar la cobertura de Suricata cuando se instale; el diseño inicial solo contempla tráfico visible en SOC-LINUX.
+- Disponer de un resolvedor local para SOC-007 o completar el caso después de instalar AD DNS.
+- Revisar visualmente el diagrama en GitHub cuando se publique.
+- Revisar archivos, historial y secretos antes de crear el repositorio público.
 
-## Exact next deliverable
+## Revisión de la documentación
 
-**Deliverable 1 — Wazuh + Windows + Sysmon telemetry.** Validate host/hypervisor prerequisites and network isolation; deploy only the Wazuh all-in-one and Windows 11 VMs; enroll the Windows agent; configure Security, System, PowerShell, Sysmon and Defender channels; prove collection using harmless baseline events; record versions, queries, sanitized evidence, gaps and recovery steps.
+La documentación se mantiene en español, con nombres de productos, comandos, rutas y campos técnicos conservados para facilitar su uso. El README presenta el objetivo y el punto actual del proyecto; cada caso indica su propósito, sus requisitos y las evidencias que faltan.
 
-Follow the [Deliverable 1 acceptance checklist](../implementation-checklist.md#deliverable-1--wazuh--windows--sysmon-telemetry). Ubuntu, simulator, AD, Suricata, attack investigations, AWS, Splunk and publishing are outside that next deliverable. **Stop after Deliverable 0 for this task.**
+## Siguiente etapa
+
+**Entregable 1 — Wazuh, Windows y Sysmon.** Comprobar recursos y aislamiento, desplegar SOC-WAZUH y SOC-WIN11, registrar el agente Windows y configurar Security, System, PowerShell, Sysmon y Defender. Después, verificar la llegada de eventos inocuos y guardar configuraciones, consultas y fragmentos sin datos sensibles.
+
+El detalle y los criterios de cierre están en el [plan del entregable 1](../implementation-checklist.md#entregable-1--wazuh-windows-y-sysmon). Ubuntu, el simulador, Active Directory, Suricata, las investigaciones, AWS y Splunk se incorporarán en las etapas posteriores.

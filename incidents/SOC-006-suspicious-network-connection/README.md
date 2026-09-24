@@ -1,16 +1,27 @@
-# SOC-006 — Suspicious network connection
+# SOC-006 — Conexión de red sospechosa
 
-**PLANNED — NOT RUN — REQUIRES MANUAL EXECUTION**
+**Estado: pendiente de ejecución.** Etapa prevista: 6. Todavía no hay evidencias ni una clasificación del caso.
 
-This is a scope stub, not an incident report. No alert, collected evidence, ATT&CK mapping, classification, severity, or closure decision is claimed.
+## Objetivo
 
-- **Implementation phase:** 6.
-- **Controlled scenario:** A harmless request from Windows to a temporary lab-local service on SOC-LINUX.
-- **Planned sources:** Sysmon network/process events, Suricata EVE, Wazuh, and local service logs.
-- **Evidence needed:** Process/parent/user, endpoint, destination, port/protocol, timestamps, cross-source correlation, and service cleanup.
+Atribuir una conexión a su proceso y usuario, y valorar el destino y el contexto para decidir si es sospechosa.
 
-Before execution, verify telemetry, isolation, exact owned target scope, time synchronization, snapshots, stop conditions, and cleanup. Follow the [implementation checklist](../../docs/implementation-checklist.md).
+## Actividad prevista
 
-When evidence exists, replace this stub with a completed [incident report](../../templates/incident-report.md), retaining every required section. Add small sanitized artifacts with provenance under this case's `evidence/` directory and follow the [evidence policy](../../docs/evidence-handling.md). Document missing expected alerts as **Detection Gap**. Do not fill unknown fields or results with invented data.
+Enviar una solicitud inocua desde Windows a un servicio temporal en SOC-LINUX; detener el servicio al terminar.
 
-[Investigation index](../README.md)
+## Evidencias necesarias
+
+**Fuentes:** Eventos de procesos y red de Sysmon, Suricata EVE, Wazuh y registros del servicio local.
+
+Proceso, padre y usuario, equipo, destino, puerto, protocolo, tiempos, correlación entre fuentes y limpieza del servicio.
+
+## Dependencias y siguiente paso
+
+Depende de eventos de red Sysmon y de una captura Suricata validada. El destino será local y controlado.
+
+Antes de ejecutar la prueba se comprobarán aislamiento, objetivos propios, sincronización horaria, instantáneas, condiciones de parada y limpieza. El orden de trabajo está en la [lista de implementación](../../docs/implementation-checklist.md). Esta etapa **requiere ejecución manual**.
+
+Durante la investigación se completará la [plantilla de informe](../../templates/incident-report.md), con fragmentos revisados en `evidence/` y su procedencia según las [reglas de manejo de evidencias](../../docs/evidence-handling.md). Las alertas esperadas que no aparezcan se documentarán como brechas de detección.
+
+[Volver al índice de investigaciones](../README.md)

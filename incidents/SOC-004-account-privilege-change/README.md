@@ -1,16 +1,27 @@
-# SOC-004 — Account / privilege change
+# SOC-004 — Cambios de cuentas y privilegios
 
-**PLANNED — NOT RUN — REQUIRES MANUAL EXECUTION**
+**Estado: pendiente de ejecución.** Etapa prevista: 7. Todavía no hay evidencias ni una clasificación del caso.
 
-This is a scope stub, not an incident report. No alert, collected evidence, ATT&CK mapping, classification, severity, or closure decision is claimed.
+## Objetivo
 
-- **Implementation phase:** 7.
-- **Controlled scenario:** Create a test identity and change group membership/elevated privilege in the lab, then restore state.
-- **Planned sources:** Windows/DC Security events, identity state, and Wazuh.
-- **Evidence needed:** Actor, affected identity, previous/new group or privilege, host, time, authorization context, and cleanup verification.
+Identificar quién modificó una cuenta o sus privilegios y comprobar si el cambio estaba autorizado.
 
-Before execution, verify telemetry, isolation, exact owned target scope, time synchronization, snapshots, stop conditions, and cleanup. Follow the [implementation checklist](../../docs/implementation-checklist.md).
+## Actividad prevista
 
-When evidence exists, replace this stub with a completed [incident report](../../templates/incident-report.md), retaining every required section. Add small sanitized artifacts with provenance under this case's `evidence/` directory and follow the [evidence policy](../../docs/evidence-handling.md). Document missing expected alerts as **Detection Gap**. Do not fill unknown fields or results with invented data.
+Crear una identidad de prueba, cambiar su pertenencia a un grupo o elevar sus privilegios y restaurar el estado al terminar.
 
-[Investigation index](../README.md)
+## Evidencias necesarias
+
+**Fuentes:** Eventos Security del equipo o controlador de dominio, estado de las identidades y Wazuh.
+
+Actor, cuenta afectada, grupo o privilegio anterior y posterior, equipo, hora, autorización y comprobación de limpieza.
+
+## Dependencias y siguiente paso
+
+La variante de dominio requiere Active Directory, políticas de auditoría y usuarios de prueba de la etapa 7.
+
+Antes de ejecutar la prueba se comprobarán aislamiento, objetivos propios, sincronización horaria, instantáneas, condiciones de parada y limpieza. El orden de trabajo está en la [lista de implementación](../../docs/implementation-checklist.md). Esta etapa **requiere ejecución manual**.
+
+Durante la investigación se completará la [plantilla de informe](../../templates/incident-report.md), con fragmentos revisados en `evidence/` y su procedencia según las [reglas de manejo de evidencias](../../docs/evidence-handling.md). Las alertas esperadas que no aparezcan se documentarán como brechas de detección.
+
+[Volver al índice de investigaciones](../README.md)

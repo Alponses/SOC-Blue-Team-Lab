@@ -1,36 +1,36 @@
-# Evidence handling and public publication
+# Manejo de evidencias
 
-Status: repository policy defined; no operational evidence collected yet.
+El objetivo es conservar suficiente información para reproducir una investigación y explicar sus conclusiones, sin publicar secretos ni datos personales. Hasta ahora está definido el procedimiento; la recopilación de evidencias operativas comenzará con el despliegue del laboratorio.
 
-## Provenance and storage
+## Procedencia y almacenamiento
 
-Keep source logs, email originals, full packet captures, credentials, export bundles, and the real-to-sanitized identity map outside this repository in private storage. `private/`, `raw/`, `exports/`, and common sensitive formats are ignored as a second layer, not a secure vault. `.gitignore` does not protect files already tracked or files added with force.
+Los registros originales, correos completos, capturas de paquetes, credenciales, exportaciones y tablas de correspondencia entre identidades reales y ficticias se guardarán fuera del repositorio, en almacenamiento privado. Las exclusiones de `private/`, `raw/` y `exports/` son una protección adicional. `.gitignore` no protege archivos ya versionados ni incorporados a la fuerza.
 
-Publish only the minimum reviewed excerpt needed to support a finding. Store future small sanitized excerpts beside the incident report in an `evidence/` subdirectory; add an evidence manifest with source type, collection time, original time zone, export/query method, source version, redactions, record locators, and SHA-256 of the published artifact. No evidence subdirectories contain samples at this stage.
+Cada investigación publicará únicamente los fragmentos necesarios para respaldar sus hallazgos, dentro de su subdirectorio `evidence/`. El inventario de evidencias incluirá fuente, fecha de recopilación, zona horaria original, consulta o método de exportación, versión de la fuente, datos eliminados, localizadores de registros y SHA-256 del archivo publicado. Todavía no hay muestras recopiladas.
 
-Use consistent invented aliases and addresses throughout a case so correlation remains possible. Explain any timestamp shift and apply it consistently; preserve relative ordering and intervals. Keep important distinctions such as actor versus target and source versus destination. Do not replace failed outcomes with successful ones or fill missing fields from assumptions.
+Los alias y direcciones sustituidos deberán ser coherentes en todo el caso para conservar la correlación. Si se desplazan las fechas, se explicará el ajuste y se preservarán el orden y los intervalos. Se mantendrán las diferencias entre actor y cuenta afectada, y entre origen y destino. Los campos ausentes quedarán identificados como tales.
 
-Label provenance as one of: observed lab simulation, sanitized export of observed lab evidence, or synthetic training sample. Synthetic email or fixtures are legitimate teaching inputs only when clearly labeled; they cannot prove a deployed detector worked. Planned steps and expected results are not observations.
+La procedencia se registrará como simulación observada en el laboratorio, exportación de evidencia observada con datos sensibles retirados, o muestra sintética de entrenamiento. Un correo sintético permite practicar análisis, pero no demuestra que una regla desplegada haya detectado un evento real.
 
-## Sanitization review
+## Revisión de datos sensibles
 
-Review nested JSON, command lines, script blocks, URLs/query parameters, email headers, screenshots, and metadata for secrets and identifying material. Remove credentials, passwords, API tokens, access keys, session tokens, cookies, private keys, live account IDs/ARNs, personal emails/usernames, public infrastructure addresses, and unrelated file paths. Keep mappings and unredacted originals private.
+La revisión cubrirá JSON anidado, líneas de comandos, bloques de scripts, URL y parámetros, encabezados de correo, capturas y metadatos. Se eliminarán contraseñas, credenciales, tokens, claves de acceso, cookies, claves privadas, identificadores reales de cuentas y ARN, correos y usuarios personales, direcciones de infraestructura pública y rutas ajenas al caso. Los originales y las correspondencias permanecerán privados.
 
-For synthetic names use invented lab identities and reserved domains such as `soc.test` or `example.invalid`. Defang phishing URLs in reports. Do not visit a suspicious URL merely to enrich it. Record external reputation results only if actually obtained, with lookup time and disclosure scope; a reserved domain has no meaningful live reputation verdict.
+Se utilizarán identidades ficticias y dominios reservados como `soc.test` o `example.invalid`. Las URL de phishing se escribirán de forma no navegable. Las consultas de reputación indicarán servicio, fecha, resultado y alcance de lo compartido; si no se realizan, se dejará constancia. Un dominio reservado no permite obtener una conclusión útil sobre reputación de infraestructura real.
 
-Do not upload confidential material to VirusTotal, URLScan, or similar services. A public lookup may disclose the indicator or artifact. Prefer local analysis and synthetic training samples; document checks that were deliberately not performed.
+VirusTotal, URLScan y servicios similares no recibirán material confidencial. Una consulta pública puede revelar el indicador o el archivo. Se priorizará el análisis local y el uso de muestras de entrenamiento, sin visitar enlaces sospechosos.
 
-Keep raw logs, VM/ISO images, binaries, and packet captures out of Git. Small reviewed JSON/CSV/TXT excerpts are preferred. Review artifact size before staging; a project guideline of at most 1 MiB per text excerpt and 2 MiB per screenshot encourages selected evidence, not bulk export. These size limits are review guidance and are not enforced by `.gitignore`.
+Los registros completos, imágenes de máquinas virtuales, ISO, binarios y capturas de paquetes quedan fuera de Git. Se prefieren fragmentos JSON/CSV/TXT revisados. Como criterio de selección, cada fragmento de texto debería ocupar como máximo 1 MiB y cada imagen 2 MiB. Estos límites se revisan al preparar la publicación; `.gitignore` no controla tamaños.
 
-## Publication checklist
+## Revisión antes de publicar
 
-- [ ] Every claim is tied to observed evidence or explicitly labeled planned/synthetic/unverified.
-- [ ] No credentials, keys, cookies, personal identifiers, public infrastructure targets, malicious binaries, VM images, or sensitive captures are present.
-- [ ] Excerpts are small, relevant, consistently sanitized, and have provenance and record locators.
-- [ ] Screenshots have evidence captions; inspect visible UI, tabs, metadata, and hidden personal information.
-- [ ] Run `python3 scripts/validate_repository.py` and `git diff --check`.
-- [ ] Review `git status --short`, `git diff --cached --stat`, and `git diff --cached` before committing.
-- [ ] Review all history and Git author metadata before creating a public remote; deleting a secret in a later commit does not remove it from earlier history.
-- [ ] Add a dedicated secret scanner before publishing real evidence; link validation and `.gitignore` are not secret scans.
+- [ ] Las conclusiones tienen evidencias; los planes, las muestras sintéticas y los puntos sin validar están identificados.
+- [ ] No hay credenciales, claves, cookies, datos personales, objetivos públicos, binarios maliciosos, imágenes de máquinas virtuales ni capturas sensibles.
+- [ ] Los fragmentos son pequeños, relevantes y coherentes; incluyen procedencia y localizadores.
+- [ ] Las capturas tienen descripción y se han revisado interfaz, pestañas, metadatos e información personal.
+- [ ] Se han ejecutado `python3 scripts/validate_repository.py` y `git diff --check`.
+- [ ] Se han revisado `git status --short`, `git diff --cached --stat` y `git diff --cached` antes del commit.
+- [ ] Se han revisado el historial y los metadatos de autor antes de publicar. Eliminar un secreto en un commit posterior no lo borra del historial.
+- [ ] Se ha utilizado un analizador de secretos antes de publicar evidencias reales, además de la revisión manual.
 
-No GitHub repository has been created or published in Deliverable 0. The local initial commit uses a generic project author and a reserved email address to avoid adding personal identity to this scaffold.
+El repositorio sigue siendo local. El commit inicial utiliza una identidad genérica del proyecto y una dirección de correo reservada para no incluir datos personales.

@@ -1,14 +1,14 @@
-# Repository validation
+# Validación del repositorio
 
-Run from the repository root with Python 3.9+ and Git:
+El script comprueba los enlaces internos de la documentación. Se ejecuta desde la raíz del repositorio con Python 3.9 o posterior y Git:
 
 ```sh
 python3 scripts/validate_repository.py
 git diff --check
 ```
 
-The validator checks tracked and non-ignored untracked Markdown files for the inline-link syntax used by this repository. It checks file/directory targets, repository boundaries, and same-file/cross-file GitHub-style heading anchors, including duplicate headings. Fenced examples are excluded. It exits nonzero for broken links or a missing Git context.
+Revisa archivos Markdown versionados y archivos nuevos no excluidos por Git. Comprueba destinos de archivo o directorio, rutas dentro del repositorio y anclas de encabezados con el formato de GitHub, incluidas repeticiones. Omite los bloques de código. Devuelve un código distinto de cero si encuentra enlaces rotos o falta el contexto Git.
 
-Keep authored links inline. Reference-style links, HTML links/anchors, and unusual Markdown constructs need a parser upgrade if introduced. This is not a general Markdown renderer, external URL checker, Mermaid renderer, secret scanner, or lab test. It cannot establish infrastructure health or detection success.
+La documentación utiliza enlaces Markdown en línea. Los enlaces por referencia, las anclas HTML y las construcciones menos habituales necesitarían ampliar el analizador. El script no comprueba URL externas, representación visual de Mermaid, secretos ni funcionamiento del laboratorio.
 
-No provisioning or simulation scripts exist in Deliverable 0. All operational work remains **REQUIRES MANUAL EXECUTION** until later phases.
+**Avance:** validador disponible y utilizado en la revisión documental. Los scripts de instalación y simulación se prepararán en las etapas correspondientes; su ejecución operativa sigue pendiente.

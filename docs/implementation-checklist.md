@@ -1,147 +1,148 @@
-# Implementation checklist
+# Plan de implementación y avance
 
-Complete one deliverable at a time. Deliverable 0 is the only authorized execution scope for the current task. All later work is **NOT STARTED — REQUIRES MANUAL EXECUTION** until environment access and execution are recorded. This checklist is a plan, not proof of installation or testing.
+**Punto actual:** entregable 0 terminado. La estructura, la arquitectura y las plantillas están listas. El siguiente paso es comprobar los recursos disponibles y desplegar Wazuh con Windows 11. Todavía no hay infraestructura instalada ni investigaciones ejecutadas.
 
-## Completion rules
+Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada una se cerrará con sus archivos, pruebas, evidencias, problemas pendientes y siguiente paso documentados.
 
-- A deliverable is complete only when its acceptance evidence exists and has been reviewed.
-- Report what was created, files changed, actual validation, evidence obtained, remaining issues, and the exact next deliverable.
-- Record a **Detection Gap** when an expected detection is missing; preserve the failed test and investigate collection, parsing, rule logic, timing, and suppression.
-- Snapshot before state changes, limit tests to explicit owned targets, and verify cleanup.
-- Review staged content and make a logical local Git commit when the deliverable is ready.
-- Do not proceed through an unresolved dependency merely to fill an incident report.
+## Criterios de trabajo
 
-## Deliverable 0 — Repository skeleton and architecture
+- Completar y validar una etapa antes de avanzar sobre sus dependencias.
+- Registrar las alertas esperadas que no aparezcan como **brecha de detección (Detection Gap)**, conservando el resultado y revisando recopilación, interpretación de campos, reglas, tiempos y supresiones.
+- Crear una instantánea antes de cambiar el estado de un sistema; delimitar equipos e intentos y verificar la limpieza posterior.
+- Relacionar cada conclusión con evidencias y cada mejora con una prueba.
+- Revisar los archivos preparados para Git y guardar cambios coherentes en commits separados.
 
-- [x] Inspect the working directory and parent guidance; establish existing Git status.
-- [x] Create `SOC-Blue-Team-Lab` without overwriting unrelated files.
-- [x] Create initial README, architecture document, and Mermaid network diagram.
-- [x] Create public-repository ignore rules and evidence-handling guidance.
-- [x] Create reusable incident and SOC playbook templates.
-- [x] Reserve incident, configuration, detection, playbook, query, and screenshot locations.
-- [x] Create this ordered implementation checklist.
-- [x] Validate all internal Markdown links and inspect staged changes.
-- [x] Record validation results and make the initial logical commit.
+## Entregable 0 — Estructura y arquitectura
 
-Acceptance: a navigable, locally committed scaffold with explicit unverified status. See the [execution report](deliverables/deliverable-0.md) for observed results. **Stop after this deliverable.**
+- [x] Revisar el directorio de trabajo y comprobar si existía un repositorio Git.
+- [x] Crear `SOC-Blue-Team-Lab` sin sobrescribir archivos ajenos.
+- [x] Preparar README, arquitectura y diagrama Mermaid.
+- [x] Definir exclusiones de archivos y manejo de evidencias para publicación.
+- [x] Crear plantillas de informe de incidente y procedimiento SOC.
+- [x] Organizar espacios para casos, configuraciones, detecciones, procedimientos, consultas y capturas.
+- [x] Definir el orden de implementación.
+- [x] Validar enlaces internos y revisar los cambios.
+- [x] Registrar las comprobaciones y crear el commit inicial.
 
-## Deliverable 1 — Wazuh + Windows + Sysmon telemetry
+**Resultado:** base documental y repositorio local listos. Las comprobaciones están en el [informe del entregable 0](deliverables/deliverable-0.md).
 
-Exact next scope: establish the isolated lab network and deploy only SOC-WAZUH and SOC-WIN11, with Wazuh agent, Sysmon, and existing Defender protection. Establish collection and benign event visibility; adversary-style investigations begin in later deliverables.
+## Entregable 1 — Wazuh, Windows y Sysmon
 
-- [ ] Inventory usable host RAM/disk/CPU, supported hypervisor, guest requirements, evaluation media source, and available VM access. Confirm the proposed subnet is unused.
-- [ ] Record versions, official download locations/checksums where supplied, VM sizing, guest identifiers, and recovery method. Do not commit installers or generated credentials.
-- [ ] Create the host-only network and verify adapters, IPv4/IPv6 routes, host forwarding, management access, and absence of public exposure. Record temporary update NAT removal.
-- [ ] Deploy Wazuh all-in-one at `10.10.10.10` and Windows 11 at `10.10.10.30`; confirm service health and take baseline snapshots.
-- [ ] Enroll the Windows agent using privately stored enrollment material. Configure Security, System, PowerShell Operational, Sysmon Operational, and Defender Operational collection.
-- [ ] Set Windows audit and PowerShell logging policies; configure Sysmon process creation, bounded network-connection, and DNS coverage. Record filters and why they were chosen.
-- [ ] Verify time synchronization and document UTC conversion/skew, local event records, agent delivery, manager receipt, and SIEM search visibility.
-- [ ] Generate harmless baseline events: an ordinary sign-in, a marker command/PowerShell script, and controlled local network/DNS activity where a local service/resolver is available. Capture a normal System/Defender event; do not disable protection or fabricate a malware alert.
-- [ ] Prove at least one event from each required channel through the full collection path. Distinguish alerts from benign events available only through a deliberately enabled bounded archive path. Where a required Sysmon event cannot yet be stimulated, record the dependency and leave coverage unvalidated.
-- [ ] Record exact queries, source/event IDs, timestamps, normalized fields, observed ingestion delay, dropped/absent fields, collection volume, and retention settings.
-- [ ] Save small sanitized evidence, actual configuration exports without secrets, and a few evidence-captioned screenshots. Review public safety, rerun link checks, and commit the deliverable report.
+**Siguiente etapa.** Crear la red aislada y desplegar únicamente SOC-WAZUH y SOC-WIN11, con agente Wazuh, Sysmon y Defender activo. El objetivo es demostrar la llegada de eventos normales antes de ejecutar escenarios de investigación.
 
-Expected files: setup/validation documentation under `docs/`, sanitized templates/configuration under `configs/wazuh/` and `configs/windows/`, selected screenshots, and `docs/deliverables/deliverable-1.md`. Create links only once files exist.
+- [ ] Comprobar RAM, disco y CPU disponibles, hipervisor compatible, requisitos de invitados, medios de evaluación y acceso a las máquinas. Confirmar que la subred propuesta no esté en uso.
+- [ ] Registrar versiones, descargas oficiales y sumas de verificación cuando se proporcionen, recursos, nombres de equipos y recuperación. Mantener instaladores y credenciales fuera de Git.
+- [ ] Crear la red solo anfitrión; revisar adaptadores, rutas IPv4/IPv6, reenvío, administración y exposición. Documentar la retirada del NAT temporal de actualización.
+- [ ] Desplegar Wazuh todo en uno en `10.10.10.10` y Windows 11 en `10.10.10.30`; comprobar servicios y crear instantáneas de referencia.
+- [ ] Registrar el agente Windows guardando las credenciales de forma privada. Configurar Security, System, PowerShell Operational, Sysmon Operational y Defender Operational.
+- [ ] Ajustar auditoría de Windows y registro de PowerShell; configurar eventos de creación de procesos, conexiones acotadas y DNS en Sysmon. Documentar filtros y motivo.
+- [ ] Verificar sincronización horaria, conversión a UTC, desfase, eventos locales, envío del agente, recepción del servidor y búsqueda en el SIEM.
+- [ ] Generar eventos inocuos: inicio de sesión normal, comando o script con un marcador y actividad local de red/DNS cuando exista el servicio necesario. Recoger un evento normal de System y Defender manteniendo la protección activa.
+- [ ] Mostrar al menos un evento de cada canal a través de toda la cadena de recopilación. Distinguir las alertas de los eventos consultados mediante una ruta de archivo temporal y limitada. Dejar pendiente cualquier cobertura de Sysmon que aún no pueda comprobarse.
+- [ ] Registrar consultas, ID de fuente/evento, tiempos, campos, retraso de ingestión observado, datos ausentes, volumen y retención.
+- [ ] Guardar fragmentos revisados, configuraciones sin secretos y unas pocas capturas con descripción. Validar enlaces y cerrar el informe de la etapa en Git.
 
-Acceptance: both VMs are healthy and isolated, Windows is enrolled, every required channel is shown arriving via a documented path, and field-level limitations are explicit. A connected agent alone is insufficient. An inaccessible hypervisor/guest remains **REQUIRES MANUAL EXECUTION**, with no claim that deployment is complete.
+**Archivos previstos:** documentación de instalación y comprobaciones en `docs/`, configuraciones en `configs/wazuh/` y `configs/windows/`, capturas seleccionadas y `docs/deliverables/deliverable-1.md`.
 
-Out of scope for Deliverable 1: Ubuntu, simulator, brute force, AD/domain join, Suricata, real incident verdicts, phishing, AWS, Splunk, and public GitHub publishing.
+**Criterio de cierre:** las dos máquinas funcionan y están aisladas; Windows está registrado y cada canal requerido llega por una ruta documentada, con sus limitaciones de campos identificadas. Un agente conectado por sí solo no cumple este criterio. Si falta acceso al hipervisor o a un invitado, la instalación seguirá pendiente de ejecución manual.
 
-## Deliverable 2 — Ubuntu and authentication/SSH telemetry
+Ubuntu, el simulador, las investigaciones de ataque, Active Directory, Suricata, phishing, AWS, Splunk y la publicación en GitHub quedan para sus etapas correspondientes.
 
-- [ ] Deploy SOC-LINUX at `10.10.10.40`; install/configure OpenSSH, agent, and scoped audit/system logging.
-- [ ] Identify actual journal/rsyslog sources, prevent duplicate ingestion, and verify SSH, auth, sudo, system, and selected application logs with benign operations.
-- [ ] Capture required users/processes/source fields and document limits on network attribution.
-- [ ] Reserve a dedicated non-sensitive test file/directory for later FIM; establish baseline and decide who-data/audit requirements without claiming actor attribution yet.
+## Entregable 2 — Ubuntu y telemetría de autenticación
 
-Acceptance: source-to-SIEM evidence and queries, accurate timestamps, logging paths, resource/retention notes, and sanitized configuration. No brute-force case yet.
+- [ ] Desplegar SOC-LINUX en `10.10.10.40` con OpenSSH, agente Wazuh y registros de auditoría y sistema acotados.
+- [ ] Identificar las fuentes reales del diario del sistema y rsyslog; evitar duplicados y comprobar SSH, autenticación, sudo, sistema y aplicaciones seleccionadas con operaciones normales.
+- [ ] Comprobar campos de usuarios, procesos y origen; documentar los límites de atribución de red.
+- [ ] Reservar un archivo o directorio de prueba sin datos sensibles para FIM; establecer la referencia y los requisitos de auditoría o who-data para identificar al actor más adelante.
 
-## Deliverable 3 — SOC-001 SSH brute force
+**Criterio de cierre:** evidencia desde el origen hasta el SIEM, consultas, tiempos precisos, rutas de registros, configuración revisada y notas de recursos y retención. La fuerza bruta se ejecutará en la siguiente etapa.
 
-- [ ] Establish SOC-SIM at `10.10.10.50`, target allowlist, test account, rate/attempt bounds, lockout implications, snapshots, and cleanup plan.
-- [ ] Generate a bounded series of owned-lab SSH failures; investigate failure counts, account, source, time window, and any later successful login.
-- [ ] Identify actual Wazuh alerts/rule IDs or a Detection Gap. Complete evidence-linked report, timeline, ATT&CK rationale, severity, disposition, and escalation logic.
+## Entregable 3 — SOC-001: fuerza bruta SSH
 
-Acceptance: first complete investigation based on observed evidence; attempt counts reconciled with event/alert counts, and cleanup verified.
+- [ ] Preparar SOC-SIM en `10.10.10.50`, objetivos permitidos, cuenta de prueba, frecuencia y número máximo de intentos, posibles bloqueos, instantáneas y limpieza.
+- [ ] Generar fallos SSH limitados contra SOC-LINUX; revisar origen, cuenta, recuento, intervalo y cualquier acceso exitoso posterior.
+- [ ] Registrar alertas e ID de reglas reales o la brecha de detección; completar evidencias, línea de tiempo, ATT&CK, severidad, clasificación y decisión.
 
-## Deliverable 4 — SOC-002 Windows authentication failures
+**Criterio de cierre:** primera investigación completa con intentos, eventos y alertas reconciliados, conclusión respaldada y limpieza verificada.
 
-- [ ] Generate controlled failures under a lockout-aware procedure; record authentication type and local/domain context.
-- [ ] Identify relevant actual Security event IDs, status/substatus, account, source where present, and related SIEM events; build a timeline.
-- [ ] Complete the standard incident report with observed outcome and cleanup.
+## Entregable 4 — SOC-002: autenticación Windows
 
-Acceptance: Windows authentication evidence supports the verdict and escalation criteria; missing source fields are not invented.
+- [ ] Generar fallos controlados teniendo en cuenta la política de bloqueo y el contexto local o de dominio.
+- [ ] Identificar ID de eventos Security, estado y subestado, cuenta, origen disponible y eventos relacionados en el SIEM; construir la línea de tiempo.
+- [ ] Completar el informe con resultado observado, criterios de escalamiento y limpieza.
 
-## Deliverable 5 — SOC-003 PowerShell / Sysmon
+**Criterio de cierre:** las evidencias de autenticación sostienen la clasificación; los campos ausentes se reconocen como limitaciones.
 
-- [ ] Run a reviewed harmless PowerShell simulation with explicit marker, target, bounds, and cleanup.
-- [ ] Correlate process/parent, command line, user, host, timestamp, script-block information, and network activity only if generated/observed.
-- [ ] Record detection success/gap and finish the report and ATT&CK mapping based on the observed behavior.
+## Entregable 5 — SOC-003: PowerShell y Sysmon
 
-Acceptance: cross-source process evidence, correct interpretation of authorized simulation, and documented detection improvements.
+- [ ] Ejecutar una simulación PowerShell inocua, revisada y con marcador, objetivo, límites y limpieza definidos.
+- [ ] Correlacionar proceso y padre, comandos, usuario, equipo, hora, bloque de script y conexiones solo cuando se hayan observado.
+- [ ] Documentar el resultado de la detección, la correspondencia con ATT&CK y las mejoras derivadas de la investigación.
 
-## Deliverable 6 — Suricata and network investigations
+**Criterio de cierre:** evidencia correlacionada entre fuentes y clasificación coherente con el contexto de simulación autorizada.
 
-- [ ] Install/configure Suricata on SOC-LINUX and collect selected EVE output into Wazuh; demonstrate capture-path visibility first.
-- [ ] Complete SOC-005 with a bounded scan of SOC-LINUX only, showing port/time pattern, actual IDS/flow evidence, and packet inspection if useful.
-- [ ] Complete SOC-006 with a harmless workstation connection to a lab-local service, correlating process and network tuple; stop the service afterward.
-- [ ] Start SOC-007 with a local controlled resolver and reserved domain; otherwise defer its execution to phase 7 and record the dependency.
-- [ ] Document DNS response evidence, endpoint attribution, reputation methodology, encryption/visibility limits, false positives, and gaps.
+## Entregable 6 — Suricata e investigaciones de red
 
-Acceptance: actual network evidence and completed 005/006 reports; 007 is complete only with observed query/response evidence. No claim of whole-switch visibility without proof.
+- [ ] Instalar Suricata en SOC-LINUX y enviar la salida EVE seleccionada a Wazuh; comprobar primero la visibilidad de la interfaz.
+- [ ] Completar SOC-005 mediante un escaneo acotado de SOC-LINUX, con patrón de puertos y tiempos, registros de flujos/IDS e inspección de paquetes si aporta evidencia.
+- [ ] Completar SOC-006 mediante una conexión inocua desde Windows hacia un servicio local, correlacionando proceso, direcciones y puertos; detener el servicio al terminar.
+- [ ] Iniciar SOC-007 con un resolvedor local y un dominio reservado. Si depende del DNS de AD, registrarlo y finalizarlo en la etapa 7.
+- [ ] Documentar respuesta DNS, equipo solicitante, método de consulta de reputación, límites del cifrado, cobertura, falsos positivos y brechas.
 
-## Deliverable 7 — Active Directory and identity investigations
+**Criterio de cierre:** casos 005 y 006 completos con tráfico observado. SOC-007 se cerrará únicamente con evidencia de consulta y respuesta. Cualquier ampliación de visibilidad del sensor deberá estar demostrada.
 
-- [ ] Deploy SOC-DC01 at `10.10.10.20`, AD DS and local DNS for `soc.test`; configure explicit service flows and appropriate audit policies.
-- [ ] Create invented normal users, a separate administrator identity, and security groups; join Windows 11 to the domain.
-- [ ] Validate DC/workstation authentication sources and time synchronization; finish SOC-007 if it required AD DNS.
-- [ ] Complete SOC-004: create a test account, change group membership/elevation, identify actor/target/privilege/host/time, check authorization, then restore state.
+## Entregable 7 — Active Directory e identidades
 
-Acceptance: evidence-backed identity report and domain/DNS collection proof, including actual successful/failed authentication and authorized administrator activity.
+- [ ] Desplegar SOC-DC01 en `10.10.10.20`, AD DS y DNS local para `soc.test`; configurar comunicaciones y políticas de auditoría.
+- [ ] Crear usuarios ficticios normales, una identidad administradora separada y grupos de seguridad; unir Windows 11 al dominio.
+- [ ] Verificar autenticación en controlador y estación, sincronización horaria y SOC-007 si estaba pendiente.
+- [ ] Completar SOC-004: crear una cuenta, modificar pertenencia a grupos o privilegios, identificar actor/cuenta/privilegio/equipo/hora, comprobar autorización y restaurar el estado.
 
-## Deliverable 8 — Detections, FIM investigation, and playbooks
+**Criterio de cierre:** informe de cambios de identidad, evidencia de recopilación del dominio/DNS, autenticación exitosa y fallida, y actividad administrativa autorizada.
 
-- [ ] Build/tune only detections justified by preceding investigations in Wazuh, Sigma where portable, and Suricata where relevant.
-- [ ] Document objective, source, logic, ATT&CK, expected true positives, false positives, validation steps, observed results, and known gaps for each rule.
-- [ ] Validate positive and negative controls and threshold boundaries where applicable; record engine/backend versions and parsing/field requirements.
-- [ ] Complete SOC-008 with a controlled test-file change, previous/current state, FIM evidence, supported actor attribution, and restoration verification.
-- [ ] Write the eight scoped operational playbooks listed in the playbook index; link actual queries and cases. Revalidate phishing/AWS playbooks after those investigations run.
+## Entregable 8 — Detecciones, FIM y procedimientos SOC
 
-Acceptance: tested meaningful detection content, an evidence-backed FIM case, and usable analyst checklists. A Sigma file without target-backend testing is marked unvalidated for that backend.
+- [ ] Crear o ajustar detecciones justificadas por los casos previos en Wazuh, Sigma cuando sean portables y Suricata cuando corresponda.
+- [ ] Documentar objetivo, fuente, lógica, ATT&CK, verdaderos positivos esperados, falsos positivos, pruebas, resultados y brechas.
+- [ ] Verificar controles positivos y negativos y límites de umbral; registrar versiones, campos y requisitos de interpretación de eventos.
+- [ ] Completar SOC-008 con modificación controlada, estado anterior y posterior, evidencia FIM, actor si puede demostrarse y restauración verificada.
+- [ ] Redactar los ocho procedimientos del índice y enlazar consultas y casos reales. Revisar los de phishing y AWS después de ejecutar sus investigaciones.
 
-## Deliverable 9 — SOC-009 phishing
+**Criterio de cierre:** detecciones probadas, caso FIM completo y procedimientos utilizables. La validación de Sigma debe indicar el motor de destino; una regla convertida sin ejecutar no está validada en ese motor.
 
-- [ ] Create a clearly labeled synthetic email or choose a safe training sample with documented provenance.
-- [ ] Analyze header trust boundaries, From/Reply-To/Return-Path/Received, SPF/DKIM/DMARC, defanged URLs/domains, hashes, and attachment metadata.
-- [ ] Document enrichment results actually obtained or why enrichment was not performed; do not upload confidential information.
-- [ ] Complete executive summary, evidence, IOC table, timeline, verdict, actions, and the standard report sections; validate the phishing playbook.
+## Entregable 9 — SOC-009: phishing
 
-Acceptance: reproducible analysis that distinguishes synthetic assertions from authenticated delivery evidence.
+- [ ] Preparar un correo sintético identificado como tal o una muestra segura de entrenamiento con procedencia documentada.
+- [ ] Revisar confianza de los encabezados, From, Reply-To, Return-Path, Received, SPF, DKIM, DMARC, URL no navegables, dominios, hashes y metadatos de adjuntos.
+- [ ] Registrar los resultados de enriquecimiento obtenidos o el motivo de no realizar las consultas, manteniendo la confidencialidad.
+- [ ] Completar resumen ejecutivo, evidencias, tabla de IOC, línea de tiempo, conclusión, acciones y secciones del informe; validar el procedimiento de phishing.
 
-## Deliverable 10 — SOC-010 AWS CloudTrail
+**Criterio de cierre:** análisis reproducible que diferencia datos sintéticos de pruebas verificadas de entrega y autenticación.
 
-- [ ] Establish owner's AWS lab account scope, secure access, resource/region boundaries, costs/retention, and cleanup procedure before controlled changes.
-- [ ] Configure/verify IAM, CloudTrail coverage, and CloudWatch log delivery. Generate bounded identity/API/resource changes, including API access-key identity context where appropriate; keep all key material private.
-- [ ] Reconstruct who/what/when/from where/resource/change and API outcome, then verify resource and permission cleanup.
-- [ ] Publish only sanitized samples, documented limitations, standard incident report, and validated AWS playbook.
+## Entregable 10 — SOC-010: AWS CloudTrail
 
-Acceptance: actual source events support the reconstruction; no credentials, public infrastructure targets, or live identity details in Git.
+- [ ] Definir cuenta propia de laboratorio, acceso seguro, regiones y recursos permitidos, costes, retención y limpieza antes de generar cambios.
+- [ ] Configurar y comprobar IAM, cobertura de CloudTrail y entrega a CloudWatch. Generar actividad limitada de identidad/API/recursos, incluido el contexto de uso de claves de acceso cuando corresponda, conservando las claves de forma privada.
+- [ ] Reconstruir quién hizo qué, cuándo, desde dónde, contra qué recurso, qué cambió y cuál fue el resultado. Verificar retirada de recursos y permisos de prueba.
+- [ ] Publicar muestras sin datos sensibles, limitaciones, informe y procedimiento AWS validado.
 
-## Deliverable 11 — Splunk / SPL investigations
+**Criterio de cierre:** los eventos reales sostienen la reconstrucción y la limpieza está verificada, sin credenciales ni identificadores de infraestructura real en Git.
 
-- [ ] Introduce Splunk Enterprise only after Wazuh investigations work; record version, resources, source types, field mappings, timestamp extraction, and import counts.
-- [ ] Import sanitized lab datasets; reconcile event counts and document preprocessing.
-- [ ] Implement and validate the seven SPL investigations in the query index with objective, query, fields, time bounds, expected behavior, actual output, and caveats.
-- [ ] Distinguish SPL/Enterprise practice from Enterprise Security, which remains unclaimed unless actually used.
+## Entregable 11 — Splunk y SPL
 
-Acceptance: reproducible searches of real sanitized datasets with observed results and known limitations.
+- [ ] Incorporar Splunk Enterprise después de validar las investigaciones con Wazuh; registrar versión, recursos, tipos de fuente, correspondencia de campos, interpretación de tiempos y recuento de importación.
+- [ ] Importar datos del laboratorio revisados, reconciliar recuentos y documentar transformaciones.
+- [ ] Crear y ejecutar las siete consultas del índice, con objetivo, campos, intervalo, comportamiento esperado, resultados y limitaciones.
+- [ ] Documentar la práctica como Splunk Enterprise y SPL. Enterprise Security solo se incluirá si llega a utilizarse y existe evidencia.
 
-## Deliverable 12 — Final portfolio review
+**Criterio de cierre:** consultas reproducibles sobre datos del laboratorio, con resultados observados y límites conocidos.
 
-- [ ] Update README status, architecture, environment versions, investigation results/links, and concrete skills demonstrated.
-- [ ] Keep only a few captioned screenshots that prove findings; preserve primary evidence and analyst reasoning.
-- [ ] Verify every report uses the standard sections and every classification/severity/decision follows from evidence.
-- [ ] Review internal links, repository size, all tracked artifacts/history, secrets, privacy, licensing, Git authors, and any remaining detection gaps.
-- [ ] Check that a reviewer can understand actual scope and evidence within 2–3 minutes; remove unsupported experience claims.
+## Entregable 12 — Revisión final del portafolio
 
-Acceptance: public-ready reviewed repository. Remote creation or publishing is a separate action, not part of Deliverable 0.
+- [ ] Actualizar avance del README, arquitectura, versiones, enlaces, resultados y habilidades respaldadas por casos.
+- [ ] Seleccionar pocas capturas con descripción y mantener los registros, las consultas y el razonamiento como evidencias principales.
+- [ ] Comprobar la estructura de todos los informes y la justificación de clasificación, severidad y decisión.
+- [ ] Revisar enlaces, tamaño, archivos e historial, secretos, privacidad, licencias, metadatos de autor y brechas pendientes.
+- [ ] Verificar que el objetivo, la infraestructura, los casos y las conclusiones se entiendan en 2–3 minutos.
+
+**Criterio de cierre:** repositorio revisado y preparado para publicación. La creación del repositorio remoto y la publicación se realizarán después de esa revisión.

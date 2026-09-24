@@ -1,92 +1,92 @@
-# Incident ID
+# SOC-NNN — Título del incidente
 
-Replace this heading with `SOC-NNN — Scenario title` when creating a report.
+Plantilla para documentar una investigación desde la alerta inicial hasta su cierre o escalamiento. Los campos se completan durante el análisis; la clasificación y la decisión quedan pendientes hasta disponer de evidencias suficientes.
 
-| Record | Value |
+| Dato | Registro |
 | --- | --- |
-| Status | NOT STARTED / REQUIRES MANUAL EXECUTION / IN PROGRESS / VALIDATED |
-| Analyst | Lab alias only |
-| Evidence provenance | Observed lab simulation / sanitized observed export / synthetic training sample |
-| Execution window | Start and end in UTC; retain original zone and clock offset |
-| Environment / versions | Guest, agent, rules/configuration revision, relevant tools |
-| Authorization | Owned targets, test purpose, authorized actor, approved window |
-| Simulation record | Exact bounded steps, snapshot reference, expected signal, stop conditions, cleanup and observed cleanup result |
+| Estado | Pendiente / Requiere ejecución manual / En investigación / Validado |
+| Analista | Alias del laboratorio |
+| Procedencia de la evidencia | Simulación observada / Exportación revisada sin datos sensibles / Muestra sintética de entrenamiento |
+| Intervalo | Inicio y fin en UTC; zona original y desfase del reloj |
+| Entorno y versiones | Sistema, agente, revisión de reglas/configuración y herramientas |
+| Autorización | Equipos propios, propósito, actor autorizado y ventana de prueba |
+| Ejecución y recuperación | Pasos acotados, instantánea previa, señal esperada, condiciones de parada, limpieza y resultado comprobado |
 
-This is an unfilled template, not an executed incident. Remove instructions and unused placeholders only after recording real observations. Label synthetic samples explicitly; do not present them as collected events.
+## Resumen ejecutivo
 
-## Executive Summary
+Describir el comportamiento observado, los equipos afectados, el impacto demostrado, la conclusión y la acción. En phishing, incluir el pretexto del correo y si se conoce alguna interacción o ejecución por parte del usuario. Diferenciar hechos, hipótesis e información pendiente.
 
-Briefly describe the observed behavior, affected assets, evidence-backed impact, verdict, and action. For phishing, include the delivery/pretext and whether user interaction or execution is known. Separate facts, hypotheses, and unknowns.
+## Alerta
 
-## Alert
+Registrar hora, ID/nombre/versión de regla, nivel, fuente, campos que activaron la detección y referencia de la alerta. Explicar por qué se investigó. Si faltó una alerta esperada, registrar **brecha de detección (Detection Gap)**, la prueba realizada y el evento o búsqueda manual que inició el caso.
 
-Record alert time, rule ID/name/version, level, source, triggering fields, and the actual alert reference. Describe why it was investigated. If there was no alert, write **Detection Gap**, document the attempted validation, and identify the manual hunt/source event that began the case. Do not invent an alert ID.
+## Evaluación inicial
 
-## Initial Triage
+Revisar criticidad del activo, duplicados, salud de la recopilación, tiempos y desfases, actividad autorizada e impacto inmediato. Anotar la hipótesis inicial y la evidencia que permitiría descartarla.
 
-Check asset criticality, alert duplication, collection health, timestamps/skew, authorized activity, and immediate impact. Record the initial hypothesis and what would disprove it.
+## Alcance
 
-## Scope
+Identificar equipos, usuarios, direcciones de origen y destino, servicios, intervalo, actividad relacionada y puntos sin visibilidad. Explicar cualquier ampliación del alcance.
 
-Identify in-scope hosts, users, source/destination addresses, services, time range, related activity, and collection blind spots. Explain how scope expanded or remained bounded.
+## Evidencias
 
-## Evidence
+Asignar identificadores estables y enlazar fragmentos revisados mediante rutas relativas. Conservar los originales en almacenamiento privado. Cada evidencia publicada debe indicar procedencia y cambios realizados para retirar información sensible.
 
-Use stable evidence IDs and actual relative links to reviewed excerpts. Keep originals private; public artifacts must follow the repository's evidence policy. Remove the blank row below when filling the table.
-
-| Evidence ID | Source / event ID | Artifact and record locator | What it proves | Limitations / redactions |
+| ID de evidencia | Fuente e ID de evento | Archivo y localizador del registro | Qué demuestra | Limitaciones o datos retirados |
 | --- | --- | --- | --- | --- |
-| To fill | To fill | To fill | To fill | To fill |
+| Por completar | Por completar | Por completar | Por completar | Por completar |
 
-Record query text, search window, timezone, count method, and deduplication method. Distinguish event count from alert count and unique attempts; preserve event IDs needed to cross-reference sources. Hash published artifacts only after sanitization and identify the hash algorithm. An export hash verifies that export, not the private original.
+Registrar consulta, intervalo de búsqueda, zona horaria, método de recuento y eliminación de duplicados. Diferenciar eventos, alertas e intentos únicos; conservar los ID necesarios para relacionar fuentes. Calcular el hash después de retirar datos sensibles e indicar el algoritmo: ese valor identifica el archivo publicado, no el original privado.
 
-## Timeline
+## Línea de tiempo
 
-| Timestamp (UTC) | Host / actor | Observed event | Evidence ID | Analyst interpretation / uncertainty |
+| Fecha y hora UTC | Equipo o actor | Evento observado | ID de evidencia | Interpretación e incertidumbre |
 | --- | --- | --- | --- | --- |
-| To fill | To fill | To fill | To fill | To fill |
+| Por completar | Por completar | Por completar | Por completar | Por completar |
 
-Order by event time; retain ingestion time if useful. Explain gaps, clock drift, snapshot effects, or conflicting sources.
+Ordenar por hora del evento y conservar la hora de ingestión si aporta contexto. Explicar vacíos, desfases, efectos de instantáneas y contradicciones entre fuentes.
 
-## Indicators
+## Indicadores
 
-| Type | Sanitized value | Context / role | Enrichment source and lookup time | Result / confidence |
+| Tipo | Valor sin datos sensibles | Contexto o función | Fuente y fecha de enriquecimiento | Resultado y confianza |
 | --- | --- | --- | --- | --- |
-| To fill | To fill | To fill | To fill | To fill |
+| Por completar | Por completar | Por completar | Por completar | Por completar |
 
-An internal IP, account, or process is an investigative indicator, not automatically a malicious IOC. Label invented and reserved domains. For phishing, inspect From, Reply-To, Return-Path, Received chains, trustworthy authentication results (SPF/DKIM/DMARC), defanged URLs/domains, attachment metadata, and hashes. Distinguish synthetically supplied authentication results from verified results; do not trust sender-inserted headers. Record reputation checks as not performed when appropriate; absence of reputation data does not mean benign. Never submit confidential content to enrichment services.
+Una IP interna, una cuenta o un proceso pueden orientar la investigación sin ser un indicador malicioso. Identificar dominios ficticios o reservados y consultas de reputación no realizadas. La falta de información de reputación no demuestra que algo sea benigno.
+
+En phishing, revisar From, Reply-To, Return-Path, cadena Received, resultados confiables de SPF/DKIM/DMARC, URL y dominios no navegables, hashes y metadatos de adjuntos. Diferenciar encabezados sintéticos, datos insertados por el remitente y resultados verificados por infraestructura de confianza. Mantener el contenido confidencial fuera de servicios externos de enriquecimiento.
 
 ## MITRE ATT&CK
 
-Record tactic, technique/sub-technique ID, official technique reference, and the specific behavior/evidence supporting each mapping. ATT&CK describes behavior, not a verdict. Use “not applicable” with reasoning for generic changes that do not establish adversary behavior. Do not infer credential theft, persistence, or command-and-control from a single ambiguous event.
+Registrar táctica, ID de técnica o subtécnica, referencia oficial y comportamiento concreto que respalda la correspondencia. Usar «no aplica» con una explicación cuando la evidencia no permita asociar una técnica. ATT&CK describe comportamiento; no determina por sí solo si hubo una intrusión. La atribución de robo de credenciales, persistencia o mando y control requiere evidencia suficiente.
 
-## Analysis
+## Análisis
 
-Correlate the evidence and explain the causal sequence, competing explanations, and missing information. Include relevant source fields rather than screenshots alone. For authentication cases distinguish failures, lockout, and later success. For AWS answer **Who → What → When → From Where → Against Which Resource → What Changed**, including outcome/errors and previous/new state where available.
+Relacionar las evidencias y explicar la secuencia, las alternativas y la información que falta. Incluir los campos relevantes de los registros. En autenticación, separar fallos, bloqueos y éxitos posteriores. En AWS responder **quién → qué → cuándo → desde dónde → contra qué recurso → qué cambió**, con resultado de la API, errores y estado anterior y posterior cuando esté disponible.
 
-## Classification
+## Clasificación
 
-Choose exactly one after analysis: **True Positive**, **False Positive**, **Benign Positive**, or **Inconclusive**. Leave unassigned while this is a template.
+Elegir una categoría después del análisis y justificarla con evidencia y contexto de autorización:
 
-- True Positive: evidence supports the malicious/unauthorized behavior the detection is intended to identify. A simulation verdict must explicitly say it is simulated and describe its test ground truth.
-- False Positive: the detection asserted a condition that the evidence does not support; explain the mismatch.
-- Benign Positive: the behavior was correctly detected and was authorized/expected in context.
-- Inconclusive: evidence is insufficient or conflicting; specify what is needed.
+- **Verdadero positivo (True Positive):** se sostiene el comportamiento malicioso o no autorizado que busca la detección. Si es una simulación, dejar explícitos el escenario y su resultado esperado de referencia.
+- **Falso positivo (False Positive):** la condición señalada por la detección no está respaldada por los hechos; explicar la discrepancia.
+- **Positivo benigno (Benign Positive):** el comportamiento se detectó correctamente y estaba autorizado o era esperado.
+- **No concluyente (Inconclusive):** faltan datos o existen contradicciones; indicar qué información hace falta.
 
-Record detection validation separately as **not tested / fired as expected / Detection Gap**. A rule can fire correctly for an approved simulation while the analyst disposition is Benign Positive. Explain the verdict with evidence and authorization context.
+Registrar por separado el resultado de la regla: **sin probar / activada según lo esperado / brecha de detección**. Una regla puede funcionar correctamente durante una prueba autorizada y el caso clasificarse como positivo benigno.
 
-## Severity
+## Severidad
 
-Assign a justified severity using observed impact, target privilege/criticality, scope, successful versus failed actions, and uncertainty. Record the original SIEM level separately. Explain any increase or decrease; a large failure count alone does not prove compromise.
+Justificar la severidad según impacto observado, privilegios y criticidad del objetivo, alcance, acciones exitosas o fallidas e incertidumbre. Conservar por separado el nivel original del SIEM y explicar cualquier ajuste. Un recuento elevado de fallos no demuestra acceso exitoso.
 
-## Decision
+## Decisión
 
-Choose **Close** or **Escalate** when sufficiently supported. State why, the owner/recipient role, urgency, evidence handoff, and specific unanswered questions. An incomplete template has no decision. Document any containment request separately from an action actually performed.
+Elegir **cerrar** o **escalar** cuando haya base suficiente. Explicar motivo, responsable o rol receptor, urgencia, evidencias que se entregan y preguntas pendientes. Distinguir una solicitud de contención de una acción realmente ejecutada.
 
-## Recommended Actions
+## Acciones recomendadas
 
-Separate immediate containment, further investigation, remediation, and prevention. State owner and execution status; L1 recommendations do not imply authority to disable accounts or isolate machines. For an authorized lab simulation, document removal of test artifacts, restoration of modified state, and verification of cleanup.
+Separar contención inmediata, investigación adicional, remediación y prevención. Indicar responsable y estado de ejecución. Una recomendación L1 no equivale a autorización para deshabilitar cuentas o aislar equipos. En las simulaciones, documentar la retirada de artefactos de prueba, la restauración de cambios y su comprobación.
 
-## Lessons Learned / Detection Improvement
+## Lecciones aprendidas y mejora de detecciones
 
-Describe collection gaps, incorrect assumptions, tuning proposals, and expected false positives. Link the eventual detection and playbook changes. Record actual positive/negative control outcomes and residual gaps; do not say a change fixed detection before testing it.
+Registrar carencias de recopilación, hipótesis descartadas, ajustes propuestos y falsos positivos previsibles. Enlazar las reglas y los procedimientos modificados. Anotar resultados reales de controles positivos y negativos, y brechas que continúan abiertas. Una mejora se considera validada después de probarla.

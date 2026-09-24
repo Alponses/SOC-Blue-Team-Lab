@@ -1,107 +1,111 @@
-# Proposed lab architecture
+# Arquitectura del laboratorio
 
-Status: **DESIGN ONLY — REQUIRES MANUAL EXECUTION**. No hypervisor, VM, interface, firewall rule, collection pipeline, or detection has been validated. The [README diagram](../README.md#arquitectura) is the canonical Mermaid topology.
+El laboratorio está diseñado para investigar un mismo evento desde tres perspectivas: el equipo donde ocurre, la identidad que lo ejecuta y el tráfico que genera. Wazuh será el SIEM principal. Splunk se incorporará después para practicar consultas sobre los datos obtenidos.
 
-## Design goals and constraints
+**Avance:** diseño definido; infraestructura pendiente de despliegue. La instalación y las comprobaciones de red **requieren ejecución manual**. El [diagrama del README](../README.md#arquitectura) muestra la topología propuesta.
 
-Use a small isolated environment to reconstruct security events across endpoint, identity, and network sources. Wazuh remains the primary SIEM; Splunk is introduced only after the Wazuh investigations work. Build incrementally so limited hardware does not require every VM to run at once.
+## Alcance y requisitos previos
 
-The local repository was created on an x86_64 macOS host. Available memory, storage, hypervisor support, guest licensing, and VM access have not been established. Choose a supported hypervisor and current compatible guest/tool versions in Deliverable 1; record versions and official download sources then. No installation commands or deployment configurations are provided in Deliverable 0.
+La implementación se divide en etapas para trabajar con pocos equipos encendidos a la vez. Primero se desplegarán Wazuh y Windows 11; después se añadirán Linux, el simulador, la supervisión de red y Active Directory.
 
-## Host inventory and sizing
+El repositorio se inició en un equipo macOS x86_64. Falta comprobar la memoria y el almacenamiento disponibles, seleccionar un hipervisor compatible y revisar los requisitos y licencias de los sistemas invitados. Las versiones y fuentes oficiales de descarga se registrarán durante el entregable 1.
 
-All hostnames and addresses below are proposed lab identifiers, not observed assets. Verify the subnet does not overlap a home network, VPN, or other virtual network before assigning it.
+## Equipos y recursos previstos
 
-| Name | IPv4 | Role | Initial planning budget (vCPU / RAM / disk) | First phase |
+Los nombres y las direcciones son parte del diseño. Antes de asignarlos se comprobará que la subred no coincida con la red doméstica, una VPN u otra red virtual.
+
+| Equipo | IPv4 | Función | Recursos iniciales estimados: vCPU / RAM / disco | Etapa |
 | --- | --- | --- | --- | --- |
-| SOC-WAZUH | 10.10.10.10 | Wazuh server, indexer, dashboard on one supported Linux VM | 4 / 8 GiB / 80 GB | 1 |
-| SOC-DC01 | 10.10.10.20 | Windows Server 2025 evaluation, AD DS, DNS | 2 / 4 GiB / 64 GB | 7 |
-| SOC-WIN11 | 10.10.10.30 | Windows 11 Enterprise evaluation, Wazuh agent, Sysmon, Defender | 2 / 4 GiB / 80 GB | 1 |
-| SOC-LINUX | 10.10.10.40 | Ubuntu Server, OpenSSH, Wazuh agent, audit; later Suricata | 2 / 4 GiB / 40 GB | 2; sensor in 6 |
-| SOC-SIM | 10.10.10.50 | Separate bounded event-generation VM | 2 / 2 GiB / 30 GB | 3 |
-| Host management adapter | 10.10.10.1 (reserved) | Analyst-to-lab management only; never a simulation target | Host resources | 1 |
+| SOC-WAZUH | 10.10.10.10 | Servidor, indexador y panel de Wazuh en una máquina Linux compatible | 4 / 8 GiB / 80 GB | 1 |
+| SOC-DC01 | 10.10.10.20 | Windows Server 2025 de evaluación, AD DS y DNS | 2 / 4 GiB / 64 GB | 7 |
+| SOC-WIN11 | 10.10.10.30 | Windows 11 Enterprise de evaluación, agente Wazuh, Sysmon y Defender | 2 / 4 GiB / 80 GB | 1 |
+| SOC-LINUX | 10.10.10.40 | Ubuntu Server, OpenSSH, agente Wazuh y auditoría; Suricata más adelante | 2 / 4 GiB / 40 GB | 2; sensor en la 6 |
+| SOC-SIM | 10.10.10.50 | Máquina independiente para generar eventos controlados | 2 / 2 GiB / 30 GB | 3 |
+| Adaptador de administración | 10.10.10.1, reservada | Acceso del anfitrión al laboratorio; fuera de los objetivos de prueba | Recursos del anfitrión | 1 |
 
-These are budgeting assumptions, not verified performance or minimum requirements. Wazuh's current quickstart recommends 4 vCPU, 8 GiB RAM, and 50 GB for 1–25 agents; the proposed 80 GB adds room for this lab, but retention still depends on event volume. [Wazuh quickstart](https://documentation.wazuh.com/current/quickstart.html).
+Estos recursos son estimaciones de planificación. La [guía de inicio de Wazuh](https://documentation.wazuh.com/current/quickstart.html) utilizada como referencia recomienda 4 vCPU, 8 GiB de RAM y 50 GB para 1–25 agentes. Se proponen 80 GB para dar margen al laboratorio; la retención dependerá del volumen real de eventos.
 
-The five guest budgets total 22 GiB RAM and 294 GB virtual disk capacity, before host overhead, installation media, and snapshots. Deliverable 1 starts with 12 GiB guest RAM and 160 GB virtual disk capacity. Do not assume thin provisioning or CPU overcommit makes all guests practical on the current host. Reduce concurrent phases or use another owned host if capacity is inadequate; do not silently remove required telemetry to fit.
+Las cinco máquinas suman 22 GiB de RAM y 294 GB de disco virtual, sin contar el sistema anfitrión, los instaladores y las instantáneas. La primera etapa necesita 12 GiB de RAM y 160 GB de disco virtual para los dos invitados. La asignación dinámica de disco y la sobreasignación de CPU no sustituyen una revisión de capacidad. Si los recursos no alcanzan, se reducirán los equipos simultáneos o se utilizará otro equipo propio.
 
-## Network boundaries and visibility
+## Aislamiento y visibilidad de la red
 
-Use a host-only virtual switch for `10.10.10.0/24`, with static addresses, no guest default gateway during simulations, and no host IP forwarding/Internet sharing. The analyst host remains reachable on that switch for management; it is outside the target allowlist. A private address alone does not establish isolation.
+La red `10.10.10.0/24` utilizará un conmutador virtual de tipo solo anfitrión, con direcciones estáticas. Durante las simulaciones, los invitados no tendrán puerta de enlace predeterminada y el anfitrión no reenviará tráfico ni compartirá Internet. El acceso de administración al anfitrión queda fuera del alcance de las pruebas.
 
-Before each simulation, verify guest adapters, IPv4/IPv6 routes, host forwarding, VPN routes, and firewall exposure. No bridged adapter, public port forwarding, or routed path to a home/company network is allowed. Inspect configuration and routing without sending probes to public systems. Use a console if host-only management is unavailable; document the changed access path.
+Antes de cada simulación se revisarán adaptadores, rutas IPv4/IPv6, reenvío del anfitrión, rutas VPN y exposición del cortafuegos. La red de pruebas no tendrá adaptadores en puente, redirecciones públicas de puertos ni rutas hacia redes domésticas o de empresa. El aislamiento se comprobará mediante la configuración y las tablas de rutas, sin sondear sistemas públicos. Si el acceso por la red de administración no está disponible, se usará la consola y se documentará el cambio.
 
-Temporary outbound NAT may be attached for official updates and package installation. Record when it is enabled; remove or disconnect it before testing. Do not run simulations while guests are dual-homed. Keep Defender enabled. Take snapshots before state-changing tests and record cleanup and recovery steps.
+Se podrá habilitar NAT temporalmente para actualizaciones e instalación desde fuentes oficiales. Esa conexión se retirará antes de probar escenarios. Defender permanecerá activo. Las pruebas que cambien el estado de un equipo tendrán una instantánea previa y un procedimiento de limpieza y recuperación.
 
-### Initial sensor placement
+### Ubicación inicial de Suricata
 
-Suricata will capture on SOC-LINUX's lab interface. SOC-005 scans SOC-LINUX from SOC-SIM; SOC-006 sends a harmless Windows request to a local service on SOC-LINUX. This places the tested traffic on the sensor's actual interface. Suricata cannot be assumed to see unicast traffic between other VMs merely because they share a virtual switch.
+Suricata capturará en la interfaz de laboratorio de SOC-LINUX. El caso SOC-005 enviará el escaneo desde SOC-SIM hacia SOC-LINUX; el caso SOC-006 generará una solicitud inocua desde Windows hacia un servicio local en SOC-LINUX. Así, el tráfico de ambas pruebas pasará por la interfaz que observa el sensor.
 
-If later scenarios need other east-west traffic, explicitly configure and validate virtual-switch mirroring or a dedicated capture path first. Validate with a known lab flow and packet/event counts. DNS traffic from Windows to the domain controller requires endpoint DNS events, DNS server logging, or a capture on that path; the initial Ubuntu sensor does not cover it. Packet capture inspection stays private by default.
+Compartir un conmutador virtual no garantiza que Suricata vea el tráfico unicast entre otros equipos. Para ampliar esa cobertura hará falta configurar y validar una copia del tráfico del conmutador o una ruta de captura específica. La comprobación se hará con un flujo conocido y recuentos de paquetes y eventos.
 
-Suricata EVE JSON can carry alerts and protocol/flow records, but output types and capture coverage must be configured and tested. An EVE flow is not automatically an IDS alert. [Suricata EVE documentation](https://docs.suricata.io/en/latest/output/eve/eve-json-output.html). That documentation's `latest` branch may describe development features; choose version-matched documentation before configuring the eventual stable installation.
+El tráfico DNS entre Windows y el controlador de dominio se investigará con eventos del equipo, registros del servidor DNS o una captura en esa ruta. El sensor inicial de Ubuntu no cubrirá ese intercambio. Las capturas completas se conservarán de forma privada.
 
-### Intended flows
+EVE JSON permite registrar alertas, flujos y datos de protocolos. Cada tipo de salida y su cobertura se comprobarán durante la instalación; un registro de flujo no equivale por sí solo a una alerta IDS. La [documentación de EVE](https://docs.suricata.io/en/latest/output/eve/eve-json-output.html) sirve de referencia; antes de configurar Suricata se consultará la documentación de la versión instalada, ya que la rama `latest` puede incluir funciones en desarrollo.
 
-This table is a future firewall design input, not an applied rule set. Restrict sources and destinations explicitly; verify actual ports against chosen versions in their implementation phase.
+### Comunicaciones previstas
 
-| Source → destination | Intended service | Boundary |
+La tabla sirve para preparar las reglas del cortafuegos. Los puertos y las restricciones se verificarán al desplegar cada servicio.
+
+| Origen → destino | Servicio previsto | Restricción |
 | --- | --- | --- |
-| Analyst host → Wazuh | HTTPS dashboard, typically TCP 443; SSH TCP 22 only if needed | Management only; never expose to Internet |
-| Enrolled agents → Wazuh | Agent events, typically TCP 1514 | Owned lab agents only |
-| New agents → Wazuh | Enrollment, typically TCP 1515 | Limit to enrollment period and named agents |
-| Workstation → DC | DNS TCP/UDP 53 and required AD services | Define complete domain-join/service rules in phase 7 |
-| Simulator → Ubuntu | SSH TCP 22; bounded approved scan ports | Exact per-test target list and attempt/port limits |
-| Windows → Ubuntu | Temporary harmless HTTP service, proposed TCP 8080 | Scenario 006 only; stop service afterward |
+| Equipo del analista → Wazuh | Panel HTTPS, normalmente TCP 443; SSH TCP 22 si hace falta | Solo administración; sin exposición pública |
+| Agentes registrados → Wazuh | Eventos del agente, normalmente TCP 1514 | Solo agentes del laboratorio |
+| Agentes nuevos → Wazuh | Registro de agentes, normalmente TCP 1515 | Equipos definidos y ventana de registro limitada |
+| Estación Windows → controlador de dominio | DNS TCP/UDP 53 y servicios necesarios de AD | Completar reglas de unión al dominio y operación en la etapa 7 |
+| Simulador → Ubuntu | SSH TCP 22 y puertos aprobados para el escaneo | Destino, número de intentos y puertos definidos por prueba |
+| Windows → Ubuntu | Servicio HTTP temporal e inocuo, propuesto en TCP 8080 | Caso SOC-006; detenerlo al finalizar |
 
-Indexer/API back-end access stays internal to the all-in-one SIEM. Additional necessary flows, including AD time/Kerberos/LDAP/SMB/RPC and any remote administration, must be documented and verified before opening them. Avoid an unexplained allow-all rule as the final state.
+El acceso al indexador y a la API interna permanecerá dentro del SIEM todo en uno. Las comunicaciones adicionales, incluidas sincronización horaria, Kerberos, LDAP, SMB, RPC y administración remota, se documentarán antes de habilitarlas. El estado final debe tener reglas justificadas por servicio y origen.
 
-## Identity, DNS, and time
+## Identidades, DNS y tiempo
 
-Use the private test domain `soc.test` once SOC-DC01 exists. `.test` is reserved for testing; all required records must be hosted locally. Disable external forwarding during tests. [RFC 2606](https://www.rfc-editor.org/rfc/rfc2606.html).
+El dominio de prueba será `soc.test` cuando exista SOC-DC01. El sufijo `.test` está reservado para pruebas según [RFC 2606](https://www.rfc-editor.org/rfc/rfc2606.html). Los registros necesarios se alojarán localmente y los reenviadores externos permanecerán desactivados durante las simulaciones.
 
-Deliverables 1–6 can operate as a workgroup; do not point clients at the nonexistent DC. Keep the lab adapter free of a public DNS dependency in the initial isolated stage. DNS investigation SOC-007 begins in phase 6 only if a local test resolver is configured; otherwise record the dependency and finish it after phase 7 supplies AD DNS.
+Las etapas 1–6 pueden funcionar en grupo de trabajo. Los clientes no apuntarán al controlador de dominio antes de que exista ni dependerán de un DNS público en la red aislada. SOC-007 podrá ejecutarse en la etapa 6 si ya hay un resolvedor local de prueba; en caso contrario, quedará pendiente hasta disponer del DNS de AD en la etapa 7.
 
-Create only invented lab identities. Separate routine users, simulation accounts, and lab administrator accounts. Domain join, normal users, groups, and authorization records belong to phase 7. Never use workplace credentials.
+Se utilizarán identidades ficticias y cuentas separadas para uso normal, simulación y administración. La unión al dominio, los usuarios, los grupos y el registro de cambios autorizados corresponden a la etapa 7. Las credenciales de trabajo o de uso personal quedan fuera del laboratorio.
 
-Normalize report timestamps to UTC, retaining original timestamps/time zones and measured clock offsets. Use a verified guest/host time source initially and document domain time behavior once AD exists. Record drift before/after snapshots; snapshot restores can disrupt correlation. Do not assert event order within uncertainty caused by clock skew or ingestion delay.
+Los informes usarán UTC y conservarán la zona horaria original y el desfase medido. Primero se verificará la fuente de tiempo del anfitrión y los invitados; después se documentará la sincronización del dominio. Las restauraciones de instantáneas pueden alterar los relojes, por lo que se revisará el desfase antes y después de utilizarlas. La precisión de la línea de tiempo deberá reflejar esa incertidumbre y el retraso de ingestión.
 
-## Telemetry contract
+## Telemetría necesaria
 
-This is a collection plan, not a statement that events are available. Each source requires a known harmless source event, collection proof, ingestion proof, field verification, and documented gaps before its investigation starts.
+Antes de iniciar cada investigación se comprobarán el evento en origen, su recopilación, su llegada al SIEM y los campos disponibles. La tabla define esa cobertura pendiente de validar.
 
-| Source | Planned collection | Required investigative fields | Important qualification |
+| Fuente | Recopilación prevista | Campos de investigación | Consideraciones |
 | --- | --- | --- | --- |
-| Windows Security | Wazuh event-channel collection | Time, event ID, computer, actor/target user, logon type/result/status, source IP when present | Audit policy controls coverage; local logons may have no source IP |
-| Windows System | Wazuh event-channel collection | Time, computer, provider, event ID, service/state | Establish health and service-change context |
-| PowerShell Operational | Wazuh event-channel collection | Time, user/context, script block ID/content, host | Enable appropriate script-block/module logging; sensitive command content stays private |
-| Sysmon Operational | Wazuh event-channel collection | ProcessGuid, process/parent image and command line, user, time, network tuple, DNS query/results | Explicitly configure needed event types and filters; correlate, do not assume every field appears in every event |
-| Defender Operational | Wazuh event-channel collection | Time, computer, detection/action/configuration fields where applicable | Healthy configuration events do not prove malware detection |
-| Linux SSH/auth/sudo | Agent reads verified journal or rsyslog-backed auth file | Time, host, user, source IP/port, result, service, sudo actor/target/command | Verify actual Ubuntu logging backend; avoid duplicate collection |
-| Linux audit/process | Agent reads audit output after scoped audit setup | Time, audit ID, login UID/effective UID, executable, PID, arguments, result | Ordinary auth logs are insufficient for complete process/network attribution |
-| Linux system/application | Agent reads selected journal/files | Time, host, service, action/error, local service request metadata | Document exact service and source paths when deployed |
-| Wazuh FIM | Agent monitors a dedicated protected test path | Path, time, previous/current hash/state; actor if available | Actor attribution needs supported who-data/audit configuration; never infer actor solely from FIM |
-| AD Security / DNS | DC agent and explicitly enabled DNS logging | Subject/target SID, account/group, logon result, client address, DNS answer when present | Distinguish DC authentication from workstation logon events; configure audit policy |
-| Suricata EVE | Ubuntu agent reads selected JSON output | Time, source/destination IP/port, protocol, flow ID, DNS/HTTP/alert fields as available | Coverage limited to captured traffic; encrypted payload may be unavailable |
-| CloudTrail / CloudWatch | Owner AWS account, selected reviewed exports in phase 10 | eventTime, eventName/source, userIdentity, sourceIPAddress, resources, request/response, error, eventID | Check trail/region/event coverage and CloudWatch delivery separately; no account access yet |
+| Windows Security | Canales de eventos mediante Wazuh | Hora, ID, equipo, actor y cuenta afectada, tipo/resultado/estado de inicio de sesión, IP de origen cuando exista | Depende de la política de auditoría; un acceso local puede carecer de IP |
+| Windows System | Canales de eventos mediante Wazuh | Hora, equipo, proveedor, ID, servicio y estado | Aporta contexto de salud y cambios de servicios |
+| PowerShell Operational | Canales de eventos mediante Wazuh | Hora, usuario/contexto, ID y contenido del bloque de script, equipo | Habilitar registro de bloques y módulos según la necesidad; revisar contenido sensible |
+| Sysmon Operational | Canales de eventos mediante Wazuh | ProcessGuid, proceso y padre, líneas de comandos, usuario, hora, direcciones/puertos, consultas y resultados DNS | Configurar tipos y filtros; los campos pueden estar repartidos entre varios eventos |
+| Defender Operational | Canales de eventos mediante Wazuh | Hora, equipo y datos de detección, acción o configuración disponibles | Un evento de configuración normal no demuestra detección de malware |
+| SSH, autenticación y sudo en Linux | Diario del sistema o archivo de autenticación mantenido por rsyslog | Hora, equipo, usuario, IP/puerto de origen, resultado, servicio, actor/destino/comando de sudo | Identificar la fuente real en Ubuntu y evitar duplicados |
+| Auditoría y procesos Linux | Salida de auditoría con reglas acotadas | Hora, ID de auditoría, UID de inicio de sesión y efectivo, ejecutable, PID, argumentos y resultado | Los registros de autenticación no ofrecen por sí solos atribución completa de procesos o red |
+| Sistema y aplicaciones Linux | Diario y archivos seleccionados | Hora, equipo, servicio, acción/error y metadatos de solicitudes locales | Registrar servicio y rutas concretas al desplegar |
+| Wazuh FIM | Ruta de prueba protegida y dedicada | Archivo, hora, estado/hash anterior y actual; actor si está disponible | Identificar al autor requiere una configuración compatible de auditoría o who-data |
+| Security y DNS de AD | Agente en el controlador y registro DNS habilitado | SID del actor y del destinatario, cuenta/grupo, resultado, cliente y respuesta DNS cuando exista | Diferenciar autenticación en el controlador de inicio de sesión en la estación |
+| Suricata EVE | Lectura de salida JSON seleccionada desde el agente Ubuntu | Hora, IP/puerto de origen y destino, protocolo, ID de flujo, datos DNS/HTTP/alerta | Solo tráfico capturado; el contenido cifrado puede no estar disponible |
+| CloudTrail / CloudWatch | Exportaciones revisadas de la cuenta propia en la etapa 10 | eventTime, eventName, eventSource, userIdentity, sourceIPAddress, resources, solicitud/respuesta, error y eventID | Verificar cobertura de eventos/regiones y entrega a CloudWatch por separado |
 
-Sysmon provides process creation, network, and DNS events; network-connection logging is disabled by default. Deliverable 1 must record the chosen configuration and verify coverage. [Microsoft Sysmon documentation](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon).
+Sysmon ofrece eventos de creación de procesos, conexiones y DNS. El registro de conexiones de red está desactivado por defecto según la [documentación de Microsoft](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon), por lo que se configurará y comprobará de forma explícita.
 
-An agent being connected does not prove all sources arrive. Wazuh alerts contain events that meet alerting rules; benign source events may need a deliberately enabled, temporary, bounded archive/indexing path for collection validation. Document which path was used and its retention; do not treat missing baseline events in the alerts index as proof the agent failed. No retention interval is validated yet.
+Un agente conectado no basta para demostrar que todas las fuentes llegan. Las alertas Wazuh contienen eventos que cumplen sus reglas de alerta; algunos eventos inocuos pueden requerir una ruta temporal y acotada de archivo e indexación para validar la recopilación. Se registrará qué ruta se usó y su retención. La ausencia de un evento normal en el índice de alertas no demuestra un fallo del agente. La retención aún está por definir y validar.
 
-## Separate and later environments
+## AWS y Splunk
 
-AWS work uses only the owner's dedicated lab account. IAM, CloudTrail, and CloudWatch setup, costs/retention, controlled change scope, access handling, and teardown belong to phase 10. The local test network does not gain Internet access for attack simulation. Only sanitized CloudTrail samples enter Git; no live credentials or public infrastructure targets are published.
+AWS se trabajará en una cuenta propia dedicada al laboratorio. IAM, CloudTrail, CloudWatch, acceso seguro, costes, retención, alcance de los cambios y eliminación de recursos corresponden a la etapa 10. La red local seguirá aislada durante las simulaciones. Solo se publicarán muestras revisadas de CloudTrail sin credenciales, identificadores reales ni direcciones de infraestructura pública.
 
-Splunk is a later secondary analysis environment for sanitized datasets. Choose its host, version, resources, and index/source-type mapping in phase 11. Do not replace Wazuh or claim Enterprise Security use without actual access and evidence.
+Splunk será un entorno de análisis secundario para datos del laboratorio sin información sensible. En la etapa 11 se elegirán equipo, versión, recursos, índices y tipos de fuente. La práctica prevista cubre Splunk Enterprise y SPL; Enterprise Security queda fuera del alcance actual.
 
-## Acceptance gates
+## Comprobaciones pendientes
 
-- [ ] Host capacity, supported hypervisor/guest versions, and recovery method recorded.
-- [ ] Lab network and exact target allowlist established; routes/adapters/forwarding verified.
-- [ ] Versions, time sources, logging policies, and snapshots documented.
-- [ ] Each required telemetry source verified end to end using a benign event.
-- [ ] Sensor visibility demonstrated on each network investigation's actual path.
-- [ ] Evidence sanitized and linked to reports; cleanup and detection gaps recorded.
+- [ ] Registrar capacidad del anfitrión, compatibilidad del hipervisor y los invitados, y método de recuperación.
+- [ ] Configurar la red y los objetivos permitidos; comprobar rutas, adaptadores y reenvío.
+- [ ] Documentar versiones, fuentes de tiempo, políticas de registro e instantáneas.
+- [ ] Verificar cada fuente de telemetría de extremo a extremo con un evento inocuo.
+- [ ] Demostrar la visibilidad del sensor en la ruta real de cada investigación.
+- [ ] Revisar y enlazar evidencias; registrar limpieza y brechas de detección.
 
-These are future execution gates. See the [ordered implementation checklist](implementation-checklist.md).
+El orden de trabajo está en la [lista de implementación](implementation-checklist.md).

@@ -1,16 +1,27 @@
-# SOC-003 — Suspicious PowerShell execution
+# SOC-003 — Ejecución sospechosa de PowerShell
 
-**PLANNED — NOT RUN — REQUIRES MANUAL EXECUTION**
+**Estado: pendiente de ejecución.** Etapa prevista: 5. Todavía no hay evidencias ni una clasificación del caso.
 
-This is a scope stub, not an incident report. No alert, collected evidence, ATT&CK mapping, classification, severity, or closure decision is claimed.
+## Objetivo
 
-- **Implementation phase:** 5.
-- **Controlled scenario:** A safe PowerShell simulation that generates inspectable execution telemetry without malware.
-- **Planned sources:** Sysmon Operational, PowerShell Operational, and Wazuh.
-- **Evidence needed:** Process and parent, command line/script content, user, host, time, process correlation IDs, and network activity only if observed.
+Relacionar una ejecución de PowerShell con su proceso padre, usuario y efectos observados para evaluar si requiere escalamiento.
 
-Before execution, verify telemetry, isolation, exact owned target scope, time synchronization, snapshots, stop conditions, and cleanup. Follow the [implementation checklist](../../docs/implementation-checklist.md).
+## Actividad prevista
 
-When evidence exists, replace this stub with a completed [incident report](../../templates/incident-report.md), retaining every required section. Add small sanitized artifacts with provenance under this case's `evidence/` directory and follow the [evidence policy](../../docs/evidence-handling.md). Document missing expected alerts as **Detection Gap**. Do not fill unknown fields or results with invented data.
+Ejecutar una simulación inocua con un patrón que permita practicar la investigación, sin malware.
 
-[Investigation index](../README.md)
+## Evidencias necesarias
+
+**Fuentes:** Sysmon Operational, PowerShell Operational y Wazuh.
+
+Proceso y padre, línea de comandos, contenido del script, usuario, equipo, hora, identificadores de correlación y conexiones solo si se observan.
+
+## Dependencias y siguiente paso
+
+Depende de los filtros de Sysmon y las políticas de registro de PowerShell definidos y comprobados en la etapa 1.
+
+Antes de ejecutar la prueba se comprobarán aislamiento, objetivos propios, sincronización horaria, instantáneas, condiciones de parada y limpieza. El orden de trabajo está en la [lista de implementación](../../docs/implementation-checklist.md). Esta etapa **requiere ejecución manual**.
+
+Durante la investigación se completará la [plantilla de informe](../../templates/incident-report.md), con fragmentos revisados en `evidence/` y su procedencia según las [reglas de manejo de evidencias](../../docs/evidence-handling.md). Las alertas esperadas que no aparezcan se documentarán como brechas de detección.
+
+[Volver al índice de investigaciones](../README.md)

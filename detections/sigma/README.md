@@ -1,7 +1,11 @@
-# Sigma detections
+# Detecciones de Sigma
 
-Status: **PLANNED — no rules created, loaded, or validated**.
+**Objetivo:** Expresar lógica de detección portable cuando los campos y el significado de la fuente lo permitan.
 
-Portable detection logic only where source semantics can be represented accurately. Record Sigma version/schema assumptions, fields, conversion backend, and actual target-query validation. Syntax or conversion success alone does not establish detection quality.
+**Avance:** reglas pendientes de creación, carga y validación.
 
-Follow the [detection documentation contract](../README.md). Build from an actual investigation and include objective, source, logic, ATT&CK rationale, expected true positives, false positives, validation procedure, and observed results. Preserve failed tests as **Detection Gap**.
+## Comprobaciones previstas
+
+Registrar versión o esquema Sigma, campos, motor de conversión y validación de la consulta en el destino. La corrección de sintaxis o una conversión exitosa no bastan para demostrar que la detección funciona.
+
+Cada regla seguirá los [criterios de documentación](../README.md), con objetivo, fuente, lógica, ATT&CK, verdaderos positivos esperados, falsos positivos, procedimiento de prueba y resultados. Los fallos de detección quedarán registrados junto al caso que motivó la regla.

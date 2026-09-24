@@ -1,10 +1,26 @@
 # SOC Blue Team Lab
 
-Proyecto práctico de portafolio orientado a puestos de Analista SOC L1 y Operaciones de Seguridad Junior. Se centra en la evaluación inicial de alertas, la investigación, la mejora de detecciones y las decisiones de escalamiento, siempre con respaldo en evidencias.
+## Objetivo
 
-**Estado actual: entregable 0 completado — estructura del repositorio y arquitectura propuesta.** Todavía no se ha desplegado ni validado la infraestructura del laboratorio. No se han generado simulaciones, alertas, resultados de incidentes ni capturas de pantalla. Todas las investigaciones siguientes están planificadas. Los pasos de infraestructura quedan marcados como **REQUIERE EJECUCIÓN MANUAL** hasta documentar el acceso y su ejecución.
+Construir un laboratorio SOC para practicar el trabajo de un analista de primer nivel: recibir una alerta, investigar qué ocurrió, relacionar evidencias y decidir si el caso debe cerrarse o escalarse.
 
-Comienza por la [arquitectura](docs/architecture.md), la [lista de implementación](docs/implementation-checklist.md) y el [informe de ejecución del entregable 0](docs/deliverables/deliverable-0.md).
+El proyecto está orientado a puestos de Analista SOC L1 y Operaciones de Seguridad Junior. Cada investigación deberá mostrar los registros utilizados, la línea de tiempo, el razonamiento y las mejoras de detección que se deriven del caso.
+
+## Avance del proyecto
+
+**Etapa actual: entregable 0 completado — estructura del repositorio y diseño del laboratorio.**
+
+| Área | Avance |
+| --- | --- |
+| Documentación | Arquitectura, plan de trabajo, manejo de evidencias y plantillas preparados en español |
+| Infraestructura | Equipos, red y telemetría definidos; despliegue pendiente |
+| Investigaciones | Diez escenarios planificados; todavía sin ejecutar |
+| Detecciones | Directorios y criterios definidos; reglas pendientes |
+| Evidencias | Por recopilar durante la instalación y las pruebas |
+
+**Lo siguiente:** comprobar los recursos del equipo y el hipervisor, crear la red aislada e instalar Wazuh y Windows 11 con Sysmon. El primer hito operativo será verificar que los eventos lleguen al SIEM desde cada canal configurado. Esta etapa **requiere ejecución manual** en el laboratorio.
+
+El detalle está en la [arquitectura](docs/architecture.md), el [plan de implementación](docs/implementation-checklist.md) y el [informe del entregable 0](docs/deliverables/deliverable-0.md).
 
 ## Arquitectura
 
@@ -35,7 +51,7 @@ flowchart LR
     curated -.->|Importación de datos sin conexión| splunk
 ```
 
-Está previsto instalar Suricata inicialmente en Ubuntu para observar el tráfico entrante y saliente de ese equipo. Esto **no** proporciona visibilidad de toda la red. AWS será un entorno independiente, fuera de la red virtual aislada. Consulta los [límites y la visibilidad de la red](docs/architecture.md#network-boundaries-and-visibility).
+Está previsto instalar Suricata inicialmente en Ubuntu para observar el tráfico entrante y saliente de ese equipo. Esto **no** proporciona visibilidad de toda la red. AWS será un entorno independiente, fuera de la red virtual aislada. Consulta los [límites y la visibilidad de la red](docs/architecture.md#aislamiento-y-visibilidad-de-la-red).
 
 ## Entorno
 
@@ -58,7 +74,7 @@ Cada informe completado relacionará las evidencias con una conclusión, una sev
 
 ## Investigaciones
 
-Estos enlaces abren fichas de planificación. Las detecciones describen la cobertura prevista; todavía no se ha demostrado que las reglas se activen. Las correspondencias con ATT&CK y los resultados se incorporarán después de revisar las evidencias.
+Cada ficha recoge el objetivo del caso, las fuentes de evidencia y los requisitos para ejecutarlo. La primera investigación será la de fuerza bruta SSH, después de validar la recopilación en Linux. Las correspondencias con ATT&CK y los resultados se completarán a partir de los eventos observados.
 
 | ID | Escenario | Fuente de datos prevista | Detección prevista | ATT&CK | Resultado |
 | --- | --- | --- | --- | --- | --- |
@@ -79,9 +95,11 @@ Los directorios de [Wazuh](detections/wazuh/README.md), [Sigma](detections/sigma
 
 Los [procedimientos para analistas](playbooks/README.md) y las [investigaciones con Splunk](queries/splunk/README.md) tienen un alcance futuro definido. La práctica con Splunk Enterprise y SPL no se presentará como experiencia con Splunk Enterprise Security.
 
-## Habilidades demostradas
+## Competencias y evidencias
 
-El entregable 0 demuestra planificación de arquitectura de laboratorio, definición de requisitos de telemetría, manejo de evidencias y una estructura reutilizable de informes. Las habilidades operativas se acreditarán únicamente cuando existan evidencias: correlación de registros Windows/Linux, análisis de IOC, líneas de tiempo, clasificaciones justificadas, ajuste de detecciones y decisiones de escalamiento.
+El trabajo realizado hasta ahora cubre el diseño de la arquitectura, la selección de fuentes de telemetría y la organización de informes y evidencias.
+
+Las siguientes etapas se centrarán en correlacionar registros Windows/Linux, analizar indicadores, reconstruir líneas de tiempo, justificar clasificaciones, ajustar detecciones y preparar escalamientos. Cada competencia se respaldará con el caso y las pruebas correspondientes.
 
 ## Capturas de pantalla
 
@@ -95,4 +113,4 @@ Todavía no hay capturas. Las futuras imágenes del directorio de [capturas de p
 4. Utiliza la [plantilla de informe de incidentes](templates/incident-report.md) y la [plantilla de procedimiento SOC](templates/soc-playbook.md). Documenta las incertidumbres y los fallos de detección.
 5. Valida los enlaces internos de la documentación desde la raíz del repositorio con `python3 scripts/validate_repository.py`.
 
-Todas las simulaciones deben dirigirse exclusivamente a máquinas virtuales propias creadas para este laboratorio. No se deben incluir objetivos públicos, malware real, credenciales, imágenes de máquinas virtuales, volcados de registros sin procesar ni capturas de paquetes sensibles. La [lista de revisión para publicar](docs/evidence-handling.md#publication-checklist) complementa `.gitignore`; ignorar archivos no elimina los datos sensibles de su contenido.
+Todas las simulaciones deben dirigirse exclusivamente a máquinas virtuales propias creadas para este laboratorio. No se deben incluir objetivos públicos, malware real, credenciales, imágenes de máquinas virtuales, volcados de registros sin procesar ni capturas de paquetes sensibles. La [lista de revisión para publicar](docs/evidence-handling.md#revisión-antes-de-publicar) complementa `.gitignore`; ignorar archivos no elimina los datos sensibles de su contenido.

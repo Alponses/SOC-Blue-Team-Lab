@@ -1,75 +1,75 @@
-# SOC playbook — scenario
+# Procedimiento SOC — Nombre del escenario
 
-Status: **DRAFT — NOT OPERATIONALLY VALIDATED**. This template is a checklist structure, not a completed playbook.
+Plantilla para convertir un tipo de alerta en una secuencia de comprobaciones y decisiones. Su validación operativa queda pendiente hasta ejecutar el escenario y revisar los resultados.
 
-| Field | Value |
+| Campo | Contenido |
 | --- | --- |
-| Purpose / trigger | Specific alert or observation and intended analyst outcome |
-| Scope / owner | Allowed assets and responsible role |
-| Required access | Read permissions, indexes, tools, and any limitations |
-| Log prerequisites | Sources, collection-health checks, field availability, time window |
-| Related artifacts | Add working relative links to reports, queries, and detections |
-| Validation | Tool/config versions, test date, actual outcomes, reviewer alias |
+| Objetivo y activación | Alerta u observación concreta y resultado que debe obtener el analista |
+| Alcance y responsable | Equipos permitidos y rol encargado |
+| Acceso necesario | Permisos de lectura, índices, herramientas y limitaciones |
+| Requisitos de registros | Fuentes, comprobación de recopilación, campos e intervalo |
+| Documentos relacionados | Enlaces a casos, consultas y detecciones existentes |
+| Validación | Versiones, fecha, resultados observados y alias del revisor |
 
-## First Checks
+## Primeras comprobaciones
 
-- [ ] Preserve the original alert, rule/version, event time, and source evidence reference.
-- [ ] Confirm affected host, user, privilege, criticality, and current observed impact.
-- [ ] Verify log freshness, time zones/skew, duplicates, and missing sources.
-- [ ] Check approved changes, lab simulation records, and previous related cases.
-- [ ] Apply the immediate escalation triggers defined below; do not delay urgent escalation for optional enrichment.
+- [ ] Conservar alerta original, regla y versión, hora del evento y referencia de evidencia.
+- [ ] Confirmar equipo, usuario, privilegio, criticidad e impacto observado.
+- [ ] Revisar actualización de registros, zonas horarias, desfases, duplicados y fuentes ausentes.
+- [ ] Consultar cambios autorizados, registro de simulaciones y casos relacionados.
+- [ ] Aplicar los criterios de escalamiento inmediato sin retrasarlos por enriquecimiento opcional.
 
-## Logs and Fields
+## Registros y campos
 
-| Question to answer | Exact source/channel/index | Required fields | Query or pivot | Expected limitations |
+| Pregunta por resolver | Fuente, canal o índice exacto | Campos necesarios | Consulta o búsqueda relacionada | Limitaciones |
 | --- | --- | --- | --- | --- |
-| To fill | To fill | To fill | To fill | To fill |
+| Por completar | Por completar | Por completar | Por completar | Por completar |
 
-## Investigation Checklist
+## Investigación
 
-- [ ] Define the initial time window and expand it with a stated reason.
-- [ ] Correlate source and destination, actor and target, process and parent, and success/failure as relevant.
-- [ ] Check related hosts/users and prior or subsequent successful activity.
-- [ ] Deduplicate events and distinguish events from aggregated alerts.
-- [ ] Build a UTC timeline with evidence IDs; preserve uncertainty.
-- [ ] Compare the leading explanation with an alternative supported by evidence.
+- [ ] Definir el intervalo inicial y justificar cualquier ampliación.
+- [ ] Relacionar origen y destino, actor y cuenta afectada, proceso y padre, éxitos y fallos según el caso.
+- [ ] Revisar otros equipos o usuarios y actividad exitosa anterior o posterior.
+- [ ] Eliminar duplicados y distinguir eventos de alertas agregadas.
+- [ ] Crear una línea de tiempo UTC con ID de evidencia e incertidumbres.
+- [ ] Comparar la explicación principal con una alternativa basada en hechos.
 
-## Enrichment
+## Enriquecimiento
 
-- [ ] Identify whether indicators are internal, synthetic, reserved, or externally routable.
-- [ ] Use local context first: asset inventory, user role, change window, known service, hash/signature.
-- [ ] If external enrichment is appropriate, record service, lookup time, result, and confidence.
-- [ ] Do not upload confidential files, full private URLs, headers, tokens, or sensitive hashes without an appropriate basis for disclosure. Use synthetic content or document an unperformed lookup.
+- [ ] Identificar indicadores internos, sintéticos, reservados o públicos.
+- [ ] Consultar primero inventario, rol del usuario, ventana de cambio, servicio conocido, hash y firma.
+- [ ] Registrar servicio, fecha, resultado y confianza cuando corresponda una consulta externa.
+- [ ] Mantener archivos confidenciales, URL privadas completas, encabezados, tokens y hashes sensibles fuera de servicios externos. Utilizar muestras sintéticas o dejar constancia de la consulta no realizada.
 
-## Common False Positives and Benign Positives
+## Falsos positivos y actividad benigna
 
-| Alternative explanation | Evidence needed to confirm | When it is unsafe to dismiss |
+| Explicación alternativa | Evidencia para confirmarla | Cuándo no basta para cerrar |
 | --- | --- | --- |
-| To fill | To fill | To fill |
+| Por completar | Por completar | Por completar |
 
-Do not use a blanket user/IP allowlist as a substitute for checking context.
+La inclusión de un usuario o una IP en una lista permitida debe acompañarse de una comprobación del contexto.
 
-## Escalation Criteria
+## Criterios de escalamiento
 
-Define scenario-specific thresholds and evidence. Include successful activity after suspicious failures, unexpected privileged changes, verified impact, scope expansion, and unresolved evidence gaps where applicable.
+Definir umbrales y evidencias propios del escenario. Considerar acceso exitoso tras fallos sospechosos, cambios inesperados de privilegios, impacto confirmado, ampliación del alcance y vacíos relevantes de evidencia.
 
-| Condition | Priority / receiving role | Minimum evidence and unanswered questions | L1 action permitted |
+| Condición | Prioridad y rol receptor | Evidencia mínima y preguntas pendientes | Acción permitida a L1 |
 | --- | --- | --- | --- |
-| To fill | To fill | To fill | To fill |
+| Por completar | Por completar | Por completar | Por completar |
 
-Containment actions require the appropriate operational authority; this checklist alone does not grant it. In the lab, only named lab assets may be changed under the simulation procedure.
+La contención requiere la autoridad operativa correspondiente. En el laboratorio, los cambios se limitarán a los equipos definidos en el procedimiento de simulación.
 
-## Classification and Closure
+## Clasificación y cierre
 
-- [ ] Select True Positive, False Positive, Benign Positive, or Inconclusive with evidence.
-- [ ] Separate detection test outcome from incident classification.
-- [ ] Justify severity, Close/Escalate decision, and recommended follow-up.
-- [ ] Record case owner, handoff contents, and next review requirement if unresolved.
-- [ ] Confirm required cleanup, remediation verification, and no unexplained remaining activity.
-- [ ] Attach reviewed evidence and timeline using the incident-report structure.
+- [ ] Elegir verdadero positivo, falso positivo, positivo benigno o no concluyente con respaldo en evidencias.
+- [ ] Separar el resultado de la prueba de detección de la clasificación del caso.
+- [ ] Justificar severidad, cierre o escalamiento y seguimiento recomendado.
+- [ ] Registrar responsable, contenido de la entrega y próxima revisión si quedan asuntos abiertos.
+- [ ] Confirmar limpieza, remediación y ausencia de actividad pendiente de explicación.
+- [ ] Adjuntar evidencias revisadas y línea de tiempo con la estructura del informe de incidente.
 
-## Validation and Improvement
+## Validación y mejora
 
-- [ ] Run the scoped positive control, benign/negative control, and boundary condition where relevant.
-- [ ] Record actual results and limitations; missing expected alerts are a **Detection Gap**.
-- [ ] Update queries, collection requirements, and escalation logic from what the test showed.
+- [ ] Ejecutar control positivo, control benigno o negativo y prueba de umbral cuando corresponda.
+- [ ] Registrar resultados y limitaciones; una alerta esperada ausente queda como **brecha de detección (Detection Gap)**.
+- [ ] Actualizar consultas, requisitos de recopilación y criterios de escalamiento según lo observado.

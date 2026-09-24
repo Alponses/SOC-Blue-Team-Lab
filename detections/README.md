@@ -1,13 +1,23 @@
-# Detection engineering
+# Ingeniería de detecciones
 
-Status: **PLANNED — no custom detections implemented or validated**.
+El objetivo es convertir los hallazgos de las investigaciones en reglas que aporten contexto útil al analista. **Avance:** estructura y criterios definidos; reglas pendientes de implementación y validación.
 
-Use observed investigation findings to decide what to build. Initial detections may be added while investigating; phase 8 consolidates coverage and validation. A source event arriving is not the same as a detection firing.
+Las primeras reglas podrán surgir durante cada investigación. La etapa 8 consolidará su cobertura y las pruebas. La recepción de un evento y la activación de una alerta se comprobarán por separado.
 
-| Directory | Intended artifact |
+| Directorio | Contenido previsto |
 | --- | --- |
-| [Wazuh](wazuh/README.md) | Custom rules and decoders only where needed, with sanitized inputs and observed output |
-| [Sigma](sigma/README.md) | Portable behavior logic with source/field/backend assumptions |
-| [Suricata](suricata/README.md) | Lab-relevant IDS rules validated on the actual capture path |
+| [Wazuh](wazuh/README.md) | Reglas y decodificadores necesarios, entradas sin datos sensibles y resultados observados |
+| [Sigma](sigma/README.md) | Lógica portable con fuentes, campos y motores de destino identificados |
+| [Suricata](suricata/README.md) | Reglas IDS comprobadas sobre la ruta real del tráfico del laboratorio |
 
-Every detection needs an adjacent description covering objective, log source, required fields, logic/threshold/window/grouping, ATT&CK rationale, expected true positives, possible false positives, and validation procedure. Include engine/rule versions, exact scoped input, expected versus observed results, a benign negative control, threshold boundary tests where relevant, limitations, and an incident link. Label failed validation **Detection Gap**. Do not invent rule IDs or success evidence in advance.
+## Documentación de cada regla
+
+- Objetivo, fuente y campos necesarios.
+- Lógica, umbral, intervalo y agrupación.
+- Correspondencia con ATT&CK y evidencia que la justifica.
+- Verdaderos positivos esperados y posibles falsos positivos.
+- Versiones de regla y motor, entrada de prueba y pasos de validación.
+- Resultado esperado y observado, control negativo y pruebas de umbral cuando correspondan.
+- Limitaciones y enlace al caso que motivó la regla.
+
+Si falta una alerta esperada, se conservará el resultado como **brecha de detección (Detection Gap)** y se investigará antes de dar por validada la regla.

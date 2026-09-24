@@ -1,16 +1,27 @@
-# SOC-001 — SSH brute force
+# SOC-001 — Fuerza bruta SSH
 
-**PLANNED — NOT RUN — REQUIRES MANUAL EXECUTION**
+**Estado: pendiente de ejecución.** Etapa prevista: 3. Todavía no hay evidencias ni una clasificación del caso.
 
-This is a scope stub, not an incident report. No alert, collected evidence, ATT&CK mapping, classification, severity, or closure decision is claimed.
+## Objetivo
 
-- **Implementation phase:** 3.
-- **Controlled scenario:** Repeated, bounded failed SSH authentications against SOC-LINUX from SOC-SIM.
-- **Planned sources:** SSH/authentication records and Wazuh events.
-- **Evidence needed:** Source IP, target account, unique attempt count, timestamps, subsequent successful login if any, and actual alert/rule references.
+Determinar si una serie de fallos SSH corresponde a un intento de fuerza bruta y comprobar si después hubo un acceso exitoso.
 
-Before execution, verify telemetry, isolation, exact owned target scope, time synchronization, snapshots, stop conditions, and cleanup. Follow the [implementation checklist](../../docs/implementation-checklist.md).
+## Actividad prevista
 
-When evidence exists, replace this stub with a completed [incident report](../../templates/incident-report.md), retaining every required section. Add small sanitized artifacts with provenance under this case's `evidence/` directory and follow the [evidence policy](../../docs/evidence-handling.md). Document missing expected alerts as **Detection Gap**. Do not fill unknown fields or results with invented data.
+Generar un número limitado de fallos desde SOC-SIM hacia SOC-LINUX con una cuenta de prueba.
 
-[Investigation index](../README.md)
+## Evidencias necesarias
+
+**Fuentes:** Registros SSH y de autenticación; eventos y alertas de Wazuh.
+
+IP de origen, cuenta objetivo, número de intentos únicos, tiempos, posibles accesos exitosos posteriores e identificadores de alertas y reglas.
+
+## Dependencias y siguiente paso
+
+Depende de la recopilación Linux del entregable 2 y de preparar el simulador con límites de intentos y una política de bloqueo conocida.
+
+Antes de ejecutar la prueba se comprobarán aislamiento, objetivos propios, sincronización horaria, instantáneas, condiciones de parada y limpieza. El orden de trabajo está en la [lista de implementación](../../docs/implementation-checklist.md). Esta etapa **requiere ejecución manual**.
+
+Durante la investigación se completará la [plantilla de informe](../../templates/incident-report.md), con fragmentos revisados en `evidence/` y su procedencia según las [reglas de manejo de evidencias](../../docs/evidence-handling.md). Las alertas esperadas que no aparezcan se documentarán como brechas de detección.
+
+[Volver al índice de investigaciones](../README.md)
