@@ -12,7 +12,7 @@ Una IP observada puede corresponder a VPN, proxy, salida Tor, proveedor de nube,
 | --- | --- |
 | Filtros superiores | Ventana UTC, sensor/época, origen observado, protocolo/servicio, país estimado, ASN y tipo de evento |
 | Mapa | Agrupar coordenadas estimadas de IP observadas, con tamaño por eventos o fuentes únicas mediante selector explícito; nunca etiquetar «ubicación del atacante» |
-| Ficha de origen | IP privada visible para el analista, país estimado, ciudad si existe con precisión razonable, ASN, red/proveedor y fecha/fuente del enriquecimiento |
+| Ficha de origen | IP observada visible solo en la vista privada del analista, país estimado, ciudad si existe con precisión razonable, ASN, red/proveedor y fecha/fuente del enriquecimiento |
 | Tabla asociada | IP o alias público, país, ciudad disponible, ASN, network/provider, servicio destino, event count, first seen y last seen en la ventana |
 | Contexto histórico | First/last seen internos en todo el periodo retenido, separados de los de la ventana actual; sin afirmar antigüedad global |
 | Cobertura | Orígenes geolocalizados / orígenes válidos únicos; desconocidos, errores y datos vencidos por separado |

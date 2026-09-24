@@ -23,7 +23,7 @@ Alerta → triage → evidencia → enriquecimiento → timeline → ATT&CK → 
 1. Verificar ventana de medición, unidades, tiempo de evento, reinicios de contadores y ausencia de duplicados; descartar picos causados por importación atrasada.
 2. Comparar tasas con historia de cobertura equivalente; registrar periodo y suficiencia del baseline, mantenimiento, cambios de configuración y datos ausentes.
 3. Relacionar fuentes, protocolos y puertos con recursos, pérdida de captura y disponibilidad del servicio; contrastar ruido, escaneo, brute force y actividad distribuida.
-4. Aplicar las categorías del panel Network Anomalies: normal noise, automated scan, brute force, distributed brute force, Traffic Spike, suspicious volumetric activity, Suspected DoS o Confirmed DDoS según evidencia. Mantener no concluyente cuando corresponda.
+4. Comparar Internet Noise, Reconnaissance, Port Scan, Credential Brute Force, Distributed Brute Force, Traffic Spike, Suspected DoS y Confirmed DDoS con los criterios del panel Network Anomalies. Registrar actividad volumétrica sospechosa como hipótesis si falta evidencia y mantener no concluyente cuando corresponda.
 5. Para Confirmed DDoS exigir evidencia adecuada de distribución, mecanismo y denegación, o confirmación explícita del proveedor de seguridad upstream; documentar mitigación y no inventar impacto local.
 
 ## Entrega y decisión

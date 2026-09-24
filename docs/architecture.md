@@ -37,7 +37,7 @@ El patrón base envía telemetría a un receptor separado y transfiere lotes al 
 | Zona nueva | Identidad/red | Recursos y estado |
 | --- | --- | --- |
 | Sensor Cowrie | Pública dedicada; proveedor/IP sin asignar; nunca dentro de `10.10.10.0/24` | Por dimensionar según carga, cuotas, retención y Suricata opcional |
-| Receptor de telemetría | Separado del sensor y del laboratorio; sin rutas entre ellos | Transporte y almacenamiento por elegir; no comparte credenciales del SOC |
+| Receptor de telemetría | Separado del sensor y del laboratorio; sin reenviar tráfico del sensor al SOC | Transporte y almacenamiento por elegir; no comparte credenciales del SOC |
 | Estación de transferencia | Dedicada, sin doble conexión simultánea ni datos personales | Procedimiento y capacidad por verificar; no es un router |
 
 Estos recursos no están incluidos en las estimaciones del laboratorio siguiente. El proveedor debe permitir explícitamente el uso conforme a AUP/ToS y sus procedimientos de abuso; verificar banda y cargos antes de desplegar. El [modelo de seguridad](../honeypot/security-model.md) contiene matriz de firewall, management plane, egress, fallos y recuperación. La [lista de despliegue](../honeypot/deployment-checklist.md) define los requisitos de apertura.

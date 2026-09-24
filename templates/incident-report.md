@@ -13,7 +13,7 @@ Plantilla para documentar una investigación desde la alerta inicial hasta su ci
 | Procedencia de la evidencia | Valor exacto de Evidence Origin; sensor/época y procedencia de fuentes adicionales si existen |
 | Intervalo | Inicio y fin en UTC; zona original y desfase del reloj |
 | Entorno y versiones | Sistema, agente, revisión de reglas/configuración y herramientas |
-| Autorización | Equipos propios, propósito, actor autorizado y ventana de prueba |
+| Autorización | Equipos propios, propósito y ventana; actor autorizado en simulaciones. En honeypot, autorización del despliegue/proveedor y ventana de observación, sin asumir autorización del origen |
 | Ejecución y recuperación | Pasos acotados, instantánea previa, señal esperada, condiciones de parada, limpieza y resultado comprobado |
 
 ## Resumen ejecutivo

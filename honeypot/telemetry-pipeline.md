@@ -55,7 +55,7 @@ Los campos técnicos de Cowrie se inspeccionarán en eventos de la versión eleg
 5. Usar una identidad estable de registro basada en sensor autenticado, época y posición de origen/lote. El ID del tipo de evento y el ID de sesión no identifican un evento único. No deduplicar por IP, usuario y segundo: eliminaría intentos legítimamente repetidos.
 6. Reconciliar registros producidos, recibidos, rechazados, importados y repetidos. Reintentar con acuses y checkpoints; no afirmar entrega exactamente una vez. Verificar reinicio, rotación, reenvío, caducidad de credencial y cola llena.
 7. Separar eventos consultables de alertas. Los paneles de actividad necesitan eventos, incluidos los que no activan detecciones. Cuotas, acceso y retención se definirán para ambos; el archivo global sin límites puede agotar Wazuh.
-8. Normalizar únicamente correspondencias comprobadas y versionadas. Enriquecer sin sobrescribir origen ni confundir destino observado, puerto interno redirigido y destino solicitado en un comando. Luego crear reglas y validar resultados, indexación y consultas por separado.
+8. Normalizar únicamente correspondencias comprobadas y versionadas; crear reglas y validar resultados, indexación y consultas por separado. Enriquecer sin sobrescribir origen ni confundir destino observado, puerto interno redirigido y destino solicitado en un comando.
 9. Publicar únicamente extractos revisados con manifiesto, procedencia y transformaciones; mantener originales, credenciales, transcript completo y payloads fuera de Git.
 
 ## Separación analítica

@@ -69,15 +69,15 @@ La base inicial pasó `python3 scripts/validate_repository.py`: 112 enlaces inte
 
 | Comprobación | Resultado |
 | --- | --- |
-| Validador original e internos Markdown | Pendiente de registro final |
-| `git diff --check` y `git diff --cached --check` | Pendiente de registro final |
-| Preservación de archivos, incidentes y procedencia | Pendiente de registro final |
-| Exclusiones e inventario de archivos | Pendiente de registro final |
-| Revisión de diff completo | Pendiente de registro final |
+| Validador original: rutas y anclas Markdown | CORRECTO: 299 enlaces internos en 49 archivos Markdown |
+| `git diff --check` y `git diff --cached --check` | Ambos sin errores de espacios |
+| Preservación de archivos, incidentes y procedencia | 35 archivos originales presentes; informe 0 y validador idénticos; cuerpos SOC-001–SOC-010 idénticos tras retirar solo metadatos nuevos; 15 orígenes válidos al inicio |
+| Exclusiones e inventario de archivos | 8 rutas privadas excluidas y 4 rutas de configuración/extractos permitidas mediante `git check-ignore`; 22 nuevos Markdown; archivos UTF-8 menores de 1 MiB; sin nuevos datos ni imágenes |
+| Revisión de diff completo | Revisados todos los cambios preparados: 22 archivos nuevos y 22 modificados, sin eliminaciones ni trabajo ajeno; ajustes finales de claridad incluidos |
 
 La revisión es documental. No valida red, seguridad operativa, ingestión, reglas, consultas ni paneles desplegados. Los diagramas Mermaid se revisan como código; su representación visual en GitHub permanece pendiente. No se generaron screenshots ni resultados de ataque. Se consultaron referencias oficiales de Cowrie, Wazuh, Suricata y GeoIP enlazadas junto a las afirmaciones técnicas; no se verifican todos los enlaces externos mediante el validador.
 
-Commit de cierre previsto: `docs: extend SOC lab with isolated Internet honeypot architecture`. Base preservada: `833de89`. El hash final se consultará en el historial Git; no se introduce una referencia circular dentro del propio commit.
+Mensaje del commit de cierre: `docs: extend SOC lab with isolated Internet honeypot architecture`. Base preservada: `833de89`. El hash final se consultará en el historial Git; no se introduce una referencia circular dentro del propio commit.
 
 ## Decisiones operativas sin resolver
 

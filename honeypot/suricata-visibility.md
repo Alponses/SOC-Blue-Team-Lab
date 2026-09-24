@@ -1,6 +1,6 @@
 # Suricata en el entorno público
 
-**Estado: evaluación de arquitectura; instalación y captura pendientes.** El sensor Suricata existente de SOC-LINUX conserva su función en las simulaciones y no observa el VPS remoto.
+**Estado: evaluación de arquitectura; instalación y captura pendientes.** El diseño existente de Suricata en SOC-LINUX conserva su función prevista en las simulaciones y no cubre el VPS remoto.
 
 ## Punto de observación propuesto
 
@@ -27,7 +27,7 @@ EVE puede ofrecer alertas, flujos y metadatos de protocolos según la configurac
 | Estadísticas de captura y host | Pérdida, paquetes/bytes, recursos y disponibilidad | Dependen de intervalo, reinicios y ubicación del contador |
 | Métricas TCP del host y proveedor | SYN, estados, conexiones y evidencia de saturación | Requieren fuentes adicionales verificadas; Cowrie no las sustituye |
 
-Cowrie ofrece interacción después de terminar SSH; Suricata verá la conexión cifrada y sus metadatos, no esa shell. Correlacionar mediante sensor/época, tiempo, protocolo y tupla de red validada, anotando NAT y desfase. No presumir que el identificador de flujo EVE sea el identificador de sesión Cowrie.
+Cowrie registra interacción dentro de su servicio SSH; Suricata verá la conexión cifrada y sus metadatos, no esa shell. Correlacionar mediante sensor/época, tiempo, protocolo y tupla de red validada, anotando NAT y desfase. No presumir que el identificador de flujo EVE sea el identificador de sesión Cowrie.
 
 Antes del despliegue, comprobar cobertura en una réplica privada con flujos inocuos conocidos y comparar eventos/paquetes. Reservar configuración futura del sensor público bajo `configs/honeypot/`; conservar la de SOC-LINUX en `configs/suricata/`. EVE público viajará por el mismo [límite de datos](telemetry-pipeline.md), con procedencia y fuente separadas.
 
