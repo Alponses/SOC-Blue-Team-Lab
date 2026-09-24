@@ -1,62 +1,88 @@
-# SOC Blue Team Lab
+# SOC Blue Team Lab — Hybrid SOC & Internet Honeypot
 
 ## Objetivo
 
-Construir un laboratorio SOC para practicar el trabajo de un analista de primer nivel: recibir una alerta, investigar qué ocurrió, relacionar evidencias y decidir si el caso debe cerrarse o escalarse.
+Construir una plataforma híbrida con **dos entornos separados**: un laboratorio de detección reproducible y un honeypot público aislado para investigar telemetría no solicitada de Internet. El trabajo del analista será recibir una alerta, investigar qué ocurrió, relacionar evidencias y decidir si el caso debe cerrarse o escalarse.
+
+**Observed Internet activity does not imply compromise of a production environment.** Las simulaciones se identificarán como tales; una sesión aceptada por el honeypot no demuestra compromiso del host ni de un sistema de producción.
 
 El proyecto está orientado a puestos de Analista SOC L1 y Operaciones de Seguridad Junior. Cada investigación deberá mostrar los registros utilizados, la línea de tiempo, el razonamiento y las mejoras de detección que se deriven del caso.
 
+## Controlled Detection Lab
+
+Windows, Linux, Active Directory, Sysmon, Suricata y Wazuh en `10.10.10.0/24`, con simulaciones controladas y reproducibles. **CONTROLLED TELEMETRY.** Se conservan SOC-001–SOC-010, los diseños, las plantillas y el trabajo del entregable 0.
+
+## Internet Honeypot
+
+Cowrie emulado en un VPS o host público dedicado, fuera del laboratorio. Recopilará actividad no solicitada de SSH y, opcionalmente, Telnet: **OBSERVED INTERNET TELEMETRY**. SOC-011–SOC-015 requieren evidencia real y permanecen pendientes. No habrá ruta confiable desde el honeypot hacia la red privada. [Diseño del honeypot](honeypot/README.md).
+
+## Security Analytics
+
+Wazuh será el SIEM principal: ingestión de JSON, parsing, normalización, detecciones verificadas, enriquecimiento de IOC, GeoIP, paneles e investigaciones. El transporte saliente terminará en un receptor separado; la base conserva aislamiento mediante importación de lotes revisados, sin prometer tiempo real. [Flujo de datos y frontera](honeypot/telemetry-pipeline.md).
+
+## Cloud Security
+
+AWS IAM, CloudTrail y CloudWatch se investigarán en una cuenta propia de laboratorio mediante SOC-010. Es una fase independiente del honeypot y sus extractos se publicarán sanitizados. Splunk Enterprise/SPL permanece como fase posterior de análisis.
+
 ## Avance del proyecto
 
-**Etapa actual: entregable 0 completado — estructura del repositorio y diseño del laboratorio.**
+**Etapa actual: entregable 0.5 completado — refactor de arquitectura híbrida. Entregable 0 preservado.**
 
 | Área | Avance |
 | --- | --- |
-| Documentación | Arquitectura, plan de trabajo, manejo de evidencias y plantillas preparados en español |
-| Infraestructura | Equipos, red y telemetría definidos; despliegue pendiente |
-| Investigaciones | Diez escenarios planificados; todavía sin ejecutar |
-| Detecciones | Directorios y criterios definidos; reglas pendientes |
-| Evidencias | Por recopilar durante la instalación y las pruebas |
+| Documentación | Arquitectura híbrida, fronteras, riesgos, pipeline y plan preparados en español |
+| Infraestructura | Laboratorio y sensor público diseñados; ningún despliegue realizado |
+| Investigaciones | SOC-001–SOC-010 controlados preservados; SOC-011–SOC-015 placeholders observados, sin investigar |
+| Detecciones | Reglas pendientes de inspeccionar eventos y validar campos |
+| Paneles y reporte | Tres especificaciones y plantilla semanal; NO DATA — DEPLOYMENT PENDING |
+| Evidencias | Sin telemetría recopilada; originales futuros privados y extractos sanitizados públicos |
 
-**Lo siguiente:** comprobar los recursos del equipo y el hipervisor, crear la red aislada e instalar Wazuh y Windows 11 con Sysmon. El primer hito operativo será verificar que los eventos lleguen al SIEM desde cada canal configurado. Esta etapa **requiere ejecución manual** en el laboratorio.
+**Lo siguiente, después de 0.5: entregable 1 — Wazuh, Windows y Sysmon.** Comprobar los recursos del equipo y el hipervisor, crear la red aislada e instalar únicamente Wazuh y Windows 11 con Sysmon. El primer hito operativo será verificar que los eventos lleguen al SIEM desde cada canal configurado. Esta etapa **requiere ejecución manual** en el laboratorio.
 
-El detalle está en la [arquitectura](docs/architecture.md), el [plan de implementación](docs/implementation-checklist.md) y el [informe del entregable 0](docs/deliverables/deliverable-0.md).
+El detalle está en la [arquitectura](docs/architecture.md), el [plan de implementación](docs/implementation-checklist.md), el [informe del entregable 0](docs/deliverables/deliverable-0.md) y el [cierre de 0.5](docs/deliverables/deliverable-0.5.md).
 
 ## Arquitectura
 
-Las direcciones son propuestas; no corresponden a equipos descubiertos. Las flechas continuas representan flujos previstos de telemetría o DNS; las discontinuas, pruebas controladas o reutilización posterior de datos.
+Las direcciones del laboratorio se conservan. El sensor y el receptor públicos no tienen IP ni proveedor asignados. Las flechas representan datos; la transferencia de lotes al SOC es sin conexión de red, no un túnel ni una ruta IP.
 
 ```mermaid
 flowchart LR
-    analyst["Equipo del analista — solo administración"]
-    subgraph lab["Red virtual aislada — 10.10.10.0/24 — sin ruta a Internet durante las pruebas"]
-        wazuh["10.10.10.10 — Wazuh todo en uno"]
-        dc["10.10.10.20 — Windows Server 2025 / AD DS / DNS"]
-        win["10.10.10.30 — Windows 11 / Sysmon / Defender"]
-        linux["10.10.10.40 — Ubuntu / SSH / Suricata"]
-        sim["10.10.10.50 — máquina virtual de simulación"]
-        dc -->|Agente Wazuh| wazuh
-        win -->|Agente Wazuh| wazuh
-        linux -->|Autenticación, auditoría, FIM, EVE JSON| wazuh
-        win -->|DNS y servicios de dominio del laboratorio| dc
-        sim -.->|Fallos SSH y escaneo con alcance limitado| linux
-        win -.->|Conexión local segura| linux
+    internet["Internet"] -->|"SSH; Telnet opcional"| cowrie
+    subgraph public["Zona pública aislada: OBSERVED INTERNET TELEMETRY"]
+        cowrie["Cowrie: shell emulada en VPS dedicado"] --> json["JSON privado"]
+        hostadmin["Host: administración separada del señuelo"]
     end
-    analyst -->|Administración por red solo anfitrión| wazuh
-    aws["Fase independiente — cuenta AWS de laboratorio del propietario"]
-    curated["Evidencias revisadas y sin datos sensibles"]
-    splunk["Fase posterior — Splunk Enterprise / SPL"]
-    wazuh -.->|Exportación de evidencias seleccionadas| curated
-    aws -.->|Exportación seleccionada de CloudTrail| curated
-    curated -.->|Importación de datos sin conexión| splunk
+    json -->|"Envío saliente cifrado y autenticado"| receiver["Receptor separado: sin rutas al SOC"]
+    receiver -.->|"Lotes revisados sin conexión de red"| ingest
+    analyst["Analista: administración privada"]
+    subgraph lab["Controlled Detection Lab: 10.10.10.0/24 sin Internet durante pruebas"]
+        ingest["Importación local de telemetría observada"] --> wazuh["10.10.10.10: Wazuh / Security Analytics"]
+        dc["10.10.10.20: Windows Server / AD / DNS"] -->|"CONTROLLED TELEMETRY"| wazuh
+        win["10.10.10.30: Windows 11 / Sysmon / Defender"] -->|"CONTROLLED TELEMETRY"| wazuh
+        linux["10.10.10.40: Linux / Audit / Suricata"] -->|"CONTROLLED TELEMETRY"| wazuh
+        sim["10.10.10.50: simulador"] -.->|"Pruebas acotadas"| linux
+        win -->|"DNS del laboratorio"| dc
+        win -.->|"Conexión local segura"| linux
+        wazuh --> analysis["Detecciones / enriquecimiento / paneles / casos por origen"]
+    end
+    analyst -->|"Solo anfitrión"| wazuh
+    management["Administración dedicada del sensor"] -->|"Consola o acceso restringido"| hostadmin
+    aws["Cuenta AWS propia: IAM / CloudTrail"]
+    analysis -.->|"Revisión de evidencia"| curated["Extractos sanitizados e informes"]
+    aws -.->|"Sanitized Cloud Activity"| curated
+    curated -.->|"Importación posterior sin conexión"| splunk["Splunk Enterprise / SPL"]
 ```
 
-Está previsto instalar Suricata inicialmente en Ubuntu para observar el tráfico entrante y saliente de ese equipo. Esto **no** proporciona visibilidad de toda la red. AWS será un entorno independiente, fuera de la red virtual aislada. Consulta los [límites y la visibilidad de la red](docs/architecture.md#aislamiento-y-visibilidad-de-la-red).
+Cowrie y el receptor estarán fuera de `10.10.10.0/24`, sin acceso confiable al hogar, equipos personales/corporativos, AD ni Windows. Wazuh, su API, indexador y registro de agentes seguirán privados. La decisión del transporte concreto se resolverá antes de cualquier despliegue. Consulta [zonas de confianza](honeypot/security-model.md) y [flujo seguro](honeypot/telemetry-pipeline.md).
+
+Suricata en SOC-LINUX solo observa el tráfico que atraviesa su interfaz; no toda la red ni el VPS. La cobertura pública se evaluará por separado. AWS conserva su fase independiente. Consulta [visibilidad del laboratorio](docs/architecture.md#aislamiento-y-visibilidad-de-la-red) y [Suricata público](honeypot/suricata-visibility.md).
 
 ## Entorno
 
 | Componente | Propósito previsto | Estado |
 | --- | --- | --- |
+| Cowrie en sensor público separado | Interacción SSH/Telnet emulada y JSON de actividad no solicitada | Sin desplegar |
+| Receptor de telemetría separado | Transporte autenticado y lotes revisados sin rutas al laboratorio | Infraestructura y mecanismo por decidir |
 | Wazuh todo en uno | Recopilación centralizada, alertas, investigación y reglas personalizadas | Sin desplegar |
 | Windows 11 Enterprise de evaluación | Telemetría de Security/System, PowerShell, Sysmon y Defender | Sin desplegar |
 | Ubuntu Server | SSH, autenticación, sudo, auditoría, registros del sistema e integridad de archivos | Sin desplegar |
@@ -89,9 +115,29 @@ Cada ficha recoge el objetivo del caso, las fuentes de evidencia y los requisito
 | SOC-009 | [Phishing](incidents/SOC-009-phishing/README.md) | Correo sintético y metadatos | Análisis de encabezados, URL y archivos adjuntos | Pendiente | Sin ejecutar |
 | SOC-010 | [AWS CloudTrail](incidents/SOC-010-aws-cloudtrail/README.md) | CloudTrail, IAM, CloudWatch | Reconstrucción de identidades, llamadas API y cambios | Pendiente | Sin ejecutar |
 
+Los casos anteriores son del **Controlled Detection Lab**. SOC-009 utiliza `Synthetic Training Sample` y SOC-010 `Sanitized Cloud Activity`; los demás, `Controlled Simulation`. Cada ficha identifica **Evidence Origin:** al comienzo, incluso cuando la fuente todavía está pendiente.
+
+Los nuevos casos requieren **Observed Honeypot Telemetry**; son fichas planificadas, no incidentes abiertos:
+
+| ID | Investigación | Dependencia / estado |
+| --- | --- | --- |
+| SOC-011 | [Internet SSH Brute Force](incidents/SOC-011-internet-ssh-brute-force/README.md) | Autenticación real de Cowrie; NO DATA — DEPLOYMENT PENDING |
+| SOC-012 | [Interactive Honeypot Session](incidents/SOC-012-interactive-honeypot-session/README.md) | Sesión real con comandos; NO DATA — DEPLOYMENT PENDING |
+| SOC-013 | [Distributed Credential Activity](incidents/SOC-013-distributed-credential-activity/README.md) | Similitudes entre fuentes, sin inferir coordinación; NO DATA — DEPLOYMENT PENDING |
+| SOC-014 | [Internet Reconnaissance](incidents/SOC-014-internet-reconnaissance/README.md) | Probing con cobertura verificada; NO DATA — DEPLOYMENT PENDING |
+| SOC-015 | [Network Traffic Anomaly](incidents/SOC-015-network-traffic-anomaly/README.md) | Tasas, baseline e impacto; NO DATA — DEPLOYMENT PENDING |
+
+## Paneles, contexto e informes
+
+[Global Honeypot Activity](dashboards/attack-map/README.md), [SOC Overview](dashboards/soc-overview/README.md) y [Network Anomalies](dashboards/network-anomalies/README.md) son especificaciones, sin estadísticas ni dashboards desplegados. El [enriquecimiento](enrichment/README.md) registra fuente, fecha, confianza y limitación. La [Weekly Honeypot Threat Report](reports/templates/weekly-honeypot-threat-report.md) documentará hallazgos, casos y decisiones con evidencia real.
+
+> Geographic information represents the estimated location of the observed source IP address and does not establish the physical location or identity of an attacker.
+
+El mapa representa IP observadas, que pueden ser intermediarios, nodos comprometidos o NAT. Un conteo alto no confirma DDoS. No se ejecutarán cargas ni ataques contra infraestructura pública. T-Pot queda como [fase opcional posterior](honeypot/README.md#fases-posteriores-y-t-pot).
+
 ## Ingeniería de detecciones
 
-Los directorios de [Wazuh](detections/wazuh/README.md), [Sigma](detections/sigma/README.md) y [Suricata](detections/suricata/README.md) están reservados para detecciones desarrolladas a partir de evidencias del laboratorio. Cada regla deberá explicar su objetivo, fuente, lógica, justificación de ATT&CK, verdaderos positivos esperados, posibles falsos positivos y validación. Todavía no existen reglas personalizadas.
+Los directorios de [Wazuh](detections/wazuh/README.md), [Sigma](detections/sigma/README.md) y [Suricata](detections/suricata/README.md) están reservados para detecciones desarrolladas a partir de evidencias identificadas por origen. La integración Cowrie se reservará en [configs/honeypot/wazuh](configs/honeypot/wazuh/README.md); sus reglas solo se escribirán después de inspeccionar eventos reales de la fuente. Cada regla deberá explicar su objetivo, fuente, lógica, justificación de ATT&CK, verdaderos positivos esperados, posibles falsos positivos y validación. Todavía no existen reglas personalizadas.
 
 Los [procedimientos para analistas](playbooks/README.md) y las [investigaciones con Splunk](queries/splunk/README.md) tienen un alcance futuro definido. La práctica con Splunk Enterprise y SPL no se presentará como experiencia con Splunk Enterprise Security.
 
@@ -108,9 +154,9 @@ Todavía no hay capturas. Las futuras imágenes del directorio de [capturas de p
 ## Cómo reproducir el laboratorio
 
 1. Revisa la [arquitectura y los requisitos previos](docs/architecture.md) y las [reglas de manejo de evidencias](docs/evidence-handling.md).
-2. Sigue la [lista de implementación](docs/implementation-checklist.md) en el orden de los entregables. El entregable 1 corresponde a Wazuh, Windows y telemetría de Sysmon.
+2. Sigue la [lista de implementación](docs/implementation-checklist.md) en el orden de los entregables. El entregable 1, posterior al refactor 0.5, corresponde únicamente a Wazuh, Windows y telemetría de Sysmon; el honeypot tiene fases posteriores propias.
 3. Valida el aislamiento y la sincronización horaria antes de cada prueba. Crea una instantánea antes de modificar el estado del sistema y documenta la limpieza posterior.
 4. Utiliza la [plantilla de informe de incidentes](templates/incident-report.md) y la [plantilla de procedimiento SOC](templates/soc-playbook.md). Documenta las incertidumbres y los fallos de detección.
 5. Valida los enlaces internos de la documentación desde la raíz del repositorio con `python3 scripts/validate_repository.py`.
 
-Todas las simulaciones deben dirigirse exclusivamente a máquinas virtuales propias creadas para este laboratorio. No se deben incluir objetivos públicos, malware real, credenciales, imágenes de máquinas virtuales, volcados de registros sin procesar ni capturas de paquetes sensibles. La [lista de revisión para publicar](docs/evidence-handling.md#revisión-antes-de-publicar) complementa `.gitignore`; ignorar archivos no elimina los datos sensibles de su contenido.
+Todas las simulaciones deben dirigirse exclusivamente a máquinas virtuales propias creadas para este laboratorio. Ninguna simulación se dirigirá a objetivos públicos. La observación futura de Internet se limitará al sensor dedicado, después de verificar AUP, ToS, abuso, límites de ancho de banda y cargos del proveedor en la [lista de despliegue](honeypot/deployment-checklist.md). No publicar malware real, credenciales, URL maliciosas activas, imágenes de máquinas virtuales, logs sin procesar ni PCAP completos sin revisión explícita. Los extractos públicos tendrán manifiesto en [datasets/sanitized-honeypot](datasets/sanitized-honeypot/README.md). La [lista de revisión para publicar](docs/evidence-handling.md#revisión-antes-de-publicar) complementa `.gitignore`; ignorar archivos no elimina los datos sensibles de su contenido.

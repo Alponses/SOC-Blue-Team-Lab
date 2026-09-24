@@ -1,12 +1,16 @@
 # SOC-NNN — Título del incidente
 
+**Evidence Origin: [seleccionar un valor permitido]**
+
+Elegir exactamente uno antes de utilizar el informe: `Controlled Simulation`, `Observed Honeypot Telemetry`, `Synthetic Training Sample` o `Sanitized Cloud Activity`. En una ficha pendiente indicar que es la fuente requerida, aún sin recopilar. Registrar también `CONTROLLED TELEMETRY` u `OBSERVED INTERNET TELEMETRY` según el contexto; sanitizar no cambia el origen. Ver [definiciones](../docs/evidence-handling.md#evidence-origin).
+
 Plantilla para documentar una investigación desde la alerta inicial hasta su cierre o escalamiento. Los campos se completan durante el análisis; la clasificación y la decisión quedan pendientes hasta disponer de evidencias suficientes.
 
 | Dato | Registro |
 | --- | --- |
 | Estado | Pendiente / Requiere ejecución manual / En investigación / Validado |
 | Analista | Alias del laboratorio |
-| Procedencia de la evidencia | Simulación observada / Exportación revisada sin datos sensibles / Muestra sintética de entrenamiento |
+| Procedencia de la evidencia | Valor exacto de Evidence Origin; sensor/época y procedencia de fuentes adicionales si existen |
 | Intervalo | Inicio y fin en UTC; zona original y desfase del reloj |
 | Entorno y versiones | Sistema, agente, revisión de reglas/configuración y herramientas |
 | Autorización | Equipos propios, propósito, actor autorizado y ventana de prueba |
@@ -15,6 +19,8 @@ Plantilla para documentar una investigación desde la alerta inicial hasta su ci
 ## Resumen ejecutivo
 
 Describir el comportamiento observado, los equipos afectados, el impacto demostrado, la conclusión y la acción. En phishing, incluir el pretexto del correo y si se conoce alguna interacción o ejecución por parte del usuario. Diferenciar hechos, hipótesis e información pendiente.
+
+Para casos de honeypot: **Observed Internet activity does not imply compromise of a production environment.** Distinguir sesión aceptada por emulación, comando solicitado, respuesta emulada e impacto demostrado en el host. No asumir una persona interactuando ni coordinación entre fuentes.
 
 ## Alerta
 
@@ -56,6 +62,10 @@ Una IP interna, una cuenta o un proceso pueden orientar la investigación sin se
 
 En phishing, revisar From, Reply-To, Return-Path, cadena Received, resultados confiables de SPF/DKIM/DMARC, URL y dominios no navegables, hashes y metadatos de adjuntos. Diferenciar encabezados sintéticos, datos insertados por el remitente y resultados verificados por infraestructura de confianza. Mantener el contenido confidencial fuera de servicios externos de enriquecimiento.
 
+En honeypot registrar GeoIP/ASN, reverse DNS, RDAP/reputación opcionales, first/last seen internos y frecuencia con fuente, fecha, resultado, confianza y limitación. No ejecutar payloads, visitar URL maliciosas ni enviar datos privados a terceros. Enriquecimiento [seguro y opcional](../enrichment/README.md).
+
+> Geographic information represents the estimated location of the observed source IP address and does not establish the physical location or identity of an attacker.
+
 ## MITRE ATT&CK
 
 Registrar táctica, ID de técnica o subtécnica, referencia oficial y comportamiento concreto que respalda la correspondencia. Usar «no aplica» con una explicación cuando la evidencia no permita asociar una técnica. ATT&CK describe comportamiento; no determina por sí solo si hubo una intrusión. La atribución de robo de credenciales, persistencia o mando y control requiere evidencia suficiente.
@@ -74,6 +84,8 @@ Elegir una categoría después del análisis y justificarla con evidencia y cont
 - **No concluyente (Inconclusive):** faltan datos o existen contradicciones; indicar qué información hace falta.
 
 Registrar por separado el resultado de la regla: **sin probar / activada según lo esperado / brecha de detección**. Una regla puede funcionar correctamente durante una prueba autorizada y el caso clasificarse como positivo benigno.
+
+Para telemetría de Internet registrar además la categoría de actividad (Internet Noise, Reconnaissance, Port Scan, Credential Brute Force, Distributed Brute Force, Traffic Spike, Suspected DoS o Confirmed DDoS) cuando haya base, separada de la clasificación de la regla/caso. Aplicar los [criterios de red y evidencia](../dashboards/network-anomalies/README.md): múltiples IP o muchos eventos no confirman DDoS. No clasificar por obligación si la evidencia es insuficiente.
 
 ## Severidad
 

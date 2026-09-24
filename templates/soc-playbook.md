@@ -5,6 +5,7 @@ Plantilla para convertir un tipo de alerta en una secuencia de comprobaciones y 
 | Campo | Contenido |
 | --- | --- |
 | Objetivo y activación | Alerta u observación concreta y resultado que debe obtener el analista |
+| Evidence Origin | Controlled Simulation / Observed Honeypot Telemetry / Synthetic Training Sample / Sanitized Cloud Activity; seleccionar uno y separar fuentes adicionales |
 | Alcance y responsable | Equipos permitidos y rol encargado |
 | Acceso necesario | Permisos de lectura, índices, herramientas y limitaciones |
 | Requisitos de registros | Fuentes, comprobación de recopilación, campos e intervalo |
@@ -16,6 +17,7 @@ Plantilla para convertir un tipo de alerta en una secuencia de comprobaciones y 
 - [ ] Conservar alerta original, regla y versión, hora del evento y referencia de evidencia.
 - [ ] Confirmar equipo, usuario, privilegio, criticidad e impacto observado.
 - [ ] Revisar actualización de registros, zonas horarias, desfases, duplicados y fuentes ausentes.
+- [ ] Verificar Evidence Origin, sensor/época y frontera; una sesión Cowrie aceptada no demuestra compromiso del host ni producción.
 - [ ] Consultar cambios autorizados, registro de simulaciones y casos relacionados.
 - [ ] Aplicar los criterios de escalamiento inmediato sin retrasarlos por enriquecimiento opcional.
 
@@ -56,6 +58,8 @@ Definir umbrales y evidencias propios del escenario. Considerar acceso exitoso t
 | Condición | Prioridad y rol receptor | Evidencia mínima y preguntas pendientes | Acción permitida a L1 |
 | --- | --- | --- | --- |
 | Por completar | Por completar | Por completar | Por completar |
+
+Para honeypot, aplicar el [modelo de seguridad y recuperación](../honeypot/security-model.md), [enriquecimiento seguro](../enrichment/README.md) y los [criterios de anomalías](../dashboards/network-anomalies/README.md). No ejecutar payloads, atribuir identidad por GeoIP ni declarar DDoS por conteo.
 
 La contención requiere la autoridad operativa correspondiente. En el laboratorio, los cambios se limitarán a los equipos definidos en el procedimiento de simulación.
 

@@ -1,5 +1,9 @@
 # SOC-003 — Ejecución sospechosa de PowerShell
 
+**Evidence Origin: Controlled Simulation**
+
+**Entorno: Controlled Detection Lab — CONTROLLED TELEMETRY.** Escenario controlado; fuente prevista y aún no recopilada.
+
 **Estado: pendiente de ejecución.** Etapa prevista: 5. Todavía no hay evidencias ni una clasificación del caso.
 
 ## Objetivo

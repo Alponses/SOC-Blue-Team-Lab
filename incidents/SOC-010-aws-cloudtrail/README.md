@@ -1,5 +1,9 @@
 # SOC-010 — Investigación de AWS CloudTrail
 
+**Evidence Origin: Sanitized Cloud Activity**
+
+**Entorno: Controlled Detection Lab — CONTROLLED TELEMETRY.** Ejercicio CONTROLLED LAB en cuenta AWS propia; actividad controlada de nube, publicación sanitizada pendiente.
+
 **Estado: pendiente de ejecución.** Etapa prevista: 10. Todavía no hay evidencias ni una clasificación del caso.
 
 ## Objetivo

@@ -12,7 +12,8 @@ Las primeras reglas podrán surgir durante cada investigación. La etapa 8 conso
 
 ## Documentación de cada regla
 
-- Objetivo, fuente y campos necesarios.
+- Objetivo, fuente, Evidence Origin y campos comprobados en eventos reales; no inventar esquemas ni confundir datos sintéticos con observados.
+- Sensor/época y separación de reproducciones de validación frente a métricas operativas.
 - Lógica, umbral, intervalo y agrupación.
 - Correspondencia con ATT&CK y evidencia que la justifica.
 - Verdaderos positivos esperados y posibles falsos positivos.

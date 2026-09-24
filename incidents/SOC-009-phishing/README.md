@@ -1,5 +1,9 @@
 # SOC-009 — Investigación de phishing
 
+**Evidence Origin: Synthetic Training Sample**
+
+**Entorno: Controlled Detection Lab — CONTROLLED TELEMETRY.** Ejercicio CONTROLLED LAB con correo sintético de entrenamiento; no actividad de Internet observada.
+
 **Estado: pendiente de ejecución.** Etapa prevista: 9. Todavía no hay evidencias ni una clasificación del caso.
 
 ## Objetivo

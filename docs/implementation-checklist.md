@@ -1,6 +1,6 @@
 # Plan de implementación y avance
 
-**Punto actual:** entregable 0 terminado. La estructura, la arquitectura y las plantillas están listas. El siguiente paso es comprobar los recursos disponibles y desplegar Wazuh con Windows 11. Todavía no hay infraestructura instalada ni investigaciones ejecutadas.
+**Punto actual:** entregables 0 y 0.5 terminados. Se conserva la base y se añade arquitectura de honeypot aislado, pipeline, paneles y casos pendientes. **El siguiente entregable sigue siendo el 1, ahora después de 0.5:** recursos, red aislada, Wazuh y Windows 11/Sysmon. Todavía no hay infraestructura instalada, honeypot público ni investigaciones ejecutadas.
 
 Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada una se cerrará con sus archivos, pruebas, evidencias, problemas pendientes y siguiente paso documentados.
 
@@ -26,9 +26,25 @@ Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada un
 
 **Resultado:** base documental y repositorio local listos. Las comprobaciones están en el [informe del entregable 0](deliverables/deliverable-0.md).
 
+## Entregable 0.5 — Refactor de arquitectura honeypot
+
+- [x] Inspeccionar el repositorio, confirmar la validación inicial y preservar Deliverable 0, directorios, incidentes y plantillas.
+- [x] Actualizar README, arquitectura y Mermaid con Controlled Detection Lab e Internet Honeypot separados.
+- [x] Definir Cowrie emulado, frontera pública sin rutas al laboratorio, administración, firewall, egress, riesgos y recuperación.
+- [x] Diseñar JSON → transporte autenticado saliente → receptor separado → importación sin conexión → Wazuh → parsing/normalización → detección → enriquecimiento → paneles → investigación → reporting.
+- [x] Reservar configuraciones Cowrie/Wazuh sin inventar campos, reglas ni eventos; dejar mecanismo exacto para implementación.
+- [x] Exigir verificación de AUP, ToS, abuso, límites de ancho de banda y cargos antes de exposición.
+- [x] Documentar límites de GeoIP y reputación, seguridad de evidencia y procedencia visible en los quince casos.
+- [x] Añadir especificaciones de Global Honeypot Activity, SOC Overview y Network Anomalies, sin métricas ficticias.
+- [x] Añadir SOC-011–SOC-015 como placeholders de observaciones reales y plantilla Weekly Honeypot Threat Report.
+- [x] Mantener T-Pot opcional, diferir todo despliegue y colocar el entregable 1 después del refactor.
+- [x] Validar enlaces internos, ejecutar validador y `git diff --check`, revisar diff completo y cerrar como un commit lógico.
+
+**Resultado:** [informe de cierre 0.5](deliverables/deliverable-0.5.md). La evidencia de esta etapa es documental; no demuestra servicios desplegados, detecciones validadas ni actividad de Internet.
+
 ## Entregable 1 — Wazuh, Windows y Sysmon
 
-**Siguiente etapa.** Crear la red aislada y desplegar únicamente SOC-WAZUH y SOC-WIN11, con agente Wazuh, Sysmon y Defender activo. El objetivo es demostrar la llegada de eventos normales antes de ejecutar escenarios de investigación.
+**Siguiente etapa, posterior a 0.5; mismo alcance operativo del entregable 1 original.** Crear la red aislada y desplegar únicamente SOC-WAZUH y SOC-WIN11, con agente Wazuh, Sysmon y Defender activo. El objetivo es demostrar la llegada de eventos normales antes de ejecutar escenarios de investigación.
 
 - [ ] Comprobar RAM, disco y CPU disponibles, hipervisor compatible, requisitos de invitados, medios de evaluación y acceso a las máquinas. Confirmar que la subred propuesta no esté en uso.
 - [ ] Registrar versiones, descargas oficiales y sumas de verificación cuando se proporcionen, recursos, nombres de equipos y recuperación. Mantener instaladores y credenciales fuera de Git.
@@ -46,7 +62,7 @@ Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada un
 
 **Criterio de cierre:** las dos máquinas funcionan y están aisladas; Windows está registrado y cada canal requerido llega por una ruta documentada, con sus limitaciones de campos identificadas. Un agente conectado por sí solo no cumple este criterio. Si falta acceso al hipervisor o a un invitado, la instalación seguirá pendiente de ejecución manual.
 
-Ubuntu, el simulador, las investigaciones de ataque, Active Directory, Suricata, phishing, AWS, Splunk y la publicación en GitHub quedan para sus etapas correspondientes.
+Ubuntu, el simulador, las investigaciones de ataque, Active Directory, Suricata, phishing, AWS, Splunk y la publicación en GitHub quedan para sus etapas correspondientes. Cowrie, VPS, receptor externo, puertos públicos, T-Pot y cambios de nube tampoco forman parte del entregable 1. No se generarán ataques ni se abrirá el honeypot en esa etapa.
 
 ## Entregable 2 — Ubuntu y telemetría de autenticación
 
@@ -146,3 +162,45 @@ Ubuntu, el simulador, las investigaciones de ataque, Active Directory, Suricata,
 - [ ] Verificar que el objetivo, la infraestructura, los casos y las conclusiones se entiendan en 2–3 minutos.
 
 **Criterio de cierre:** repositorio revisado y preparado para publicación. La creación del repositorio remoto y la publicación se realizarán después de esa revisión.
+
+## Fases honeypot posteriores
+
+Estas fases extienden el plan sin renumerar entregables 1–12 ni incidentes SOC-001–SOC-010. HP-1 empezará después de cerrar el entregable 1; HP-2 depende de HP-1, HP-3 de HP-2 y de Wazuh disponible, HP-4 de HP-3 y de observaciones suficientes. Las etapas del laboratorio pueden conservar su secuencia independiente. El número de fase HP no equivale al ID de incidente.
+
+### HP-1 — Infraestructura y decisión de transporte
+
+- [ ] Completar la revisión de proveedor: AUP, ToS, abuso, banda y cargos, con evidencia fechada y alcance permitido.
+- [ ] Elegir infraestructura, método de aislamiento, versión Cowrie, servicios, management plane, cortafuegos IPv4/IPv6 y egress. Fijar cuotas, retención, presupuesto, salud y condiciones de parada.
+- [ ] Seleccionar transporte saliente cifrado/autenticado al receptor separado y transferencia sin conexión al SOC. Registrar puertos, identidades, revocación, cola, periodicidad y latencia aceptable.
+- [ ] Preparar configuraciones revisables y procedimiento de recuperación; resolver interfaz/cobertura y recursos de Suricata público o su alternativa.
+
+**Cierre:** decisiones y configuraciones concretas revisadas, controles verificables y proveedor permitido. No se abre un sensor sin completar la [lista de despliegue](../honeypot/deployment-checklist.md).
+
+### HP-2 — Sensor Cowrie y controles
+
+- [ ] Desplegar únicamente infraestructura del honeypot definida en HP-1, como trabajo futuro separado de 0.5 y del entregable 1.
+- [ ] Probar emulación, administración separada, ausencia de rutas al hogar/SOC, egress, cuotas, transporte, cola, tiempo y recuperación. Tráfico de prueba solo privado, controlado y etiquetado.
+- [ ] Capturar e inspeccionar JSON real del software y probar límites del punto de observación. Abrir únicamente servicios permitidos después de validar controles y registrar el inicio de observación.
+
+**Cierre:** sensor contenido, datos reales de la fuente y transporte probado, sin afirmar que una prueba sea actividad no solicitada. No ejecutar descargas recibidas.
+
+### HP-3 — Ingestión y analítica comprobadas
+
+- [ ] Validar importación Wazuh y contrato de campos con muestras reales: tipos, tiempos, sesión, sensor/época, origen, NAT, duración y ausencias.
+- [ ] Crear únicamente reglas/decodificadores necesarios después de inspección, controles positivos/negativos y reconciliación de eventos, duplicados, rechazos y alertas.
+- [ ] Configurar enriquecimiento local/externo opcional, consultas y paneles con datos observados disponibles; documentar cobertura, retención, salud y demora por lotes.
+- [ ] Reunir métricas de red y baseline antes de afirmar anomalías volumétricas. Probar reglas por reproducción separada, sin carga pública.
+
+**Cierre:** cadena Cowrie → JSON → transporte → Wazuh → detección → búsqueda/panel reproducible, procedencia y privacidad verificadas. Sin datos suficientes, conservar componentes/casos pendientes en lugar de inventarlos.
+
+### HP-4 — Investigaciones e informes
+
+- [ ] Completar SOC-011–SOC-015 únicamente si ocurre actividad pertinente real, con alerta/triage, evidencia, enriquecimiento, timeline, ATT&CK, clasificación y decisión.
+- [ ] Emitir el [informe semanal](../reports/templates/weekly-honeypot-threat-report.md) con consultas verificadas, cobertura, limitaciones, brechas y recomendaciones.
+- [ ] Revisar extractos, manifiestos, privacidad, enlaces y portafolio; mantener raws, credentials y payloads privados.
+
+**Cierre:** profundidad analítica y decisiones respaldadas, no cuota de ataques ni DDoS obligatorio. Cada caso sin evidencia permanece pendiente. Repetir la revisión de portafolio del entregable 12 al incorporar resultados nuevos.
+
+### HP opcional — T-Pot
+
+Solo después de probar el pipeline Cowrie y una investigación completa, evaluar T-Pot para protocolos adicionales, Elastic, Attack Map y telemetría de red. Requiere revisión de costes, proveedor, aislamiento y datos. Sin instalación ni despliegue en 0.5.

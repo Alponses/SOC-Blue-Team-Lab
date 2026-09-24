@@ -93,3 +93,13 @@ node_modules/
 *.swo
 
 # No analiza contenido, tamaños ni secretos. Revisar archivos antes de prepararlos para Git.
+
+# Salidas conocidas del honeypot: originales siempre fuera del repositorio.
+# Los extractos revisados usan nombres propios y manifiesto; esto no inspecciona contenido.
+cowrie.json*
+eve.json*
+tty/
+quarantine/
+spool/
+var/log/cowrie/
+var/lib/cowrie/

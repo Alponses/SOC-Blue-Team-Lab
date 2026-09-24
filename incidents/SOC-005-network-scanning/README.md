@@ -1,5 +1,9 @@
 # SOC-005 — Escaneo de red
 
+**Evidence Origin: Controlled Simulation**
+
+**Entorno: Controlled Detection Lab — CONTROLLED TELEMETRY.** Escenario controlado; fuente prevista y aún no recopilada.
+
 **Estado: pendiente de ejecución.** Etapa prevista: 6. Todavía no hay evidencias ni una clasificación del caso.
 
 ## Objetivo

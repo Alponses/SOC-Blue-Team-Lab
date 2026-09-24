@@ -1,14 +1,46 @@
-# Arquitectura del laboratorio
+# Arquitectura híbrida del SOC y honeypot
 
 El laboratorio está diseñado para investigar un mismo evento desde tres perspectivas: el equipo donde ocurre, la identidad que lo ejecuta y el tráfico que genera. Wazuh será el SIEM principal. Splunk se incorporará después para practicar consultas sobre los datos obtenidos.
 
-**Avance:** diseño definido; infraestructura pendiente de despliegue. La instalación y las comprobaciones de red **requieren ejecución manual**. El [diagrama del README](../README.md#arquitectura) muestra la topología propuesta.
+**Avance:** entregable 0.5, arquitectura híbrida definida; infraestructura pendiente de despliegue. Se conserva el diseño del entregable 0 y se añade una zona pública independiente. La instalación y las comprobaciones de red **requieren ejecución manual**. El [diagrama del README](../README.md#arquitectura) muestra la topología propuesta.
 
 ## Alcance y requisitos previos
 
 La implementación se divide en etapas para trabajar con pocos equipos encendidos a la vez. Primero se desplegarán Wazuh y Windows 11; después se añadirán Linux, el simulador, la supervisión de red y Active Directory.
 
 El repositorio se inició en un equipo macOS x86_64. Falta comprobar la memoria y el almacenamiento disponibles, seleccionar un hipervisor compatible y revisar los requisitos y licencias de los sistemas invitados. Las versiones y fuentes oficiales de descarga se registrarán durante el entregable 1.
+
+## Dos entornos y una frontera de datos
+
+El **Controlled Detection Lab** conserva `10.10.10.0/24`, equipos, direcciones y simulaciones: **CONTROLLED TELEMETRY**. El **Internet Honeypot** será Cowrie emulado en un VPS/host público dedicado, fuera de esa subred: **OBSERVED INTERNET TELEMETRY**. SOC-001–SOC-010 permanecen ejercicios controlados; SOC-011–SOC-015 requieren actividad no solicitada real. Cada informe declara [Evidence Origin](evidence-handling.md#evidence-origin).
+
+**Observed Internet activity does not imply compromise of a production environment.** La aceptación de una sesión por el señuelo no prueba acceso al host. No habrá shell real para visitantes, backend proxy ni ejecución automática de payloads.
+
+```mermaid
+flowchart TB
+    internet["Internet no confiable"] --> sensor["Sensor dedicado: Cowrie emulado / JSON"]
+    sensor -->|"Salida cifrada y autenticada, solo datos"| relay["Receptor externo separado"]
+    relay --> transfer["Validación y lote con manifiesto"]
+    transfer -.->|"Traslado sin conexión IP"| imported["Importación local al SOC"]
+    subgraph isolated["10.10.10.0/24: red aislada existente"]
+        imported --> siem["SOC-WAZUH: analítica por origen"]
+        endpoints["Windows / Sysmon / Linux / Audit / AD"] -->|"Telemetría controlada"| siem
+        simulator["SOC-SIM: objetivos privados autorizados"] -.-> endpoints
+    end
+    siem --> result["Detección, enriquecimiento, paneles, investigación e informe"]
+```
+
+El flujo discontinuo representa transferencia de archivos revisados sin una conexión IP entre zonas. Se conserva Wazuh en `10.10.10.10`; el sensor y el receptor no podrán alcanzar el SOC, hogar, equipos personales/corporativos, AD ni Windows. Tampoco tendrán secretos del laboratorio. No se añade una segunda interfaz pública al SIEM. Las respuestas del protocolo de transporte no constituyen autorización de administración remota.
+
+El patrón base envía telemetría a un receptor separado y transfiere lotes al laboratorio sin conexión de red, con latencia declarada. El protocolo concreto, receptor, periodicidad y medio de transferencia se elegirán con infraestructura disponible en HP-1. Una analítica continua requerirá revisión posterior de las fronteras, sin convertir la red aislada en destino del honeypot. [Pipeline y alternativas admisibles](../honeypot/telemetry-pipeline.md).
+
+| Zona nueva | Identidad/red | Recursos y estado |
+| --- | --- | --- |
+| Sensor Cowrie | Pública dedicada; proveedor/IP sin asignar; nunca dentro de `10.10.10.0/24` | Por dimensionar según carga, cuotas, retención y Suricata opcional |
+| Receptor de telemetría | Separado del sensor y del laboratorio; sin rutas entre ellos | Transporte y almacenamiento por elegir; no comparte credenciales del SOC |
+| Estación de transferencia | Dedicada, sin doble conexión simultánea ni datos personales | Procedimiento y capacidad por verificar; no es un router |
+
+Estos recursos no están incluidos en las estimaciones del laboratorio siguiente. El proveedor debe permitir explícitamente el uso conforme a AUP/ToS y sus procedimientos de abuso; verificar banda y cargos antes de desplegar. El [modelo de seguridad](../honeypot/security-model.md) contiene matriz de firewall, management plane, egress, fallos y recuperación. La [lista de despliegue](../honeypot/deployment-checklist.md) define los requisitos de apertura.
 
 ## Equipos y recursos previstos
 
@@ -44,6 +76,10 @@ Compartir un conmutador virtual no garantiza que Suricata vea el tráfico unicas
 El tráfico DNS entre Windows y el controlador de dominio se investigará con eventos del equipo, registros del servidor DNS o una captura en esa ruta. El sensor inicial de Ubuntu no cubrirá ese intercambio. Las capturas completas se conservarán de forma privada.
 
 EVE JSON permite registrar alertas, flujos y datos de protocolos. Cada tipo de salida y su cobertura se comprobarán durante la instalación; un registro de flujo no equivale por sí solo a una alerta IDS. La [documentación de EVE](https://docs.suricata.io/en/latest/output/eve/eve-json-output.html) sirve de referencia; antes de configurar Suricata se consultará la documentación de la versión instalada, ya que la rama `latest` puede incluir funciones en desarrollo.
+
+### Visibilidad del sensor público
+
+Suricata en SOC-LINUX no ve Cowrie remoto. Se evaluará otro Suricata pasivo sobre la interfaz pública real del sensor o un punto de copia de tráfico del proveedor, sujeto a permisos y recursos. Registrar interfaz, direcciones de captura, NAT, cobertura, pérdida y tipos EVE: alertas, flujos, DNS y HTTP/TLS disponibles. SSH cifrado no revela sus comandos a la captura; estos provienen de Cowrie. No presumir acceso a tráfico filtrado upstream. [Evaluación detallada](../honeypot/suricata-visibility.md).
 
 ### Comunicaciones previstas
 
@@ -87,6 +123,8 @@ Antes de iniciar cada investigación se comprobarán el evento en origen, su rec
 | Wazuh FIM | Ruta de prueba protegida y dedicada | Archivo, hora, estado/hash anterior y actual; actor si está disponible | Identificar al autor requiere una configuración compatible de auditoría o who-data |
 | Security y DNS de AD | Agente en el controlador y registro DNS habilitado | SID del actor y del destinatario, cuenta/grupo, resultado, cliente y respuesta DNS cuando exista | Diferenciar autenticación en el controlador de inicio de sesión en la estación |
 | Suricata EVE | Lectura de salida JSON seleccionada desde el agente Ubuntu | Hora, IP/puerto de origen y destino, protocolo, ID de flujo, datos DNS/HTTP/alerta | Solo tráfico capturado; el contenido cifrado puede no estar disponible |
+| Cowrie público | JSON privado → receptor separado → lotes revisados → colector local Wazuh | Conceptos requeridos: ID/tipo de evento, tiempo, sensor, origen/puertos, protocolo, usuario, sesión, comando y duración disponible | Rutas JSON y unidades por validar con eventos; sin reglas fabricadas, secretos fuera de evidencia pública |
+| Red del sensor público | EVE y contadores del host/proveedor por decidir | Tasas, SYN/estados TCP, flujos, pérdida y disponibilidad | Cowrie no sustituye métricas de red; no confundir logs con volumen de tráfico |
 | CloudTrail / CloudWatch | Exportaciones revisadas de la cuenta propia en la etapa 10 | eventTime, eventName, eventSource, userIdentity, sourceIPAddress, resources, solicitud/respuesta, error y eventID | Verificar cobertura de eventos/regiones y entrega a CloudWatch por separado |
 
 Sysmon ofrece eventos de creación de procesos, conexiones y DNS. El registro de conexiones de red está desactivado por defecto según la [documentación de Microsoft](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon), por lo que se configurará y comprobará de forma explícita.
@@ -99,8 +137,19 @@ AWS se trabajará en una cuenta propia dedicada al laboratorio. IAM, CloudTrail,
 
 Splunk será un entorno de análisis secundario para datos del laboratorio sin información sensible. En la etapa 11 se elegirán equipo, versión, recursos, índices y tipos de fuente. La práctica prevista cubre Splunk Enterprise y SPL; Enterprise Security queda fuera del alcance actual.
 
+## Analítica y limitaciones
+
+[Global Honeypot Activity](../dashboards/attack-map/README.md), [SOC Overview](../dashboards/soc-overview/README.md) y [Network Anomalies](../dashboards/network-anomalies/README.md) son diseños sin datos: **NO DATA — DEPLOYMENT PENDING**. La copia analítica de eventos se separa de alertas y pruebas. [Enriquecimiento](../enrichment/README.md) y [reporte semanal](../reports/README.md) registrarán fuente, ventana, calidad, confianza y decisión.
+
+> Geographic information represents the estimated location of the observed source IP address and does not establish the physical location or identity of an attacker.
+
+La IP observada puede representar VPN, proxy, Tor, nube, nodo comprometido o NAT. No inferir ubicación personal, identidad ni coordinación. Los conteos altos no confirman DDoS: hacen falta tasas, baseline, distribución e impacto respaldados por telemetría adecuada o confirmación de un proveedor upstream. No se generará carga contra infraestructura pública.
+
+El [contrato Cowrie/Wazuh](../configs/honeypot/wazuh/README.md) se implementará después de inspeccionar eventos de la versión desplegada; no existen decodificadores ni reglas personalizados todavía. [T-Pot](../honeypot/README.md#fases-posteriores-y-t-pot) queda opcional para después de probar todo el pipeline Cowrie.
+
 ## Comprobaciones pendientes
 
+- [ ] Resolver proveedor permitido, transporte y transferencia sin rutas al laboratorio, recursos, egress, retención y recuperación pública antes de desplegar el honeypot.
 - [ ] Registrar capacidad del anfitrión, compatibilidad del hipervisor y los invitados, y método de recuperación.
 - [ ] Configurar la red y los objetivos permitidos; comprobar rutas, adaptadores y reenvío.
 - [ ] Documentar versiones, fuentes de tiempo, políticas de registro e instantáneas.

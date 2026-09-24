@@ -1,5 +1,9 @@
 # SOC-002 — Fallos de autenticación en Windows
 
+**Evidence Origin: Controlled Simulation**
+
+**Entorno: Controlled Detection Lab — CONTROLLED TELEMETRY.** Escenario controlado; fuente prevista y aún no recopilada.
+
 **Estado: pendiente de ejecución.** Etapa prevista: 4. Todavía no hay evidencias ni una clasificación del caso.
 
 ## Objetivo
