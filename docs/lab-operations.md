@@ -13,6 +13,8 @@ entregable 1 se verificará el entorno disponible y se reutilizará la red exist
 si cumple el diseño, sin recrearla por suposición. Véase el
 [orden de implementación](implementation-checklist.md#entregable-1--wazuh-windows-y-sysmon).
 
+**Actualización del entregable 1 (2026-09-25):** el [preflight real](../evidence/deliverable-1/preflight.md) verificó VirtualBox y SOC-LAB registrada. SOC-WAZUH y SOC-WIN11 no están registradas en la instancia inspeccionada. El [informe actual](deliverables/deliverable-1.md) mantiene **DELIVERABLE 1 — IN PROGRESS**; configuración, instalación y validación en invitados requieren ejecución manual. Los ejemplos de salida de esta guía siguen siendo ejemplos salvo lo respaldado por ese preflight.
+
 ---
 
 ## 1. Propósito

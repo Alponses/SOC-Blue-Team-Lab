@@ -26,18 +26,18 @@ AWS IAM, CloudTrail y CloudWatch se investigarán en una cuenta propia de labora
 
 ## Avance del proyecto
 
-**Etapa actual: entregable 0.5 completado — refactor de arquitectura híbrida, revisado contra sus requisitos. Entregable 0 preservado.** La [revisión de cierre](docs/deliverables/deliverable-0.5-review.md) identifica qué ya existía, qué se ajustó y las comprobaciones de esta revisión.
+**Etapa actual: DELIVERABLE 1 — IN PROGRESS.** Configuración de telemetría Windows y procedimientos preparados; despliegue e ingestión **REQUIRES MANUAL EXECUTION**. El [informe del entregable 1](docs/deliverables/deliverable-1.md) separa configuración escrita, preflight observado y validaciones pendientes. Los entregables 0 y 0.5 siguen cerrados; la [revisión de cierre 0.5](docs/deliverables/deliverable-0.5-review.md) se conserva.
 
 | Área | Avance |
 | --- | --- |
-| Documentación | Arquitectura híbrida, fronteras, riesgos, pipeline y plan preparados en español |
-| Infraestructura | Despliegues de Wazuh, endpoints y sensor público pendientes; sin cambios de infraestructura en 0.5 |
+| Documentación | Arquitectura preservada; guías de instalación y validación de los cinco canales añadidas |
+| Infraestructura | VirtualBox/SOC-LAB inspeccionados; SOC-WAZUH y SOC-WIN11 no registrados en la instancia revisada; despliegues pendientes |
 | Investigaciones | SOC-001–SOC-010 controlados preservados; SOC-011–SOC-015 placeholders observados, sin investigar |
 | Detecciones | Reglas pendientes de inspeccionar eventos y validar campos |
 | Paneles y reporte | Tres especificaciones y plantilla semanal; NO DATA — DEPLOYMENT PENDING |
-| Evidencias | Sin telemetría recopilada; originales futuros privados y extractos sanitizados públicos |
+| Evidencias | Preflight del host registrado; sin telemetría Windows/Wazuh recopilada; originales futuros privados |
 
-**Lo siguiente, después de 0.5: entregable 1 — Wazuh, Windows y Sysmon.** Comprobar los recursos del equipo y el hipervisor, verificar o crear la red aislada e instalar únicamente Wazuh y Windows 11 con Sysmon. El primer hito operativo será verificar que los eventos lleguen al SIEM desde cada canal configurado. Esta etapa **requiere ejecución manual** en el laboratorio. La [guía operativa existente](docs/lab-operations.md) conserva antecedentes de VirtualBox y SOC-LAB; su estado no se revalidó en esta revisión documental.
+**En curso: entregable 1 — Wazuh, Windows y Sysmon.** El [preflight](evidence/deliverable-1/preflight.md) confirma VirtualBox y la red registrada SOC-LAB; faltan medios/rutas y las dos VM. Seguir [Wazuh](docs/wazuh-installation.md), [Windows](docs/windows11-installation.md) y [validación por fuente](docs/telemetry-validation.md). La [matriz](docs/deliverables/deliverable-1.md#matriz-de-validación) permanece sin resultados operativos. La [guía operativa](docs/lab-operations.md) conserva el procedimiento general.
 
 El detalle está en la [arquitectura](docs/architecture.md), el [plan de implementación](docs/implementation-checklist.md), el [informe del entregable 0](docs/deliverables/deliverable-0.md) y el [cierre de 0.5](docs/deliverables/deliverable-0.5.md).
 

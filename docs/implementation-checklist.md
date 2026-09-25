@@ -1,6 +1,6 @@
 # Plan de implementación y avance
 
-**Punto actual:** entregables 0 y 0.5 terminados. Se conserva la base y se añade arquitectura de honeypot aislado, pipeline, paneles y casos pendientes. **El siguiente entregable sigue siendo el 1, ahora después de 0.5:** recursos, red aislada, Wazuh y Windows 11/Sysmon. Esta revisión no ejecuta ni acredita despliegues operativos o investigaciones. Los antecedentes de VirtualBox/SOC-LAB de la [guía local](lab-operations.md) se conservan y deberán comprobarse al iniciar el entregable 1.
+**Punto actual:** entregables 0 y 0.5 terminados; **DELIVERABLE 1 — IN PROGRESS**. [Preflight observado](../evidence/deliverable-1/preflight.md), configuraciones y procedimientos preparados. SOC-WAZUH y SOC-WIN11 no están registrados en el hipervisor inspeccionado; despliegue y cinco fuentes de telemetría **REQUIRES MANUAL EXECUTION**. Se conservan arquitectura y alcance de las etapas posteriores.
 
 Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada una se cerrará con sus archivos, pruebas, evidencias, problemas pendientes y siguiente paso documentados.
 
@@ -45,7 +45,7 @@ Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada un
 
 ## Entregable 1 — Wazuh, Windows y Sysmon
 
-**Siguiente etapa, posterior a 0.5; mismo alcance operativo del entregable 1 original.** Verificar o crear la red aislada y desplegar únicamente SOC-WAZUH y SOC-WIN11, con agente Wazuh, Sysmon y Defender activo. El objetivo es demostrar la llegada de eventos normales antes de ejecutar escenarios de investigación.
+**En curso, posterior a 0.5; mismo alcance operativo del entregable 1 original.** Configuraciones en Git y [guías de ejecución](deliverables/deliverable-1.md) disponibles. Reutilizar SOC-LAB tras verificar el aislamiento efectivo y desplegar únicamente SOC-WAZUH y SOC-WIN11, con agente Wazuh, Sysmon y Defender activo. Los checks siguientes requieren resultados reales; el preflight parcial no los completa.
 
 - [ ] Comprobar RAM, disco y CPU disponibles, hipervisor compatible, requisitos de invitados, medios de evaluación y acceso a las máquinas. Confirmar que la subred propuesta no esté en uso.
 - [ ] Registrar versiones, descargas oficiales y sumas de verificación cuando se proporcionen, recursos, nombres de equipos y recuperación. Mantener instaladores y credenciales fuera de Git.

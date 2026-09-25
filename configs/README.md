@@ -1,6 +1,6 @@
 # Configuraciones del laboratorio
 
-Este directorio reunirá las configuraciones necesarias para reproducir la recopilación y las pruebas. **Avance:** carpetas preparadas; todavía no hay configuraciones desplegadas.
+Este directorio reúne las configuraciones necesarias para reproducir la recopilación y las pruebas. **Avance:** base Windows del entregable 1 escrita y procedimiento de archives preparado; todavía no hay configuraciones desplegadas. Véase el [estado observado](../docs/deliverables/deliverable-1.md).
 
 | Directorio | Contenido previsto | Etapa |
 | --- | --- | --- |
