@@ -26,18 +26,18 @@ AWS IAM, CloudTrail y CloudWatch se investigarán en una cuenta propia de labora
 
 ## Avance del proyecto
 
-**Etapa actual: entregable 0.5 completado — refactor de arquitectura híbrida. Entregable 0 preservado.**
+**Etapa actual: entregable 0.5 completado — refactor de arquitectura híbrida, revisado contra sus requisitos. Entregable 0 preservado.** La [revisión de cierre](docs/deliverables/deliverable-0.5-review.md) identifica qué ya existía, qué se ajustó y las comprobaciones de esta revisión.
 
 | Área | Avance |
 | --- | --- |
 | Documentación | Arquitectura híbrida, fronteras, riesgos, pipeline y plan preparados en español |
-| Infraestructura | Laboratorio y sensor público diseñados; ningún despliegue realizado |
+| Infraestructura | Despliegues de Wazuh, endpoints y sensor público pendientes; sin cambios de infraestructura en 0.5 |
 | Investigaciones | SOC-001–SOC-010 controlados preservados; SOC-011–SOC-015 placeholders observados, sin investigar |
 | Detecciones | Reglas pendientes de inspeccionar eventos y validar campos |
 | Paneles y reporte | Tres especificaciones y plantilla semanal; NO DATA — DEPLOYMENT PENDING |
 | Evidencias | Sin telemetría recopilada; originales futuros privados y extractos sanitizados públicos |
 
-**Lo siguiente, después de 0.5: entregable 1 — Wazuh, Windows y Sysmon.** Comprobar los recursos del equipo y el hipervisor, crear la red aislada e instalar únicamente Wazuh y Windows 11 con Sysmon. El primer hito operativo será verificar que los eventos lleguen al SIEM desde cada canal configurado. Esta etapa **requiere ejecución manual** en el laboratorio.
+**Lo siguiente, después de 0.5: entregable 1 — Wazuh, Windows y Sysmon.** Comprobar los recursos del equipo y el hipervisor, verificar o crear la red aislada e instalar únicamente Wazuh y Windows 11 con Sysmon. El primer hito operativo será verificar que los eventos lleguen al SIEM desde cada canal configurado. Esta etapa **requiere ejecución manual** en el laboratorio. La [guía operativa existente](docs/lab-operations.md) conserva antecedentes de VirtualBox y SOC-LAB; su estado no se revalidó en esta revisión documental.
 
 El detalle está en la [arquitectura](docs/architecture.md), el [plan de implementación](docs/implementation-checklist.md), el [informe del entregable 0](docs/deliverables/deliverable-0.md) y el [cierre de 0.5](docs/deliverables/deliverable-0.5.md).
 
@@ -53,7 +53,8 @@ flowchart LR
         hostadmin["Host: administración separada del señuelo"]
     end
     json -->|"Envío saliente cifrado y autenticado"| receiver["Receptor separado: sin rutas al SOC"]
-    receiver -.->|"Lotes revisados sin conexión de red"| ingest
+    receiver --> review["Validación y minimización: copia analítica privada"]
+    review -.->|"Lotes revisados sin conexión de red"| ingest
     analyst["Analista: administración privada"]
     subgraph lab["Controlled Detection Lab: 10.10.10.0/24 sin Internet durante pruebas"]
         ingest["Importación local de telemetría observada"] --> wazuh["10.10.10.10: Wazuh / Security Analytics"]
@@ -73,7 +74,7 @@ flowchart LR
     curated -.->|"Importación posterior sin conexión"| splunk["Splunk Enterprise / SPL"]
 ```
 
-Cowrie y el receptor estarán fuera de `10.10.10.0/24`, sin acceso confiable al hogar, equipos personales/corporativos, AD ni Windows. Wazuh, su API, indexador y registro de agentes seguirán privados. La decisión del transporte concreto se resolverá antes de cualquier despliegue. Consulta [zonas de confianza](honeypot/security-model.md) y [flujo seguro](honeypot/telemetry-pipeline.md).
+Cowrie y el receptor estarán fuera de `10.10.10.0/24`, sin acceso confiable al hogar, equipos personales/corporativos, AD ni Windows. Wazuh, su API, indexador y registro de agentes seguirán privados. La decisión del transporte concreto se resolverá antes de cualquier despliegue. Consulta [zonas de confianza](honeypot/security-model.md), [flujo seguro](honeypot/telemetry-pipeline.md) y [decisiones pendientes de HP-1](honeypot/implementation-decisions.md).
 
 Suricata en SOC-LINUX solo observa el tráfico que atraviesa su interfaz; no toda la red ni el VPS. La cobertura pública se evaluará por separado. AWS conserva su fase independiente. Consulta [visibilidad del laboratorio](docs/architecture.md#aislamiento-y-visibilidad-de-la-red) y [Suricata público](honeypot/suricata-visibility.md).
 

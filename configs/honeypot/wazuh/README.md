@@ -30,6 +30,8 @@ Las contraseñas se conservarán solo en almacenamiento privado restringido cuan
 
 El colector local Wazuh leerá JSON aprobado desde una ruta dedicada, después del [transporte e importación](../../../honeypot/telemetry-pipeline.md). Se documentarán framing por registro, permisos, rotación y checkpoint. No habrá agente del VPS conectado directamente al manager privado ni receptor Wazuh abierto a Internet.
 
+La ruta recibirá únicamente la copia analítica minimizada, publicada después de validar el lote completo; los originales con credenciales permanecen en almacenamiento restringido fuera de ese colector. El parser JSON no sustituye esta revisión. Probar que los secretos retirados tampoco reaparezcan en `message`, comandos, `full_log`, archivos de eventos, alertas o exportaciones. Registrar explícitamente qué transformaciones limitan un análisis posterior.
+
 Probar primero el decodificador JSON integrado con eventos reales de la versión seleccionada. Wazuh permite extraer campos JSON; las salidas y limitaciones deben comprobarse antes de decidir si hace falta un decodificador personalizado. [Decodificador JSON oficial](https://documentation.wazuh.com/current/user-manual/ruleset/decoders/json-decoder.html).
 
 Registrar para cada correspondencia: ruta exacta de origen, ejemplo revisado, tipo/unidad, campo de destino observado, transformación, null/ausente, versión y resultado de prueba. Comprobar cómo aparecen IP, tiempos y campos anidados en análisis e indexación; el nombre utilizado por una regla puede diferir de la ruta consultada en el índice. No forzar campos ajenos para que una regla aparente funcionar.
@@ -39,6 +41,14 @@ Registrar para cada correspondencia: ruta exacta de origen, ejemplo revisado, ti
 Definir una ruta consultable para todos los eventos Cowrie aceptados, con retención y cuota, además de las alertas. El archivo de eventos de Wazuh permite conservar eventos que no producen alertas; requiere habilitación y configuración de indexación apropiadas, no es un panel disponible automáticamente. [Archivo e indexación de eventos Wazuh](https://documentation.wazuh.com/current/user-manual/manager/event-logging.html).
 
 No calcular autenticaciones o sesiones únicamente desde el índice de alertas. Registrar índice/ruta real, filtros de origen/sensor, cobertura, control de acceso, eliminación y costes antes de activar archivo global. Separar el original privado de la copia analítica minimizada y de la evidencia pública; aplicar minimización también a texto duplicado del mensaje original, exportaciones y `full_log` si aparece. No prometer ausencia de contraseñas eliminando un único atributo visible.
+
+## Correlación temporal por lotes
+
+El tiempo Cowrie validado, la recepción del lote y la hora de análisis Wazuh son relojes distintos. La [sintaxis de reglas Wazuh](https://documentation.wazuh.com/current/user-manual/ruleset/ruleset-xml-syntax/rules.html) define controles como `frequency` y `timeframe`; extraer un timestamp no demuestra qué reloj utiliza una correlación de la versión elegida. Esa semántica se comprobará antes de interpretar una alerta como frecuencia observada en Internet.
+
+Las reglas de evento individual pueden clasificar comportamiento tras inspeccionar sus campos. Para SOC-011/SOC-013 y tasas históricas, validar agregaciones sobre tiempo de evento y sensor en el conjunto consultable. Si una regla usa tiempo de procesamiento, no utilizar su agrupación de llegadas como prueba de una ráfaga histórica: respaldar la investigación con una consulta por ventana de observación. El mecanismo de búsqueda/correlación y sus límites se documentarán en HP-3, sin añadir reglas supuestas en 0.5.
+
+La aceptación privada comparará importación inmediata y demorada de la misma muestra real del software, con origen de prueba y conjunto separados. Incluir intentos separados en el tiempo que llegan juntos, una sesión dividida entre lotes, registros fuera de orden y reenvío duplicado. Los recuentos deduplicados y la clasificación sustentada en tiempo de evento deben coincidir; guardar diferencias de alertas como limitaciones del motor. Una llegada tardía puede revisar una ventana anterior: conservar corte de ingestión, versión del resultado y motivo del cambio.
 
 ## Detecciones y aceptación
 

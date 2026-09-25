@@ -19,14 +19,17 @@
 - [ ] Aplicar salida denegada por defecto y excepciones por servicio/identidad. Verificar bloqueo de descargas, forwarding, proxy y conexiones arbitrarias; nunca probar contra terceros.
 - [ ] Elegir y documentar [transporte](telemetry-pipeline.md), receptor sin rutas al SOC, identidades, validación de destino, revocación, cola y acuses. Probar que una identidad inválida no pueda entregar datos.
 - [ ] Definir transferencia local revisada, periodicidad y demora aceptable. Probar ingestión Wazuh sin exponer panel, API, indexador ni registro público de agentes.
+- [ ] Separar original restringido, copia analítica minimizada y extracto publicable; validar el lote antes de la lectura Wazuh. Comprobar que secretos de prueba no aparezcan en mensajes, `full_log`, archivos, índices ni exportaciones.
 - [ ] Definir valores concretos de cuotas, retención, rotación, duración de sesiones, capacidad, pérdida tolerable y parada por falta de telemetría; verificar alertas de salud por canal independiente.
 - [ ] Desactivar enriquecimiento, envío de muestras y reportes de abuso automáticos a terceros. Registrar fuente horaria, desfase, sensor/época y política privada de evidencia.
 - [ ] Evaluar [Suricata](suricata-visibility.md), interfaz y métricas de host/proveedor necesarias; registrar visibilidad no disponible.
+- [ ] Completar el [registro de decisiones HP-1](implementation-decisions.md) con responsable, opciones, elección y evidencia; una casilla marcada sin comprobación no habilita exposición pública.
 
 ## Aceptación y apertura futura
 
 - [ ] Probar primero con tráfico inocuo y autorizado en entorno privado: autenticación, comando marcador, cierre, intentos de salida bloqueados, interrupción de transporte, rotación y recuperación. Etiquetar `Evidence Origin: Controlled Simulation`.
 - [ ] Guardar muestras reales del software de esas pruebas, comprobar campos y fijar contrato. No mezclarlas con actividad no solicitada ni métricas operativas.
+- [ ] Demostrar recepción local de un lote minimizado en Wazuh antes de abrir el sensor. Reservar para HP-3 la correlación por tiempo de evento, los casos tardíos/repetidos y la validación completa de detecciones; no presentar un transporte probado como analítica ya validada.
 - [ ] Revisar el [modelo de seguridad](security-model.md), evidencia de las pruebas y procedimiento de recuperación. Registrar qué responsable abre únicamente los servicios aprobados y cuándo.
 - [ ] Tras la apertura, distinguir pruebas administrativas de observaciones de Internet; supervisar capacidad, retraso, pérdida y costes. No generar ataques públicos para producir casos o validar umbrales.
 - [ ] Detener exposición ante compromiso del host, pérdida de controles, aviso del proveedor, costes fuera del límite o incapacidad de supervisión. No bajar controles para mantener el conteo.

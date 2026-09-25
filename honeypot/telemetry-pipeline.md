@@ -13,7 +13,9 @@ flowchart LR
     end
     subgraph reception["Zona separada: sin rutas al laboratorio"]
         receiver["Receptor autenticado: solo datos"] --> quarantine["Validación, cuota y cuarentena"]
-        quarantine --> batch["Lote inmutable + manifiesto"]
+        quarantine --> original["Original restringido: retención privada"]
+        quarantine --> minimize["Minimización: retirar secretos y validar copia"]
+        minimize --> batch["Lote analítico privado + manifiesto"]
     end
     sender -->|"Conexión saliente cifrada y autenticada"| receiver
     batch -.->|"Transferencia revisada sin conexión de red"| importer
@@ -44,6 +46,18 @@ Elegir **una** alternativa después de comparar infraestructura, costes, permiso
 
 La exportación del receptor se hará mediante una estación de transferencia dedicada, sin acceso a datos personales ni corporativos. Se validará allí el lote y se entregará solo texto estructurado mediante un medio controlado, sin red simultánea al laboratorio, ejecución automática ni archivos de sesión binarios. Verificar cifrado del almacenamiento/transporte, hash de manifiesto por canal autenticado y permisos de lectura. Importar en una carpeta local dedicada y vigilada por el colector Wazuh. El procedimiento exacto, responsable, periodicidad y aceptación del retraso son decisiones previas al despliegue. Si la infraestructura no permite cumplirlo, HP-1 queda pendiente.
 
+## Datos que cruzan la frontera
+
+| Conjunto | Destino y tratamiento |
+| --- | --- |
+| Original Cowrie/EVE | Almacenamiento privado restringido en la zona de recepción, cifrado y con retención definida; nunca Git ni carpeta de lectura general del SIEM |
+| Copia analítica minimizada | Lote privado validado para Wazuh: retirar secretos también de mensajes, comandos y copias del JSON original antes de importar; conservar IP de conexión y campos útiles según acceso aprobado |
+| Extracto publicable | Selección posterior del analista, con alias, URL neutralizadas, manifiesto y revisión independiente; la minimización para Wazuh no autoriza publicación |
+
+Validar el lote por completo en una carpeta de preparación fuera del colector. Publicar el archivo local solo después de comprobar manifiesto, identidad, límites, JSON, transformaciones y duplicados; no dejar que Wazuh lea una copia parcial ni registros rechazados. Si la minimización no puede revisarse con confianza, mantener esos registros en cuarentena y contabilizar la carencia. Los hashes del original y de cada copia son distintos y conservarán trazabilidad privada. El traslado sin red limita rutas, pero no vuelve confiable el contenido ni demuestra que el sensor esté intacto.
+
+Una comparación sensible para SOC-013 se hará en el entorno restringido del original, si está justificada; no se reintroducirán contraseñas en la copia analítica para completar una investigación. La aceptación de HP-3 incluirá comprobar que un secreto marcador de una prueba privada no aparezca en archivo, alerta, índice ni exportación del SIEM.
+
 ## Contrato y trazabilidad
 
 Los campos técnicos de Cowrie se inspeccionarán en eventos de la versión elegida. [La especificación Wazuh](../configs/honeypot/wazuh/README.md) registra requisitos semánticos, no un esquema inventado. No habrá decodificadores ni reglas antes de disponer de muestras reales de la fuente; las pruebas controladas de integración llevarán su origen separado.
@@ -63,6 +77,8 @@ Los campos técnicos de Cowrie se inspeccionarán en eventos de la versión eleg
 `CONTROLLED TELEMETRY` identifica simulaciones y pruebas del operador. `OBSERVED INTERNET TELEMETRY` identifica actividad no solicitada recopilada por el sensor. CloudTrail y muestras sintéticas conservarán además su [Evidence Origin](../docs/evidence-handling.md#evidence-origin). El dato publicado conserva su origen aunque esté sanitizado o se reproduzca localmente.
 
 Una repetición de eventos para probar reglas irá a un conjunto de validación independiente y se excluirá de métricas operativas. Las sondas del operador, comprobaciones de salud y mantenimiento no se contarán como actividad de Internet. El filtro de origen, sensor y ventana debe ser explícito en cada consulta, panel e informe.
+
+La correlación temporal debe resistir el transporte por lotes. En [Wazuh](../configs/honeypot/wazuh/README.md#correlación-temporal-por-lotes) se comprobará qué reloj utiliza cada regla; no se asumirá que un atributo de tiempo extraído gobierna su ventana. El [enriquecimiento externo opcional](../enrichment/README.md#ubicación-de-las-consultas) seguirá fuera del SOC sin abrir una salida permanente desde el laboratorio.
 
 ## Criterio de aceptación futuro
 

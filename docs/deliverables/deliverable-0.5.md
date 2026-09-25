@@ -2,6 +2,8 @@
 
 **Fecha de cierre: 24 de septiembre de 2026. Estado: completado, alcance documental.** El entregable 0 y su [informe histórico](deliverable-0.md) se preservan. No se ha iniciado el entregable 1.
 
+**Registro histórico del refactor inicial.** Los inventarios y resultados de esta ficha corresponden a la base `833de89`, no al diff de cada revisión posterior. La [revisión del 25 de septiembre de 2026](deliverable-0.5-review.md) parte de `9834c9b`, conserva este trabajo y registra su propio inventario y evidencia de validación.
+
 ## Resultado de arquitectura
 
 El proyecto ahora distingue **Controlled Detection Lab** en `10.10.10.0/24` e **Internet Honeypot** en un sensor público dedicado. Se conservan Wazuh, Windows/Sysmon, Linux/Audit, AD/DNS, Suricata, simulador, AWS/CloudTrail y Splunk. Las direcciones privadas y los diez casos originales no se renumeran ni se sustituyen.

@@ -35,6 +35,8 @@ Denegar por defecto entrada, salida iniciada y reenvío, tanto IPv4 como IPv6. S
 
 Cambiar el puerto de SSH administrativo no sustituye el control de acceso. Una respuesta SSH/Telnet al cliente pertenece al servicio del señuelo; no autoriza nuevas conexiones salientes hacia otros destinos. El bloqueo de salida debe impedir el uso de destinos permitidos de telemetría/DNS como relés genéricos: el receptor solo acepta datos, valida identidad y esquema, y no interpreta comandos.
 
+Las excepciones de telemetría, DNS, tiempo y mantenimiento se asignarán al proceso/identidad que las necesita, no al usuario de Cowrie. Si un túnel al receptor requiere una dirección privada, documentar una excepción exclusiva para ese endpoint y servicio en una red separada; nunca permitir rangos privados completos ni crear rutas al SOC. Registrar ambos extremos y comprobar las reglas efectivas en [HP-1](implementation-decisions.md). La administración restringida tampoco autoriza agent forwarding, puentes o túneles hacia equipos del analista.
+
 ## Contención de Cowrie y datos hostiles
 
 - Usuario de servicio sin privilegios, entorno mínimo, permisos de archivos restrictivos y límites de CPU, memoria, sesiones, disco y transferencia. El método de aislamiento se seleccionará y comprobará en HP-1/HP-2; un contenedor por sí solo no demuestra contención.
@@ -57,6 +59,7 @@ Cambiar el puerto de SSH administrativo no sustituye el control de acceso. Una r
 | Sesiones y descargas bloqueadas | Visibilidad incompleta del comportamiento | Documentar limitación; no debilitar egress para obtener una historia más llamativa |
 | Proveedor filtra antes del sensor | El host no ve todo el tráfico ni prueba un DDoS | Pedir evidencia al proveedor y declarar cobertura; no extrapolar el volumen ausente |
 | Retención o publicación incorrectas | Exposición de credenciales e infraestructura | Almacenamiento privado, mínimo acceso y revisión de cada extracto |
+| Importación demorada o parcial | Alertas por ráfaga de ingestión, ventanas incompletas o secretos en índices | Validar/minimizar antes de importar; correlacionar por tiempo de evento comprobado y registrar cortes/revisiones |
 
 La autenticación del emisor acredita qué identidad entregó datos, no su veracidad si el sensor está comprometido. Un inicio de sesión exitoso en Cowrie no prueba acceso al host. La reputación y GeoIP aportan contexto; sus [limitaciones](../enrichment/README.md) acompañarán las conclusiones.
 

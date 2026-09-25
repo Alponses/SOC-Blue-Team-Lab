@@ -4,7 +4,7 @@
 
 | Área | Requisito y evidencia futura |
 | --- | --- |
-| Backend | Shell emulada; verificar ausencia de proxy, backend real, forwarding y ejecución en el host |
+| Backend | Shell emulada local; verificar ausencia de proxy, backend real, backend LLM/externo, forwarding y ejecución en el host |
 | Servicios | SSH como primer servicio; Telnet opcional. Registrar puertos público y de escucha efectivos, redirección y separación de administración |
 | Salida | JSON estructurado con rotación y permisos privados; verificar ruta real y un registro de cada tipo disponible |
 | Identidad | Alias del sensor y época de despliegue, tiempo UTC y configuración versionada; identidad de transporte asignada fuera del contenido recibido |

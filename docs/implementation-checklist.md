@@ -1,6 +1,6 @@
 # Plan de implementación y avance
 
-**Punto actual:** entregables 0 y 0.5 terminados. Se conserva la base y se añade arquitectura de honeypot aislado, pipeline, paneles y casos pendientes. **El siguiente entregable sigue siendo el 1, ahora después de 0.5:** recursos, red aislada, Wazuh y Windows 11/Sysmon. Todavía no hay infraestructura instalada, honeypot público ni investigaciones ejecutadas.
+**Punto actual:** entregables 0 y 0.5 terminados. Se conserva la base y se añade arquitectura de honeypot aislado, pipeline, paneles y casos pendientes. **El siguiente entregable sigue siendo el 1, ahora después de 0.5:** recursos, red aislada, Wazuh y Windows 11/Sysmon. Esta revisión no ejecuta ni acredita despliegues operativos o investigaciones. Los antecedentes de VirtualBox/SOC-LAB de la [guía local](lab-operations.md) se conservan y deberán comprobarse al iniciar el entregable 1.
 
 Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada una se cerrará con sus archivos, pruebas, evidencias, problemas pendientes y siguiente paso documentados.
 
@@ -38,17 +38,18 @@ Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada un
 - [x] Añadir especificaciones de Global Honeypot Activity, SOC Overview y Network Anomalies, sin métricas ficticias.
 - [x] Añadir SOC-011–SOC-015 como placeholders de observaciones reales y plantilla Weekly Honeypot Threat Report.
 - [x] Mantener T-Pot opcional, diferir todo despliegue y colocar el entregable 1 después del refactor.
+- [x] Revisar minimización antes de Wazuh, correlación con lotes tardíos, ubicación del enriquecimiento externo y registro de decisiones pendientes, preservando los antecedentes existentes.
 - [x] Validar enlaces internos, ejecutar validador y `git diff --check`, revisar diff completo y cerrar como un commit lógico.
 
-**Resultado:** [informe de cierre 0.5](deliverables/deliverable-0.5.md). La evidencia de esta etapa es documental; no demuestra servicios desplegados, detecciones validadas ni actividad de Internet.
+**Resultado:** [informe de cierre 0.5](deliverables/deliverable-0.5.md) y [revisión de requisitos y validación actual](deliverables/deliverable-0.5-review.md). La evidencia de esta etapa es documental; no demuestra servicios desplegados, detecciones validadas ni actividad de Internet.
 
 ## Entregable 1 — Wazuh, Windows y Sysmon
 
-**Siguiente etapa, posterior a 0.5; mismo alcance operativo del entregable 1 original.** Crear la red aislada y desplegar únicamente SOC-WAZUH y SOC-WIN11, con agente Wazuh, Sysmon y Defender activo. El objetivo es demostrar la llegada de eventos normales antes de ejecutar escenarios de investigación.
+**Siguiente etapa, posterior a 0.5; mismo alcance operativo del entregable 1 original.** Verificar o crear la red aislada y desplegar únicamente SOC-WAZUH y SOC-WIN11, con agente Wazuh, Sysmon y Defender activo. El objetivo es demostrar la llegada de eventos normales antes de ejecutar escenarios de investigación.
 
 - [ ] Comprobar RAM, disco y CPU disponibles, hipervisor compatible, requisitos de invitados, medios de evaluación y acceso a las máquinas. Confirmar que la subred propuesta no esté en uso.
 - [ ] Registrar versiones, descargas oficiales y sumas de verificación cuando se proporcionen, recursos, nombres de equipos y recuperación. Mantener instaladores y credenciales fuera de Git.
-- [ ] Crear la red solo anfitrión; revisar adaptadores, rutas IPv4/IPv6, reenvío, administración y exposición. Documentar la retirada del NAT temporal de actualización.
+- [ ] Verificar la red solo anfitrión existente o crearla si falta; revisar adaptadores, rutas IPv4/IPv6, reenvío, administración y exposición. Documentar la retirada del NAT temporal de actualización.
 - [ ] Desplegar Wazuh todo en uno en `10.10.10.10` y Windows 11 en `10.10.10.30`; comprobar servicios y crear instantáneas de referencia.
 - [ ] Registrar el agente Windows guardando las credenciales de forma privada. Configurar Security, System, PowerShell Operational, Sysmon Operational y Defender Operational.
 - [ ] Ajustar auditoría de Windows y registro de PowerShell; configurar eventos de creación de procesos, conexiones acotadas y DNS en Sysmon. Documentar filtros y motivo.
@@ -169,6 +170,7 @@ Estas fases extienden el plan sin renumerar entregables 1–12 ni incidentes SOC
 
 ### HP-1 — Infraestructura y decisión de transporte
 
+- [ ] Completar el [registro de decisiones](../honeypot/implementation-decisions.md) con responsables, evidencia, alternativas y criterios de revisión; concretar transporte según infraestructura disponible.
 - [ ] Completar la revisión de proveedor: AUP, ToS, abuso, banda y cargos, con evidencia fechada y alcance permitido.
 - [ ] Elegir infraestructura, método de aislamiento, versión Cowrie, servicios, management plane, cortafuegos IPv4/IPv6 y egress. Fijar cuotas, retención, presupuesto, salud y condiciones de parada.
 - [ ] Seleccionar transporte saliente cifrado/autenticado al receptor separado y transferencia sin conexión al SOC. Registrar puertos, identidades, revocación, cola, periodicidad y latencia aceptable.
@@ -180,7 +182,7 @@ Estas fases extienden el plan sin renumerar entregables 1–12 ni incidentes SOC
 
 - [ ] Desplegar únicamente infraestructura del honeypot definida en HP-1, como trabajo futuro separado de 0.5 y del entregable 1.
 - [ ] Probar emulación, administración separada, ausencia de rutas al hogar/SOC, egress, cuotas, transporte, cola, tiempo y recuperación. Tráfico de prueba solo privado, controlado y etiquetado.
-- [ ] Capturar e inspeccionar JSON real del software y probar límites del punto de observación. Abrir únicamente servicios permitidos después de validar controles y registrar el inicio de observación.
+- [ ] Capturar e inspeccionar JSON real del software y probar límites del punto de observación. Recibir en Wazuh un lote validado y minimizado antes de abrir únicamente servicios permitidos; registrar controles e inicio de observación. Las reglas y la analítica completa se validan en HP-3.
 
 **Cierre:** sensor contenido, datos reales de la fuente y transporte probado, sin afirmar que una prueba sea actividad no solicitada. No ejecutar descargas recibidas.
 
@@ -188,6 +190,8 @@ Estas fases extienden el plan sin renumerar entregables 1–12 ni incidentes SOC
 
 - [ ] Validar importación Wazuh y contrato de campos con muestras reales: tipos, tiempos, sesión, sensor/época, origen, NAT, duración y ausencias.
 - [ ] Crear únicamente reglas/decodificadores necesarios después de inspección, controles positivos/negativos y reconciliación de eventos, duplicados, rechazos y alertas.
+- [ ] Verificar minimización antes del colector y ausencia de secretos de prueba en todas las salidas; comparar llegada inmediata/demorada, sesiones entre lotes, duplicados y revisión de ventanas por tiempo de evento.
+- [ ] Verificar enriquecimiento local y, si se necesita, consulta externa desde estación separada con retorno revisado; conservar aislamiento y registrar datos compartidos.
 - [ ] Configurar enriquecimiento local/externo opcional, consultas y paneles con datos observados disponibles; documentar cobertura, retención, salud y demora por lotes.
 - [ ] Reunir métricas de red y baseline antes de afirmar anomalías volumétricas. Probar reglas por reproducción separada, sin carga pública.
 

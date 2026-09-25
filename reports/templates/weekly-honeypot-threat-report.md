@@ -10,6 +10,7 @@
 | Sensor / época / versiones | Pendiente |
 | Analista / destinatario | Alias / responsable SOC: pendiente |
 | Fecha del informe y corte de ingestión | Pendiente |
+| Revisión / informe sustituido / motivo | Pendiente; registrar lotes tardíos o correcciones sin sobrescribir resultados publicados |
 | Sensor uptime | NO DATA — DEPLOYMENT PENDING |
 | Cobertura y lagunas | NO DATA — DEPLOYMENT PENDING |
 | Retraso de importación / última recepción | NO DATA — DEPLOYMENT PENDING |
@@ -38,6 +39,8 @@ Documentar servicios expuestos, interfaz y cobertura de red, periodos operativos
 | Most common usernames revisados o alias | NO DATA — DEPLOYMENT PENDING | Pendiente |
 
 Conservar definiciones y unidades de [SOC Overview](../../dashboards/soc-overview/README.md). Si la semana está incompleta o cambió la cobertura, explicar la comparación; no extrapolar un total sin indicarlo. Después del despliegue, usar cero solo si una consulta con cobertura comprobada devuelve cero.
+
+Calcular por tiempo de evento y corte de ingestión registrado. Si llegan lotes de esta semana después del corte, emitir una revisión identificable de sus métricas y decisiones; no contarlos como actividad nueva de la semana siguiente. Conservar consulta y versión anterior para explicar la diferencia.
 
 ## Sesiones y comportamientos relevantes
 

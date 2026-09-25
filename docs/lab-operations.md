@@ -6,6 +6,13 @@ Guía operativa para iniciar, verificar, utilizar y apagar el entorno
 > Este documento describe la operación del **Controlled Detection Lab**.
 > No documenta el despliegue del futuro Internet Honeypot.
 
+**Alcance de la revisión 0.5:** se conserva esta guía y sus antecedentes de
+VirtualBox/SOC-LAB. Las salidas esperadas y el estado anotado anteriormente no
+constituyen comprobaciones realizadas en esta revisión documental. Antes del
+entregable 1 se verificará el entorno disponible y se reutilizará la red existente
+si cumple el diseño, sin recrearla por suposición. Véase el
+[orden de implementación](implementation-checklist.md#entregable-1--wazuh-windows-y-sysmon).
+
 ---
 
 ## 1. Propósito

@@ -20,7 +20,7 @@ El **Controlled Detection Lab** conserva `10.10.10.0/24`, equipos, direcciones y
 flowchart TB
     internet["Internet no confiable"] --> sensor["Sensor dedicado: Cowrie emulado / JSON"]
     sensor -->|"Salida cifrada y autenticada, solo datos"| relay["Receptor externo separado"]
-    relay --> transfer["Validación y lote con manifiesto"]
+    relay --> transfer["Validación, minimización y lote con manifiesto"]
     transfer -.->|"Traslado sin conexión IP"| imported["Importación local al SOC"]
     subgraph isolated["10.10.10.0/24: red aislada existente"]
         imported --> siem["SOC-WAZUH: analítica por origen"]
@@ -33,6 +33,8 @@ flowchart TB
 El flujo discontinuo representa transferencia de archivos revisados sin una conexión IP entre zonas. Se conserva Wazuh en `10.10.10.10`; el sensor y el receptor no podrán alcanzar el SOC, hogar, equipos personales/corporativos, AD ni Windows. Tampoco tendrán secretos del laboratorio. No se añade una segunda interfaz pública al SIEM. Las respuestas del protocolo de transporte no constituyen autorización de administración remota.
 
 El patrón base envía telemetría a un receptor separado y transfiere lotes al laboratorio sin conexión de red, con latencia declarada. El protocolo concreto, receptor, periodicidad y medio de transferencia se elegirán con infraestructura disponible en HP-1. Una analítica continua requerirá revisión posterior de las fronteras, sin convertir la red aislada en destino del honeypot. [Pipeline y alternativas admisibles](../honeypot/telemetry-pipeline.md).
+
+El original restringido, la copia analítica privada y el extracto publicable son conjuntos distintos. Retirar credenciales de la copia analítica antes de que el colector Wazuh la lea; revisar también mensajes y comandos que repitan secretos. Las consultas de reputación externas, si se autorizan, se realizarán fuera del SOC aislado y retornarán solo resultados revisados por la misma frontera de datos. Los agregados y correlaciones por lotes usarán tiempo de evento validado; importar una semana en minutos no demuestra una ráfaga de ataques. Estos controles forman parte de la aceptación futura, no están implementados todavía.
 
 | Zona nueva | Identidad/red | Recursos y estado |
 | --- | --- | --- |
