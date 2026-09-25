@@ -4,6 +4,8 @@
 
 Revisión: 2026-09-25. Configuraciones y procedimientos escritos en Git; infraestructura y telemetría **REQUIRES MANUAL EXECUTION**. No hay pruebas de ingestión ni versiones instaladas observadas. El entregable 0.5 sigue cerrado y su arquitectura se conserva.
 
+**Continuación desde `23d9614`:** se revalidaron rama, commit y árbol limpio, VirtualBox y SOC-LAB. La [nueva comprobación de medios](../../evidence/deliverable-1/preflight.md#reanudación-desde-23d9614) no encontró ninguna de las dos ISO requeridas. Se detuvo la creación de ambas VM; ningún servicio, agente o snapshot nuevo existe como resultado de esta sesión. La validación futura seguirá Security → System → Sysmon → PowerShell → Defender, documentando el resultado de cada fuente antes de continuar. No se crea un commit de cierre sin despliegue y evidencia reales.
+
 ## Base y alcance
 
 Se verificaron árbol limpio, rama `feat/deliverable-1-wazuh-windows` ya existente y HEAD exacto `1e9b9f1891534727b1ef87ee3bc882f0eb4dae96`, mensaje `docs: extend SOC lab with isolated Internet honeypot architecture`. No se trabajó en main ni se reescribió historia. Se prepara un commit de fundamento, no un cierre operativo.
@@ -28,9 +30,9 @@ Evidencia: [preflight real](../../evidence/deliverable-1/preflight.md). Hay recu
 | Ubuntu Server | 24.04 LTS x86_64 | No instalada/observada; revisión ISO y kernel pendientes |
 | Wazuh manager/indexer/dashboard | Documentación oficial consultada 2026-09-25: 4.14.8, asistente rama 4.14 | Ninguna; registrar paquete y revisión por componente al instalar |
 | Filebeat | Versión compatible provista por instalación Wazuh | No observada |
-| Windows 11 | Enterprise evaluación, requisitos estándar | Build/edición exacta no observadas |
+| Windows 11 | Enterprise Evaluation 25H2 x64 solicitada; requisitos estándar | Build/edición exacta no observadas |
 | Wazuh agente Windows | Referencia oficial consultada: 4.14.8-1 | No observado |
-| Sysmon | Microsoft Sysinternals vigente al instalar; XML schema 4.82 | Binario no observado; schema no es versión del producto |
+| Sysmon | Microsoft Sysinternals; referencia solicitada 15.22; XML schema 4.82 | Binario no observado; schema no es versión del producto |
 | Defender | Debe permanecer activo | Estado, motor/plataforma/firmas no observados |
 
 Fuentes/versionado en [instalación Wazuh](../wazuh-installation.md) y [Windows](../windows11-installation.md). Verificar release vigente al ejecutar; no confundir una consulta documental con instalación.
