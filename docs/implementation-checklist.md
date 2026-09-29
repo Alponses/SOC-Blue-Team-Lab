@@ -1,6 +1,6 @@
 # Plan de implementación y avance
 
-**Punto actual:** entregables 0 y 0.5 terminados; **DELIVERABLE 1 — IN PROGRESS**. [Preflight observado](../evidence/deliverable-1/preflight.md), configuraciones y procedimientos preparados. SOC-WAZUH y SOC-WIN11 no están registrados en el hipervisor inspeccionado; despliegue y cinco fuentes de telemetría **REQUIRES MANUAL EXECUTION**. Se conservan arquitectura y alcance de las etapas posteriores.
+**Punto actual al 2026-09-29:** entregables 0 y 0.5 terminados; **DELIVERABLE 1 — IN PROGRESS**. [SOC-WAZUH instalado y comprobado](../evidence/deliverable-1/wazuh-deployment.md), con servicios activos, red privada y snapshots confirmados. SOC-WIN11 no está registrado: falta la ruta de su ISO Enterprise Evaluation. Endpoint y cinco fuentes de telemetría **NOT EXECUTED / REQUIRES MANUAL EXECUTION**. Se conservan arquitectura y alcance de las etapas posteriores.
 
 Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada una se cerrará con sus archivos, pruebas, evidencias, problemas pendientes y siguiente paso documentados.
 
@@ -45,7 +45,7 @@ Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada un
 
 ## Entregable 1 — Wazuh, Windows y Sysmon
 
-**En curso, posterior a 0.5; mismo alcance operativo del entregable 1 original.** Configuraciones en Git y [guías de ejecución](deliverables/deliverable-1.md) disponibles. Reutilizar SOC-LAB tras verificar el aislamiento efectivo y desplegar únicamente SOC-WAZUH y SOC-WIN11, con agente Wazuh, Sysmon y Defender activo. Los checks siguientes requieren resultados reales; el preflight parcial no los completa.
+**En curso, posterior a 0.5; mismo alcance operativo del entregable 1 original.** Configuraciones en Git y [guías de ejecución](deliverables/deliverable-1.md) disponibles. La fase A de SOC-WAZUH está comprobada; la ejecución se detiene antes de Windows hasta recibir el medio correcto. Los checks que incluyen ambas VM o ingestión Windows siguen pendientes; la salud del servidor no los completa.
 
 - [ ] Comprobar RAM, disco y CPU disponibles, hipervisor compatible, requisitos de invitados, medios de evaluación y acceso a las máquinas. Confirmar que la subred propuesta no esté en uso.
 - [ ] Registrar versiones, descargas oficiales y sumas de verificación cuando se proporcionen, recursos, nombres de equipos y recuperación. Mantener instaladores y credenciales fuera de Git.

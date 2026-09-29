@@ -1,0 +1,187 @@
+$ date -u +%Y-%m-%dT%H:%M:%SZ
+2026-09-29T17:04:52Z
+exit=0
+$ dpkg-query -W -f='${Package}\t${Version}\n' wazuh-manager wazuh-indexer wazuh-dashboard filebeat
+filebeat	7.10.2-2
+wazuh-dashboard	4.14.8-1
+wazuh-indexer	4.14.8-1
+wazuh-manager	4.14.8-1
+exit=0
+$ systemctl status --no-pager --lines=0 wazuh-manager wazuh-indexer wazuh-dashboard filebeat
+● wazuh-manager.service - Wazuh manager
+     Loaded: loaded (/usr/lib/systemd/system/wazuh-manager.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-09-29 17:02:24 UTC; 2min 28s ago
+    Process: 943 ExecStart=/usr/bin/env /var/ossec/bin/wazuh-control start (code=exited, status=0/SUCCESS)
+
+● wazuh-indexer.service - wazuh-indexer
+     Loaded: loaded (/usr/lib/systemd/system/wazuh-indexer.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-09-29 17:02:45 UTC; 2min 7s ago
+   Main PID: 942 (java)
+
+● wazuh-dashboard.service - wazuh-dashboard
+     Loaded: loaded (/etc/systemd/system/wazuh-dashboard.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-09-29 17:01:56 UTC; 2min 55s ago
+   Main PID: 711 (node)
+
+● filebeat.service - Filebeat sends log files to Logstash or directly to Elasticsearch.
+     Loaded: loaded (/usr/lib/systemd/system/filebeat.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-09-29 17:01:59 UTC; 2min 53s ago
+   Main PID: 938 (filebeat)
+exit=0
+$ systemctl is-active wazuh-manager wazuh-indexer wazuh-dashboard filebeat
+active
+active
+active
+active
+exit=0
+$ systemctl is-enabled wazuh-manager wazuh-indexer wazuh-dashboard filebeat
+enabled
+enabled
+enabled
+enabled
+exit=0
+$ /var/ossec/bin/wazuh-control info
+WAZUH_VERSION="v4.14.8"
+WAZUH_REVISION="rc2"
+WAZUH_TYPE="server"
+exit=0
+$ /var/ossec/bin/wazuh-control status
+wazuh-clusterd not running...
+wazuh-modulesd is running...
+wazuh-monitord is running...
+wazuh-logcollector is running...
+wazuh-remoted is running...
+wazuh-syscheckd is running...
+wazuh-analysisd is running...
+wazuh-maild not running...
+wazuh-execd is running...
+wazuh-db is running...
+wazuh-authd is running...
+wazuh-agentlessd not running...
+wazuh-integratord not running...
+wazuh-csyslogd not running...
+wazuh-apid is running...
+exit=1
+$ /var/ossec/bin/agent_control -l
+
+Wazuh agent_control. List of available agents:
+   ID: 000, Name: SOC-WAZUH (server), IP: 127.0.0.1, Active/Local
+
+List of agentless devices:
+
+exit=0
+$ filebeat test config
+Config OK
+exit=0
+$ filebeat test output
+elasticsearch: https://127.0.0.1:9200...
+  parse url... OK
+  connection...
+    parse host... OK
+    dns lookup... OK
+    addresses: 127.0.0.1
+    dial up... OK
+  TLS...
+    security: server's certificate chain verification is enabled
+    handshake... OK
+    TLS version: TLSv1.2
+    dial up... OK
+  talk to server... OK
+  version: 7.10.2
+exit=0
+$ curl --fail --silent --show-error --max-time 15 --cacert /etc/wazuh-indexer/certs/root-ca.pem --cert /etc/wazuh-indexer/certs/admin.pem --key /etc/wazuh-indexer/certs/admin-key.pem https://127.0.0.1:9200/_cluster/health?pretty
+{
+  "cluster_name" : "wazuh-cluster",
+  "status" : "green",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "discovered_master" : true,
+  "discovered_cluster_manager" : true,
+  "active_primary_shards" : 26,
+  "active_shards" : 26,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 0,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 100.0
+}
+exit=0
+$ openssl x509 -in /etc/wazuh-dashboard/certs/wazuh-dashboard.pem -noout -subject -issuer -dates -fingerprint -sha256 -ext subjectAltName
+subject=C = US, L = California, O = Wazuh, OU = Wazuh, CN = wazuh-dashboard
+issuer=OU = Wazuh, O = Wazuh, L = California
+notBefore=Sep 28 17:44:16 2026 GMT
+notAfter=Sep 25 17:44:16 2036 GMT
+sha256 Fingerprint=AD:C4:4D:0D:93:6D:25:13:D6:A0:EC:51:7D:AD:06:4F:22:39:27:51:C7:30:02:F2:A9:DB:A2:3D:A2:FA:66:B8
+X509v3 Subject Alternative Name:
+    IP Address:127.0.0.1
+exit=0
+$ ss -lntup
+Netid State  Recv-Q Send-Q      Local Address:Port  Peer Address:PortProcess
+udp   UNCONN 0      0              127.0.0.54:53         0.0.0.0:*    users:(("systemd-resolve",pid=490,fd=16))
+udp   UNCONN 0      0           127.0.0.53%lo:53         0.0.0.0:*    users:(("systemd-resolve",pid=490,fd=14))
+tcp   LISTEN 0      4096              0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=4191,fd=3),("systemd",pid=1,fd=85))
+tcp   LISTEN 0      511               0.0.0.0:443        0.0.0.0:*    users:(("node",pid=711,fd=19))
+tcp   LISTEN 0      128               0.0.0.0:1515       0.0.0.0:*    users:(("wazuh-authd",pid=1266,fd=6))
+tcp   LISTEN 0      128               0.0.0.0:1514       0.0.0.0:*    users:(("wazuh-remoted",pid=1361,fd=4))
+tcp   LISTEN 0      2048              0.0.0.0:55000      0.0.0.0:*    users:(("python3",pid=1221,fd=46))
+tcp   LISTEN 0      4096        127.0.0.53%lo:53         0.0.0.0:*    users:(("systemd-resolve",pid=490,fd=15))
+tcp   LISTEN 0      4096           127.0.0.54:53         0.0.0.0:*    users:(("systemd-resolve",pid=490,fd=17))
+tcp   LISTEN 0      4096                 [::]:22            [::]:*    users:(("sshd",pid=4191,fd=4),("systemd",pid=1,fd=86))
+tcp   LISTEN 0      4096   [::ffff:127.0.0.1]:9200             *:*    users:(("java",pid=942,fd=622))
+tcp   LISTEN 0      4096   [::ffff:127.0.0.1]:9300             *:*    users:(("java",pid=942,fd=620))
+tcp   LISTEN 0      2048                 [::]:55000         [::]:*    users:(("python3",pid=1221,fd=49))
+exit=0
+$ ufw status verbose
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+10.10.10.10 22/tcp on lab0 ALLOW IN    10.10.10.1
+10.10.10.10 443/tcp on lab0 ALLOW IN    10.10.10.1
+10.10.10.10 1514/tcp on lab0 ALLOW IN    10.10.10.30
+
+exit=0
+$ ip -brief address
+lo               UNKNOWN        127.0.0.1/8 ::1/128
+lab0             UP             10.10.10.10/24 fe80::a00:27ff:feee:621f/64
+exit=0
+$ ip route
+10.10.10.0/24 dev lab0 proto kernel scope link src 10.10.10.10
+exit=0
+$ ip -6 route
+fe80::/64 dev lab0 proto kernel metric 256 pref medium
+exit=0
+$ sysctl net.ipv4.ip_forward net.ipv6.conf.all.forwarding
+net.ipv4.ip_forward = 0
+net.ipv6.conf.all.forwarding = 0
+exit=0
+$ timedatectl status
+               Local time: Tue 2026-09-29 17:04:53 UTC
+           Universal time: Tue 2026-09-29 17:04:53 UTC
+                 RTC time: Tue 2026-09-29 17:04:52
+                Time zone: Etc/UTC (UTC, +0000)
+System clock synchronized: no
+              NTP service: active
+          RTC in local TZ: no
+exit=0
+$ free -m
+               total        used        free      shared  buff/cache   available
+Mem:            7941        2431        4787           1         998        5509
+Swap:              0           0           0
+exit=0
+$ df -h /
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2        79G   17G   58G  23% /
+exit=0
+$ systemctl --failed --no-pager
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+exit=0

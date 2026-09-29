@@ -1,0 +1,16 @@
+{
+  "collected_utc": "2026-09-29T17:11:39.618773+00:00",
+  "connection_address": "10.10.10.10:443",
+  "tls_reference_identity": "127.0.0.1",
+  "curl_exit": 0,
+  "curl_verification": [
+    "200",
+    "0",
+    "10.10.10.1"
+  ],
+  "opensearch_dashboards_core_version": "2.19.6",
+  "overall_state": "green",
+  "peer_chain_verification_exit": 0,
+  "peer_certificate_sha256": "adc44d0d936d2513d6a0ec517dad064f22392751c73002f2a9dba23da2fa66b8",
+  "fingerprint_matches_native_certificate": true
+}

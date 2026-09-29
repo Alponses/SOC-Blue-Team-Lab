@@ -13,7 +13,9 @@ entregable 1 se verificará el entorno disponible y se reutilizará la red exist
 si cumple el diseño, sin recrearla por suposición. Véase el
 [orden de implementación](implementation-checklist.md#entregable-1--wazuh-windows-y-sysmon).
 
-**Actualización del entregable 1 (2026-09-25):** el [preflight real](../evidence/deliverable-1/preflight.md) verificó VirtualBox y SOC-LAB registrada. SOC-WAZUH y SOC-WIN11 no están registradas en la instancia inspeccionada. El [informe actual](deliverables/deliverable-1.md) mantiene **DELIVERABLE 1 — IN PROGRESS**; configuración, instalación y validación en invitados requieren ejecución manual. Los ejemplos de salida de esta guía siguen siendo ejemplos salvo lo respaldado por ese preflight.
+**Actualización del entregable 1 (2026-09-29):** [SOC-WAZUH está instalado y comprobado](../evidence/deliverable-1/wazuh-deployment.md), con servicios activos, `10.10.10.10` en SOC-LAB y NAT retirado. SOC-WIN11 no está registrado; su medio Enterprise Evaluation sigue pendiente. El [informe actual](deliverables/deliverable-1.md) mantiene **DELIVERABLE 1 — IN PROGRESS**. Los ejemplos de esta guía siguen siendo ejemplos salvo lo respaldado por evidencia enlazada.
+
+**Recuperación observada:** un estado guardado de VirtualBox falló al restaurar VGA. Se conservó una copia privada de la VM y se recuperó arrancando desde su disco, sin reinstalar. Usar apagado limpio y snapshots sin RAM mientras se investiga esa causa; los dos checkpoints registrados fueron confirmados en VirtualBox.
 
 ---
 
@@ -894,7 +896,7 @@ No reinstalar automáticamente el agente antes de identificar el fallo.
 
 ## 34. Entregable 1
 
-Estado al iniciar esta etapa:
+Estado observado al 2026-09-29; respaldo en el [registro de despliegue](../evidence/deliverable-1/wazuh-deployment.md):
 
 ```text
 Repositorio                  OK
@@ -902,10 +904,10 @@ Rama de trabajo              OK
 VirtualBox                   OK
 SOC-LAB                      OK
 
-SOC-WAZUH                    PENDIENTE
-Wazuh Server                 PENDIENTE
-Wazuh Indexer                PENDIENTE
-Wazuh Dashboard              PENDIENTE
+SOC-WAZUH                    OK
+Wazuh Server                 OK
+Wazuh Indexer                OK
+Wazuh Dashboard              OK (API autenticada; sin validación visual)
 
 SOC-WIN11                    PENDIENTE
 Wazuh Agent                  PENDIENTE

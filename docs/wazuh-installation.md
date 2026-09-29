@@ -1,12 +1,12 @@
 # Instalación de SOC-WAZUH
 
-**Estado: REQUIRES MANUAL EXECUTION.** No hay VM SOC-WAZUH registrada en el VirtualBox inspeccionado. Esta guía contiene pasos pendientes, no resultados. Véase [preflight observado](../evidence/deliverable-1/preflight.md) e [informe](deliverables/deliverable-1.md).
+**Estado observado al 2026-09-29: SOC-WAZUH instalado y comprobado.** Ubuntu 24.04.5 LTS, componentes Wazuh `4.14.8-1`, Filebeat `7.10.2-2`, servicios activos y NAT retirado. El [registro de despliegue](../evidence/deliverable-1/wazuh-deployment.md) contiene resultados, límites y artefactos; el [informe](deliverables/deliverable-1.md) conserva Deliverable 1 en progreso. Esta guía queda como procedimiento de referencia; no repetir la instalación sobre la VM existente.
 
 ## Plataforma y versiones
 
 Conservar `SOC-WAZUH`, Ubuntu Server **24.04 LTS x86_64**, `10.10.10.10/24`, **4 vCPU / 8 GiB / 80 GB** de disco virtual de la arquitectura. Los 80 GB superan el mínimo pedido y permiten algo de margen para logs; no garantizan retención. Solo un nodo con manager, indexer y dashboard; Filebeat completa el transporte al indexer.
 
-Consulta oficial del **2026-09-25**: [Quickstart](https://documentation.wazuh.com/current/quickstart.html) admite Ubuntu 24.04 y publica el asistente de la rama 4.14; las [notas 4.14.8](https://documentation.wazuh.com/current/release-notes/release-4-14-8.html) y el instalador Windows consultado indican **4.14.8**. Es la versión de referencia consultada, **no una versión instalada**. Volver a comprobar Quickstart y las notas al ejecutar; si cambia la release, usar la vigente compatible para componentes centrales y agente, registrar URL, fecha, revisión y versión exacta. La [compatibilidad oficial](https://documentation.wazuh.com/current/upgrade-guide/index.html) exige versiones centrales idénticas, incluido patch, y manager igual o posterior al agente; para indexer 4.14.8 indica Filebeat-OSS 7.10.2.
+Consulta oficial inicial del **2026-09-25**, revalidada el **2026-09-28**: [Quickstart](https://documentation.wazuh.com/current/quickstart.html) admite Ubuntu 24.04 y publica el asistente de la rama 4.14; las [notas 4.14.8](https://documentation.wazuh.com/current/release-notes/release-4-14-8.html) indican **4.14.8**. La instalación ejecutada y `dpkg-query` confirmaron `4.14.8-1` en manager, indexer y dashboard. Comprobar Quickstart y las notas para futuras instalaciones; registrar URL, fecha, revisión y versión exacta. La [compatibilidad oficial](https://documentation.wazuh.com/current/upgrade-guide/index.html) exige versiones centrales idénticas, incluido patch, y manager igual o posterior al agente; para indexer 4.14.8 indica Filebeat-OSS 7.10.2.
 
 ## VM, red y snapshot previo
 
@@ -58,7 +58,8 @@ sudo ufw status verbose
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow in on "$lab_if" from 10.10.10.30 to 10.10.10.10 port 1514 proto tcp
-sudo ufw allow in on "$lab_if" from 10.10.10.30 to 10.10.10.10 port 1515 proto tcp
+# Solo durante el futuro enrollment Windows; no aplicado en fase A:
+# sudo ufw allow in on "$lab_if" from 10.10.10.30 to 10.10.10.10 port 1515 proto tcp
 sudo ufw allow in on "$lab_if" from 10.10.10.1 to 10.10.10.10 port 443 proto tcp
 # Solo si se administrará por SSH; omitir si se usa consola:
 # sudo ufw allow in on "$lab_if" from 10.10.10.1 to 10.10.10.10 port 22 proto tcp
@@ -103,6 +104,8 @@ Guardar versiones exactas y resultados de **cada** servicio; leer `journalctl -u
 
 Seguir la recomendación del Quickstart de deshabilitar únicamente el repositorio Wazuh tras instalar para evitar actualizaciones accidentales de componentes, conservando las actualizaciones de Ubuntu. Programar revisión y upgrades coordinados; no fijar una versión vulnerable indefinidamente.
 
-Crear `SOC-WAZUH-wazuh-operational` solo tras comprobar servicios y acceso. Aplicar [archives temporales](../configs/wazuh/README.md), instalar/enrolar el [endpoint](windows11-installation.md) y verificar [las cinco fuentes](telemetry-validation.md). Una vez enrolado, retirar la regla 1515 correspondiente con `ufw delete` usando exactamente sus parámetros originales; comprobar que el agente sigue activo por 1514. Reabrir de forma limitada solo cuando se necesite reenrollment.
+El checkpoint `SOC-WAZUH-wazuh-operational` ya fue creado y confirmado tras comprobar servicios y acceso. **La fase A se detiene aquí.** Se documentan las limitaciones reales de [TLS y reloj](../evidence/deliverable-1/wazuh-deployment.md#tls-y-reloj) y la recuperación de un estado guardado VirtualBox; usar apagado limpio y snapshots sin RAM hasta resolver ese problema.
+
+Cuando se proporcione la ISO Enterprise Evaluation correcta y se retome Windows, aplicar [archives temporales](../configs/wazuh/README.md), instalar/enrolar el [endpoint](windows11-installation.md) y verificar [las cinco fuentes](telemetry-validation.md). Una vez enrolado, retirar la regla temporal 1515 correspondiente con `ufw delete` usando exactamente sus parámetros originales; comprobar que el agente sigue activo por 1514. Reabrir de forma limitada solo cuando se necesite reenrollment.
 
 No publicar configuración completa de Filebeat, archivos del keystore, API, claves, certificados privados o exportaciones del manager. El [registro de evidencia](../evidence/deliverable-1/README.md) distingue configuración de servicio observado.
