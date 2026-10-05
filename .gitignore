@@ -33,6 +33,9 @@ wazuh-passwords.txt
 *.vmdk
 *.vhd
 *.vhdx
+*.vbox
+*.vbox-prev
+*.sav
 *.qcow
 *.qcow2
 *.ova

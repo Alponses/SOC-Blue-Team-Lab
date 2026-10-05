@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SOC-WIN11: baseline pequeno y revisable para telemetria benigna.
+  Schema 4.82 es version del formato, no del binario. Validar con Sysmon64 -s.
+  No se ha cargado en Windows: REQUIRES MANUAL EXECUTION.
+-->
+<Sysmon schemaversion="4.82">
+  <HashAlgorithms>SHA256</HashAlgorithms>
+  <DnsLookup>false</DnsLookup>
+  <EventFiltering>
+    <RuleGroup name="Process creation" groupRelation="or">
+      <ProcessCreate onmatch="exclude" />
+    </RuleGroup>
+    <RuleGroup name="Lab network only" groupRelation="or">
+      <NetworkConnect onmatch="include">
+        <DestinationIp condition="begin with">10.10.10.</DestinationIp>
+      </NetworkConnect>
+    </RuleGroup>
+    <RuleGroup name="Validation files only" groupRelation="or">
+      <FileCreate onmatch="include">
+        <TargetFilename condition="begin with">C:\SOC-Lab\Validation\</TargetFilename>
+      </FileCreate>
+    </RuleGroup>
+    <RuleGroup name="Startup registry visibility" groupRelation="or">
+      <RegistryEvent onmatch="include">
+        <TargetObject condition="contains">\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</TargetObject>
+        <TargetObject condition="contains">\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run</TargetObject>
+      </RegistryEvent>
+    </RuleGroup>
+    <RuleGroup name="DNS queries" groupRelation="or">
+      <DnsQuery onmatch="exclude" />
+    </RuleGroup>
+    <!-- Empty include: no selected events for these categories. -->
+    <RuleGroup name="Deferred categories" groupRelation="or">
+      <ImageLoad onmatch="include" />
+      <ProcessAccess onmatch="include" />
+      <ProcessTerminate onmatch="include" />
+      <FileCreateTime onmatch="include" />
+      <DriverLoad onmatch="include" />
+      <CreateRemoteThread onmatch="include" />
+      <RawAccessRead onmatch="include" />
+      <FileCreateStreamHash onmatch="include" />
+      <PipeEvent onmatch="include" />
+      <WmiEvent onmatch="include" />
+      <FileDelete onmatch="include" />
+      <ClipboardChange onmatch="include" />
+      <ProcessTampering onmatch="include" />
+      <FileDeleteDetected onmatch="include" />
+    </RuleGroup>
+  </EventFiltering>
+</Sysmon>

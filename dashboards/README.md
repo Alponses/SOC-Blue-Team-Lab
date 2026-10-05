@@ -14,6 +14,8 @@ Cada vista mostrará origen de evidencia, sensor/época, intervalo UTC, última 
 
 Utilizar tiempo del evento y ventana semiabierta inicio incluido/fin excluido, con deduplicación del [pipeline](../honeypot/telemetry-pipeline.md). Diferenciar eventos, intentos, sesiones y alertas; los datos ausentes no son cero. Antes del despliegue todos los indicadores tendrán `NO DATA — DEPLOYMENT PENDING`; después se distinguirán cero confirmado, campo no disponible, sensor sin conexión y datos retrasados/incompletos.
 
+Registrar también el corte de ingestión de la consulta. Cuando llegue un lote tardío, recalcular la ventana afectada y señalar la revisión; no añadir su actividad al periodo actual por su hora de importación. Las alertas por umbral deberán cumplir la [validación temporal Wazuh](../configs/honeypot/wazuh/README.md#correlación-temporal-por-lotes) antes de interpretarse como ráfagas de autenticación o tráfico.
+
 El contrato de campos y los índices reales se resolverán en [Wazuh](../configs/honeypot/wazuh/README.md) con eventos inspeccionados. Los nombres de métricas de estas especificaciones son conceptos de análisis, no campos inventados. Cada visualización tendrá consulta versionada, denominador, agrupación, tratamiento de null, evidencia de reconciliación y enlace a casos pertinentes.
 
 Las vistas operativas permanecerán privadas. Exportar solo agregados o fragmentos revisados; no mostrar contraseñas, URL activas, transcripciones completas ni direcciones de infraestructura propia. Si el mapa necesita teselas externas, evaluar metadatos compartidos y preferir recursos locales; no enviar IP o sesiones a un servicio de mapas automáticamente.

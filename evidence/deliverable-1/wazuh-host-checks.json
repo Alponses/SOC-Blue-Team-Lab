@@ -1,0 +1,38 @@
+{
+  "collected_utc": "2026-09-29T17:00:04.176584+00:00",
+  "source": "10.10.10.1",
+  "destination": "10.10.10.10",
+  "method": "TCP connect, 3-second timeout; no application payload",
+  "ports": [
+    {
+      "port_tcp": 22,
+      "result": "CONNECTED"
+    },
+    {
+      "port_tcp": 443,
+      "result": "CONNECTED"
+    },
+    {
+      "port_tcp": 1514,
+      "result": "TIMEOUT"
+    },
+    {
+      "port_tcp": 1515,
+      "result": "TIMEOUT"
+    },
+    {
+      "port_tcp": 55000,
+      "result": "TIMEOUT"
+    },
+    {
+      "port_tcp": 9200,
+      "result": "TIMEOUT"
+    },
+    {
+      "port_tcp": 9300,
+      "result": "TIMEOUT"
+    }
+  ],
+  "clock_guest_minus_host_midpoint_seconds": -1.634,
+  "clock_uncertainty_half_roundtrip_seconds": 0.379
+}

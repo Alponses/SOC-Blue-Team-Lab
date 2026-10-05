@@ -27,6 +27,14 @@ Antes de una consulta externa, revisar el indicador mínimo, confidencialidad, c
 
 Enriquecer en privado antes de asignar alias para publicación. Separar datos nativos, datos calculados y resultados externos, conservando versiones y vigencia; no sustituir la evidencia original. Cachear con caducidad explícita y controlar fallos y límites de API. Texto devuelto por fuentes externas también es no confiable.
 
+## Ubicación de las consultas
+
+GeoIP/ASN y antecedentes internos se resolverán dentro del SOC con bases locales revisadas y versionadas. Las actualizaciones de esas bases cruzarán la misma transferencia controlada de datos; comprobar fuente, integridad, licencia y fecha, sin conectividad permanente del SIEM hacia Internet.
+
+Reverse DNS, RDAP y reputación externos, cuando hagan falta, se consultarán desde la estación dedicada de transferencia/análisis externo, durante su fase desconectada del SOC. Exportar solo el indicador mínimo revisado y conservar un registro de lo compartido. Retornar resultados como datos limitados, con fuente/fecha/confianza/limitación, mediante lote validado sin conexión simultánea entre redes. No ejecutar URL o instrucciones devueltas por una respuesta.
+
+No habilitar integraciones salientes en Wazuh ni permitir consultas arbitrarias desde Cowrie para suplir esta separación. Si no existe una estación o procedimiento seguro, dejar el enriquecimiento externo como «no consultado»; las investigaciones pueden continuar con evidencia interna. El responsable, medio y periodicidad se resolverán en el [registro de decisiones](../honeypot/implementation-decisions.md).
+
 ## Registro de enriquecimiento
 
 | Evidencia / indicador revisado | Fuente y versión | Query date UTC | Result | Confidence | Limitation / vigencia | Información compartida y decisión |

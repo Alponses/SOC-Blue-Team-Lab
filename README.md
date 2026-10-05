@@ -26,18 +26,18 @@ AWS IAM, CloudTrail y CloudWatch se investigarán en una cuenta propia de labora
 
 ## Avance del proyecto
 
-**Etapa actual: entregable 0.5 completado — refactor de arquitectura híbrida. Entregable 0 preservado.**
+**Etapa actual: DELIVERABLE 1 — IN PROGRESS.** SOC-WAZUH instalado y comprobado en SOC-LAB, sin NAT, al 2026-09-29. La fase B de SOC-WIN11 comenzó el 2026-09-30: ISO Enterprise verificada y VM creada; instalación en curso. Las cinco fuentes siguen **NOT EXECUTED**. El [informe del entregable 1](docs/deliverables/deliverable-1.md) separa configuración escrita, despliegue observado y validaciones pendientes. Los entregables 0 y 0.5 siguen cerrados; la [revisión de cierre 0.5](docs/deliverables/deliverable-0.5-review.md) se conserva.
 
 | Área | Avance |
 | --- | --- |
-| Documentación | Arquitectura híbrida, fronteras, riesgos, pipeline y plan preparados en español |
-| Infraestructura | Laboratorio y sensor público diseñados; ningún despliegue realizado |
+| Documentación | Arquitectura preservada; guías de instalación y validación de los cinco canales añadidas |
+| Infraestructura | SOC-WAZUH operativo en `10.10.10.10`, Wazuh `4.14.8-1`; SOC-WIN11 creado; instalación en curso |
 | Investigaciones | SOC-001–SOC-010 controlados preservados; SOC-011–SOC-015 placeholders observados, sin investigar |
 | Detecciones | Reglas pendientes de inspeccionar eventos y validar campos |
 | Paneles y reporte | Tres especificaciones y plantilla semanal; NO DATA — DEPLOYMENT PENDING |
-| Evidencias | Sin telemetría recopilada; originales futuros privados y extractos sanitizados públicos |
+| Evidencias | Despliegue y salud de SOC-WAZUH registrados con extractos sanitizados y hashes; sin telemetría Windows recopilada; originales privados |
 
-**Lo siguiente, después de 0.5: entregable 1 — Wazuh, Windows y Sysmon.** Comprobar los recursos del equipo y el hipervisor, crear la red aislada e instalar únicamente Wazuh y Windows 11 con Sysmon. El primer hito operativo será verificar que los eventos lleguen al SIEM desde cada canal configurado. Esta etapa **requiere ejecución manual** en el laboratorio.
+**En curso: entregable 1 — Wazuh, Windows y Sysmon.** La fase A termina con [SOC-WAZUH verificado y dos snapshots confirmados](evidence/deliverable-1/wazuh-deployment.md). La [fase B de Windows](evidence/deliverable-1/windows-deployment.md) utiliza la ISO Enterprise Evaluation indicada por el propietario; hash y recursos registrados. Las guías de [Wazuh](docs/wazuh-installation.md), [Windows](docs/windows11-installation.md) y [validación por fuente](docs/telemetry-validation.md) se conservan. La [matriz Windows](docs/deliverables/deliverable-1.md#matriz-de-validación) permanece sin resultados operativos. La [guía operativa](docs/lab-operations.md) contiene el procedimiento general.
 
 El detalle está en la [arquitectura](docs/architecture.md), el [plan de implementación](docs/implementation-checklist.md), el [informe del entregable 0](docs/deliverables/deliverable-0.md) y el [cierre de 0.5](docs/deliverables/deliverable-0.5.md).
 
@@ -53,7 +53,8 @@ flowchart LR
         hostadmin["Host: administración separada del señuelo"]
     end
     json -->|"Envío saliente cifrado y autenticado"| receiver["Receptor separado: sin rutas al SOC"]
-    receiver -.->|"Lotes revisados sin conexión de red"| ingest
+    receiver --> review["Validación y minimización: copia analítica privada"]
+    review -.->|"Lotes revisados sin conexión de red"| ingest
     analyst["Analista: administración privada"]
     subgraph lab["Controlled Detection Lab: 10.10.10.0/24 sin Internet durante pruebas"]
         ingest["Importación local de telemetría observada"] --> wazuh["10.10.10.10: Wazuh / Security Analytics"]
@@ -73,7 +74,7 @@ flowchart LR
     curated -.->|"Importación posterior sin conexión"| splunk["Splunk Enterprise / SPL"]
 ```
 
-Cowrie y el receptor estarán fuera de `10.10.10.0/24`, sin acceso confiable al hogar, equipos personales/corporativos, AD ni Windows. Wazuh, su API, indexador y registro de agentes seguirán privados. La decisión del transporte concreto se resolverá antes de cualquier despliegue. Consulta [zonas de confianza](honeypot/security-model.md) y [flujo seguro](honeypot/telemetry-pipeline.md).
+Cowrie y el receptor estarán fuera de `10.10.10.0/24`, sin acceso confiable al hogar, equipos personales/corporativos, AD ni Windows. Wazuh, su API, indexador y registro de agentes seguirán privados. La decisión del transporte concreto se resolverá antes de cualquier despliegue. Consulta [zonas de confianza](honeypot/security-model.md), [flujo seguro](honeypot/telemetry-pipeline.md) y [decisiones pendientes de HP-1](honeypot/implementation-decisions.md).
 
 Suricata en SOC-LINUX solo observa el tráfico que atraviesa su interfaz; no toda la red ni el VPS. La cobertura pública se evaluará por separado. AWS conserva su fase independiente. Consulta [visibilidad del laboratorio](docs/architecture.md#aislamiento-y-visibilidad-de-la-red) y [Suricata público](honeypot/suricata-visibility.md).
 
@@ -83,7 +84,7 @@ Suricata en SOC-LINUX solo observa el tráfico que atraviesa su interfaz; no tod
 | --- | --- | --- |
 | Cowrie en sensor público separado | Interacción SSH/Telnet emulada y JSON de actividad no solicitada | Sin desplegar |
 | Receptor de telemetría separado | Transporte autenticado y lotes revisados sin rutas al laboratorio | Infraestructura y mecanismo por decidir |
-| Wazuh todo en uno | Recopilación centralizada, alertas, investigación y reglas personalizadas | Sin desplegar |
+| Wazuh todo en uno | Recopilación centralizada, alertas, investigación y reglas personalizadas | Desplegado `4.14.8-1`; servicios verificados; ingestión Windows pendiente |
 | Windows 11 Enterprise de evaluación | Telemetría de Security/System, PowerShell, Sysmon y Defender | Sin desplegar |
 | Ubuntu Server | SSH, autenticación, sudo, auditoría, registros del sistema e integridad de archivos | Sin desplegar |
 | Windows Server 2025 de evaluación | AD DS, DNS, usuarios y grupos de prueba, cambios de identidad | Sin desplegar |

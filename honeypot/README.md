@@ -19,6 +19,7 @@ El resultado buscado es una cadena verificable: Cowrie → JSON → transporte s
 | [Modelo de seguridad](security-model.md) | Zonas, administración, cortafuegos, egress, riesgos y recuperación |
 | [Flujo de telemetría](telemetry-pipeline.md) | Frontera de confianza, transporte y control de calidad |
 | [Lista previa al despliegue](deployment-checklist.md) | Proveedor, controles, criterios de apertura y parada |
+| [Decisiones de implementación](implementation-decisions.md) | Registro pendiente de responsables, infraestructura, transporte y criterios de aceptación HP-1 |
 | [Visibilidad Suricata](suricata-visibility.md) | Interfaz, cobertura, EVE y límites del monitoreo volumétrico |
 | [Configuraciones](../configs/honeypot/README.md) | Espacios reservados para Cowrie y Wazuh; sin configuración ejecutable |
 | [Paneles](../dashboards/README.md) | Especificaciones, sin objetos importables ni métricas inventadas |

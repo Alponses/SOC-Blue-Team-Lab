@@ -1,0 +1,79 @@
+{
+  "collected_utc": "2026-09-29T17:12:12.276321+00:00",
+  "methods": [
+    "VBoxManage --version",
+    "VBoxManage showvminfo SOC-WAZUH --machinereadable",
+    "VBoxManage showmediuminfo disk (base UUID)",
+    "VBoxManage snapshot SOC-WAZUH list --machinereadable",
+    "SOC-WAZUH.vbox Snapshot attributes",
+    "VBoxManage list vms (SOC-WIN11 presence only)",
+    "sysctl (selected host counters)"
+  ],
+  "hypervisor_version": "7.2.14r174565",
+  "vm": {
+    "name": "SOC-WAZUH",
+    "UUID": "84dacd9b-058d-4ae1-a37d-09d3b364cb0f",
+    "memory": "8192",
+    "vram": "16",
+    "firmware": "BIOS",
+    "cpus": "4",
+    "VMState": "running",
+    "VMStateChangeTime": "2026-09-29T17:01:33.531000000",
+    "graphicscontroller": "vmsvga",
+    "hostonly-network1": "SOC-LAB",
+    "macaddress1": "080027EE621F",
+    "cableconnected1": "on",
+    "nic1": "hostonlynetwork",
+    "nic2": "none",
+    "nic3": "none",
+    "nic4": "none",
+    "nic5": "none",
+    "nic6": "none",
+    "nic7": "none",
+    "nic8": "none",
+    "clipboard": "disabled",
+    "draganddrop": "disabled",
+    "CurrentSnapshotName": "SOC-WAZUH-wazuh-operational",
+    "CurrentSnapshotUUID": "914fc1c2-0c02-41c4-980e-b8c8481217ab"
+  },
+  "base_disk": {
+    "UUID": "f794f0ec-b21d-4145-8b53-9081984cf103",
+    "Parent UUID": "base",
+    "Storage format": "VDI",
+    "Format variant": "dynamic default",
+    "Capacity": "81920 MBytes"
+  },
+  "snapshots": [
+    {
+      "uuid": "{e0d50517-8586-4723-9224-28e68578d9ee}",
+      "name": "SOC-WAZUH-base-install",
+      "timeStamp": "2026-09-26T19:44:39Z"
+    },
+    {
+      "uuid": "{914fc1c2-0c02-41c4-980e-b8c8481217ab}",
+      "name": "SOC-WAZUH-wazuh-operational",
+      "timeStamp": "2026-09-29T17:01:25Z"
+    }
+  ],
+  "snapshot_list": [
+    "SnapshotName=\"SOC-WAZUH-base-install\"",
+    "SnapshotUUID=\"e0d50517-8586-4723-9224-28e68578d9ee\"",
+    "SnapshotDescription=\"Ubuntu 24.04.5 updated; lab0 10.10.10.10/24; UFW active; temporary NAT for Wazuh packages; before Wazuh installation.\"",
+    "SnapshotName-1=\"SOC-WAZUH-wazuh-operational\"",
+    "SnapshotUUID-1=\"914fc1c2-0c02-41c4-980e-b8c8481217ab\"",
+    "SnapshotDescription-1=\"Wazuh 4.14.8-1 all-in-one verified; Filebeat 7.10.2-2; lab0 10.10.10.10/24; UFW active; NAT removed; indexer/dashboard green; no Windows telemetry validated. Clean shutdown, no saved RAM state.\"",
+    "CurrentSnapshotName=\"SOC-WAZUH-wazuh-operational\"",
+    "CurrentSnapshotUUID=\"914fc1c2-0c02-41c4-980e-b8c8481217ab\"",
+    "CurrentSnapshotNode=\"SnapshotName-1\""
+  ],
+  "soc_win11_registered": false,
+  "host_counters": [
+    "hw.memsize: 17179869184",
+    "hw.physicalcpu: 4",
+    "hw.logicalcpu: 8",
+    "kern.memorystatus_vm_pressure_level: 1",
+    "vm.swapusage: total = 7168.00M  used = 6201.00M  free = 967.00M  (encrypted)",
+    "net.inet.ip.forwarding: 0",
+    "net.inet6.ip6.forwarding: 0"
+  ]
+}

@@ -1,0 +1,43 @@
+<!--
+  Deliverable 1: plantilla parcial, NO reemplaza el ossec.conf completo.
+  Inspeccionar la configuración instalada y los grupos del manager primero.
+  Fusionar client/server y una sola entrada localfile por canal.
+  Preservar Application y los demás módulos existentes. Sin secretos.
+  Estado: escrita en Git; REQUIRES MANUAL EXECUTION en SOC-WIN11.
+-->
+<ossec_config>
+  <client>
+    <server>
+      <address>10.10.10.10</address>
+      <port>1514</port>
+      <protocol>tcp</protocol>
+    </server>
+  </client>
+
+  <!-- Ventana inicial sin filtros XPath: medir volumen antes de ajustar. -->
+  <localfile>
+    <location>Security</location>
+    <log_format>eventchannel</log_format>
+    <only-future-events>yes</only-future-events>
+  </localfile>
+  <localfile>
+    <location>System</location>
+    <log_format>eventchannel</log_format>
+    <only-future-events>yes</only-future-events>
+  </localfile>
+  <localfile>
+    <location>Microsoft-Windows-Sysmon/Operational</location>
+    <log_format>eventchannel</log_format>
+    <only-future-events>yes</only-future-events>
+  </localfile>
+  <localfile>
+    <location>Microsoft-Windows-PowerShell/Operational</location>
+    <log_format>eventchannel</log_format>
+    <only-future-events>yes</only-future-events>
+  </localfile>
+  <localfile>
+    <location>Microsoft-Windows-Windows Defender/Operational</location>
+    <log_format>eventchannel</log_format>
+    <only-future-events>yes</only-future-events>
+  </localfile>
+</ossec_config>
