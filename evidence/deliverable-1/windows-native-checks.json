@@ -1,0 +1,171 @@
+{
+  "method": "Native Windows PowerShell / CIM; UAC-consented SYSTEM task. Field allowlist; original private. Initial security inventory and later isolated baseline retain their collection times.",
+  "initial_inventory": {
+    "CollectedUtc": "2026-10-05T18:51:48.8540807Z",
+    "Hostname": "SOC-WIN11",
+    "OS": {
+      "Caption": "Microsoft Windows 11 Enterprise Evaluation",
+      "Version": "10.0.26200",
+      "BuildNumber": "26200",
+      "OSArchitecture": "64-bit",
+      "LastBootUpTime": "/Date(1791225576430)/"
+    },
+    "WindowsRegistry": {
+      "ProductName": "Windows 10 Enterprise Evaluation",
+      "EditionID": "EnterpriseEval",
+      "DisplayVersion": "25H2",
+      "CurrentBuild": "26200",
+      "UBR": 6584
+    },
+    "Resources": {
+      "TotalPhysicalMemory": 4274917376,
+      "NumberOfLogicalProcessors": 2
+    },
+    "CPU": [
+      {
+        "Name": "Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz",
+        "NumberOfCores": 2,
+        "NumberOfLogicalProcessors": 2
+      }
+    ],
+    "Disk": [
+      {
+        "Number": 0,
+        "FriendlyName": "VBOX HARDDISK",
+        "PartitionStyle": "GPT",
+        "Size": 85899345920,
+        "OperationalStatus": "Online"
+      }
+    ],
+    "TPM": {
+      "TpmPresent": true,
+      "TpmReady": true,
+      "TpmEnabled": true,
+      "TpmActivated": true,
+      "ManufacturerIdTxt": "IBM\u0000",
+      "ManufacturerVersion": "8228.293.18.0\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+    },
+    "TPMSpec": {
+      "SpecVersion": "2.0, 0, 1.83"
+    },
+    "SecureBoot": true,
+    "UAC": {
+      "EnableLUA": 1,
+      "ConsentPromptBehaviorAdmin": 5
+    },
+    "LabConfigPresent": false,
+    "AutoLogon": {
+      "AutoAdminLogon": "0",
+      "AutoLogonCount": null
+    }
+  },
+  "isolated_operating_baseline": {
+    "CollectedUtc": "2026-10-05T19:25:19.1036320Z",
+    "TimeZone": {
+      "Id": "Pacific Standard Time",
+      "DisplayName": "(UTC-08:00) Pacific Time (US & Canada)",
+      "BaseUtcOffset": {
+        "Ticks": -288000000000,
+        "Days": 0,
+        "Hours": -8,
+        "Milliseconds": 0,
+        "Minutes": 0,
+        "Seconds": 0,
+        "TotalDays": -0.3333333333333333,
+        "TotalHours": -8,
+        "TotalMilliseconds": -28800000,
+        "TotalMinutes": -480,
+        "TotalSeconds": -28800
+      },
+      "SupportsDaylightSavingTime": true
+    },
+    "UTCOffsetMinutes": -420,
+    "Hostname": "SOC-WIN11",
+    "OS": {
+      "Caption": "Microsoft Windows 11 Enterprise Evaluation",
+      "Version": "10.0.26200",
+      "BuildNumber": "26200"
+    },
+    "IPv4": [
+      {
+        "InterfaceAlias": "SOC-LAB",
+        "IPAddress": "10.10.10.30",
+        "PrefixLength": 24
+      },
+      {
+        "InterfaceAlias": "Loopback Pseudo-Interface 1",
+        "IPAddress": "127.0.0.1",
+        "PrefixLength": 8
+      }
+    ],
+    "DefaultRoutes": [],
+    "Firewall": [
+      {
+        "Name": "Domain",
+        "Enabled": 1
+      },
+      {
+        "Name": "Private",
+        "Enabled": 1
+      },
+      {
+        "Name": "Public",
+        "Enabled": 1
+      }
+    ],
+    "Defender": {
+      "AMServiceEnabled": true,
+      "AntivirusEnabled": true,
+      "RealTimeProtectionEnabled": true,
+      "AMProductVersion": "4.18.26080.4",
+      "AMEngineVersion": "1.1.26080.3",
+      "AntivirusSignatureVersion": "1.459.565.0"
+    },
+    "SecureBoot": true,
+    "TPMSpec": {
+      "SpecVersion": "2.0, 0, 1.83"
+    },
+    "AgentService": {
+      "Name": "WazuhSvc",
+      "Status": "Running"
+    }
+  },
+  "sysmon": {
+    "CollectedUtc": "2026-10-05T19:41:52.1029272Z",
+    "BinaryVersion": "15.22",
+    "BinarySHA256": "83D31F2478DC6716CFDBF69E5C384BF043072B5F0D8D7B2EEA365F709FDA4352",
+    "ConfigurationSHA256": "CFBF327432A53D8EDB3F18B281E233A47E62E5C41276F4395BEE1482EA71CBDF",
+    "Service": {
+      "Name": "Sysmon64",
+      "State": "Running",
+      "StartMode": "Auto",
+      "PathName": "C:\\WINDOWS\\Sysmon64.exe"
+    },
+    "Channel": {
+      "LogName": "Microsoft-Windows-Sysmon/Operational",
+      "IsEnabled": true,
+      "RecordCount": 12,
+      "MaximumSizeInBytes": 67108864
+    },
+    "RecentEvents": [
+      {
+        "Id": 22,
+        "RecordId": 12,
+        "ProviderName": "Microsoft-Windows-Sysmon",
+        "TimeCreated": "/Date(1791229310271)/"
+      },
+      {
+        "Id": 22,
+        "RecordId": 11,
+        "ProviderName": "Microsoft-Windows-Sysmon",
+        "TimeCreated": "/Date(1791229309413)/"
+      },
+      {
+        "Id": 1,
+        "RecordId": 10,
+        "ProviderName": "Microsoft-Windows-Sysmon",
+        "TimeCreated": "/Date(1791229309193)/"
+      }
+    ]
+  }
+}

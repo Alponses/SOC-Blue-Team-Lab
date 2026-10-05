@@ -1,0 +1,332 @@
+{
+  "state": "PASS",
+  "checked_utc": "2026-10-05T20:28:28.518405+00:00",
+  "base_main": "de0d8b8",
+  "branch": "fix/complete-deliverable-1",
+  "prior_commit_1df7bf9_preserved_as_ancestor": true,
+  "repository_validator_and_markdown_internal_links": {
+    "result": "PASS",
+    "output": "CORRECTO: 521 enlaces internos en 70 archivos Markdown (rutas y anclas de encabezados).\nAlcance: enlaces Markdown en l\u00ednea; no se comprueban URL externas, representaci\u00f3n de Mermaid ni secretos.",
+    "scope": "Internal files and anchors; external URLs and visual Markdown rendering not exhaustively validated."
+  },
+  "xml": {
+    "configs/windows/sysmon/sysmonconfig.xml": {
+      "well_formed": true,
+      "unchanged_from_main": true,
+      "sha256": "cfbf327432a53d8edb3f18b281e233a47e62e5c41276f4395bee1482ea71cbdf"
+    },
+    "configs/windows/wazuh-agent/ossec.conf.example": {
+      "well_formed": true,
+      "unchanged_from_main": true,
+      "sha256": "87dafcd19995b787ec033caaf602596c0902f474c6fac6e485f7964198291161"
+    }
+  },
+  "json_parse": {
+    "result": "PASS",
+    "files_checked": 20
+  },
+  "source_evidence_review": {
+    "security": {
+      "event_id": 4624,
+      "record_id": 6609,
+      "identity_matches_local_manager_indexer": true,
+      "original_xml_record_checked": true,
+      "public_values_checked_against_private_originals": true
+    },
+    "system": {
+      "event_id": 7001,
+      "record_id": 824,
+      "identity_matches_local_manager_indexer": true,
+      "original_xml_record_checked": true,
+      "public_values_checked_against_private_originals": true
+    },
+    "sysmon": {
+      "event_id": 1,
+      "record_id": 530,
+      "identity_matches_local_manager_indexer": true,
+      "original_xml_record_checked": true,
+      "public_values_checked_against_private_originals": true
+    },
+    "sysmon-network": {
+      "event_id": 3,
+      "record_id": 554,
+      "identity_matches_local_manager_indexer": true,
+      "original_xml_record_checked": true,
+      "public_values_checked_against_private_originals": true
+    },
+    "powershell": {
+      "event_id": 4104,
+      "record_id": 2109,
+      "identity_matches_local_manager_indexer": true,
+      "original_xml_record_checked": true,
+      "public_values_checked_against_private_originals": true
+    },
+    "defender": {
+      "event_id": 1001,
+      "record_id": 394,
+      "identity_matches_local_manager_indexer": true,
+      "original_xml_record_checked": true,
+      "public_values_checked_against_private_originals": true
+    },
+    "defender-scan-start": {
+      "event_id": 1000,
+      "record_id": 393,
+      "identity_matches_local_manager_indexer": true,
+      "original_xml_record_checked": true,
+      "public_values_checked_against_private_originals": true
+    }
+  },
+  "whitespace": {
+    "git_diff_check": "PASS",
+    "git_diff_cached_check": "PASS"
+  },
+  "secret_review": {
+    "result": "PASS",
+    "known_private_values_checked": 11,
+    "pattern_classes": [
+      "private_key",
+      "aws_access_key",
+      "github_token",
+      "openai_token",
+      "jwt",
+      "credential_url",
+      "agent_registration_key",
+      "sid_value"
+    ],
+    "findings": 0,
+    "scope": "Changed/new files; limited to known values and listed patterns. No exhaustive history scan claimed."
+  },
+  "iso_vm_artifacts": {
+    "result": "PASS",
+    "prohibited_paths_found": 0,
+    "tracked_and_new_paths_checked": true,
+    "ignore_probes": [
+      "check.iso",
+      "check.vdi",
+      "check.vmdk",
+      "check.vhdx",
+      "check.vbox",
+      "check.sav",
+      "check.msi",
+      "client.keys",
+      "authd.pass"
+    ],
+    "allowed_binary": "Only the unmodified, visually inspected native Dashboard PNG"
+  },
+  "full_diff_review": {
+    "result": "PASS",
+    "method": "All changed paths and content checked; documentation diff read, complete JSON values checked against private originals, screenshot inspected. Earlier Deliverable 0/0.5, future stages, incidents, detections and XML baselines preserved.",
+    "files": [
+      {
+        "path": "README.md",
+        "bytes": 17367,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "configs/README.md",
+        "bytes": 1570,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "configs/wazuh/README.md",
+        "bytes": 3341,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "configs/windows/README.md",
+        "bytes": 822,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "configs/windows/powershell/logging.md",
+        "bytes": 3752,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "configs/windows/sysmon/README.md",
+        "bytes": 4215,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "configs/windows/wazuh-agent/README.md",
+        "bytes": 2995,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "docs/deliverables/deliverable-1.md",
+        "bytes": 9976,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "docs/implementation-checklist.md",
+        "bytes": 20696,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "docs/lab-operations.md",
+        "bytes": 19936,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "docs/telemetry-validation.md",
+        "bytes": 13186,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "docs/windows11-installation.md",
+        "bytes": 7643,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/README.md",
+        "bytes": 4928,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/defender-event.json",
+        "bytes": 8298,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/defender-scan-observed.json",
+        "bytes": 701,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/defender-scan-start-event.json",
+        "bytes": 9248,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/defender.md",
+        "bytes": 4091,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/deliverable-1-snapshots.json",
+        "bytes": 1329,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/operational-final-checks.json",
+        "bytes": 6658,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/powershell-event.json",
+        "bytes": 6060,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/powershell-policy-observed.json",
+        "bytes": 391,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/powershell.md",
+        "bytes": 3884,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/repository-validation.json",
+        "bytes": null,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/security-event.json",
+        "bytes": 11240,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/security.md",
+        "bytes": 3948,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/sysmon-effective-observed.txt",
+        "bytes": 2514,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/sysmon-event.json",
+        "bytes": 10800,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/sysmon-install-observed.txt",
+        "bytes": 228,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/sysmon-network-event.json",
+        "bytes": 9448,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/sysmon.md",
+        "bytes": 4706,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/system-event.json",
+        "bytes": 4730,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/system.md",
+        "bytes": 3703,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/telemetry-session.json",
+        "bytes": 6558,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/wazuh-deployment.md",
+        "bytes": 18647,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/windows-agent-checks.json",
+        "bytes": 2461,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/windows-agent-dashboard.json",
+        "bytes": 354,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/windows-agent-dashboard.png",
+        "bytes": 75937,
+        "format": "PNG original screenshot, visually reviewed"
+      },
+      {
+        "path": "evidence/deliverable-1/windows-deployment.md",
+        "bytes": 12808,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/windows-final-checks.json",
+        "bytes": 3935,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/windows-native-checks.json",
+        "bytes": 4654,
+        "format": "UTF-8 text"
+      },
+      {
+        "path": "evidence/deliverable-1/SHA256SUMS",
+        "bytes": 3004,
+        "format": "Generated UTF-8 SHA-256 manifest, entries and file contents verified"
+      }
+    ],
+    "future_implementation_stages_unchanged": true
+  },
+  "hash_manifest": {
+    "result": "PASS",
+    "method": "SHA-256 calculated after sanitization for every published file in this evidence directory except SHA256SUMS itself; previous five source artifacts unchanged."
+  }
+}

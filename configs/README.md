@@ -1,6 +1,6 @@
 # Configuraciones del laboratorio
 
-Este directorio reúne las configuraciones necesarias para reproducir la recopilación y las pruebas. **Avance:** base Windows del entregable 1 escrita y procedimiento de archives preparado; todavía no hay configuraciones desplegadas. Véase el [estado observado](../docs/deliverables/deliverable-1.md).
+Este directorio reúne las configuraciones necesarias para reproducir la recopilación y las pruebas. **Avance:** cinco canales desplegados y validados en SOC-WIN11, Sysmon con XML original aceptado y Script Block Logging habilitado. Archives temporal ejecutado y cerrado. Véase el [estado observado](../docs/deliverables/deliverable-1.md).
 
 | Directorio | Contenido previsto | Etapa |
 | --- | --- | --- |

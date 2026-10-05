@@ -1,0 +1,152 @@
+{
+  "CollectedUtc": "2026-10-05T20:08:34.1930109Z",
+  "Hostname": "SOC-WIN11",
+  "OS": {
+    "Caption": "Microsoft Windows 11 Enterprise Evaluation",
+    "Version": "10.0.26200",
+    "BuildNumber": "26200",
+    "OSArchitecture": "64-bit"
+  },
+  "WindowsRegistry": {
+    "EditionID": "EnterpriseEval",
+    "DisplayVersion": "25H2",
+    "CurrentBuild": "26200",
+    "UBR": 6584
+  },
+  "IPv4": [
+    {
+      "InterfaceAlias": "SOC-LAB",
+      "IPAddress": "10.10.10.30",
+      "PrefixLength": 24,
+      "PrefixOrigin": 1,
+      "AddressState": 4
+    },
+    {
+      "InterfaceAlias": "Loopback Pseudo-Interface 1",
+      "IPAddress": "127.0.0.1",
+      "PrefixLength": 8,
+      "PrefixOrigin": 2,
+      "AddressState": 4
+    }
+  ],
+  "IPv4Routes": [
+    {
+      "InterfaceAlias": "SOC-LAB",
+      "DestinationPrefix": "255.255.255.255/32",
+      "NextHop": "0.0.0.0",
+      "RouteMetric": 256
+    },
+    {
+      "InterfaceAlias": "Loopback Pseudo-Interface 1",
+      "DestinationPrefix": "255.255.255.255/32",
+      "NextHop": "0.0.0.0",
+      "RouteMetric": 256
+    },
+    {
+      "InterfaceAlias": "SOC-LAB",
+      "DestinationPrefix": "224.0.0.0/4",
+      "NextHop": "0.0.0.0",
+      "RouteMetric": 256
+    },
+    {
+      "InterfaceAlias": "Loopback Pseudo-Interface 1",
+      "DestinationPrefix": "224.0.0.0/4",
+      "NextHop": "0.0.0.0",
+      "RouteMetric": 256
+    },
+    {
+      "InterfaceAlias": "Loopback Pseudo-Interface 1",
+      "DestinationPrefix": "127.255.255.255/32",
+      "NextHop": "0.0.0.0",
+      "RouteMetric": 256
+    },
+    {
+      "InterfaceAlias": "Loopback Pseudo-Interface 1",
+      "DestinationPrefix": "127.0.0.1/32",
+      "NextHop": "0.0.0.0",
+      "RouteMetric": 256
+    },
+    {
+      "InterfaceAlias": "Loopback Pseudo-Interface 1",
+      "DestinationPrefix": "127.0.0.0/8",
+      "NextHop": "0.0.0.0",
+      "RouteMetric": 256
+    },
+    {
+      "InterfaceAlias": "SOC-LAB",
+      "DestinationPrefix": "10.10.10.255/32",
+      "NextHop": "0.0.0.0",
+      "RouteMetric": 256
+    },
+    {
+      "InterfaceAlias": "SOC-LAB",
+      "DestinationPrefix": "10.10.10.30/32",
+      "NextHop": "0.0.0.0",
+      "RouteMetric": 256
+    },
+    {
+      "InterfaceAlias": "SOC-LAB",
+      "DestinationPrefix": "10.10.10.0/24",
+      "NextHop": "0.0.0.0",
+      "RouteMetric": 256
+    }
+  ],
+  "DefaultIPv6Routes": [],
+  "Firewall": [
+    {
+      "Name": "Domain",
+      "Enabled": 1
+    },
+    {
+      "Name": "Private",
+      "Enabled": 1
+    },
+    {
+      "Name": "Public",
+      "Enabled": 1
+    }
+  ],
+  "Defender": {
+    "AMServiceEnabled": true,
+    "AntivirusEnabled": true,
+    "RealTimeProtectionEnabled": true,
+    "AMRunningMode": "Normal",
+    "AMProductVersion": "4.18.26080.4",
+    "AMEngineVersion": "1.1.26080.3",
+    "AntivirusSignatureVersion": "1.459.565.0",
+    "QuickScanStartTime": "/Date(1791230529652)/",
+    "QuickScanEndTime": "/Date(1791230751371)/",
+    "QuickScanAge": 0
+  },
+  "Services": [
+    {
+      "Name": "Sysmon64",
+      "State": "Running",
+      "StartMode": "Auto"
+    },
+    {
+      "Name": "WazuhSvc",
+      "State": "Running",
+      "StartMode": "Auto"
+    }
+  ],
+  "SecureBoot": true,
+  "TPM": {
+    "TpmPresent": true,
+    "TpmReady": true,
+    "TpmEnabled": true,
+    "TpmActivated": true
+  },
+  "UAC": {
+    "EnableLUA": 1,
+    "ConsentPromptBehaviorAdmin": 5
+  },
+  "AgentConfigurationSHA256": "74BBB6BBC891147F076D4137FD15F1FFB36AC3C07141C544ACC75B270A66A903",
+  "AgentManager": "<server><address>10.10.10.10</address><port>1514</port><protocol>tcp</protocol></server>",
+  "SysmonConfigurationSHA256": "CFBF327432A53D8EDB3F18B281E233A47E62E5C41276F4395BEE1482EA71CBDF",
+  "ScriptBlockLogging": {
+    "EnableScriptBlockLogging": 1,
+    "EnableScriptBlockInvocationLogging": null
+  },
+  "AuditLogon": "System audit policy\r\r\nCategory/Subcategory                      Setting\r\nLogon/Logoff\r\n  Logon                                   Success and Failure\r\r\n"
+}

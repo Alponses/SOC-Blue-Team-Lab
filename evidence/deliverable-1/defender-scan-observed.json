@@ -1,0 +1,26 @@
+{
+  "StartedUtc": "2026-10-05T19:56:56.0422459Z",
+  "FinishedUtc": "2026-10-05T20:05:53.8563172Z",
+  "ProtectionsAfter": {
+    "AMServiceEnabled": true,
+    "AntivirusEnabled": true,
+    "RealTimeProtectionEnabled": true,
+    "AMProductVersion": "4.18.26080.4",
+    "AMEngineVersion": "1.1.26080.3",
+    "AntivirusSignatureVersion": "1.459.565.0",
+    "QuickScanStartTime": "/Date(1791230529652)/",
+    "QuickScanEndTime": "/Date(1791230751371)/"
+  },
+  "event_identities": [
+    {
+      "EventId": 1001,
+      "RecordId": 394,
+      "SystemTime": "2026-10-05T20:05:51.6382165Z"
+    },
+    {
+      "EventId": 1000,
+      "RecordId": 393,
+      "SystemTime": "2026-10-05T19:56:56.4322201Z"
+    }
+  ]
+}

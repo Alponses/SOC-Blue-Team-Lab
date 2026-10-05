@@ -1,6 +1,8 @@
 # Wazuh todo en uno: ventana de validación
 
-**REQUIRES MANUAL EXECUTION.** La [instalación](../../docs/wazuh-installation.md) conserva manager, indexer y dashboard en SOC-WAZUH. Filebeat lleva los eventos al indexer. No hay clúster multinodo ni cambios de reglas.
+**Ejecución observada 2026-10-05:** la ventana temporal respetó duración y espacio libre, y se cerró restaurando la configuración; el muestreo de espacio tuvo un intervalo máximo de 7 min 43 s. [Mediciones y cierre](../../evidence/deliverable-1/telemetry-session.json).
+
+**Procedimiento de reproducción; ejecución observada enlazada arriba.** La [instalación](../../docs/wazuh-installation.md) conserva manager, indexer y dashboard en SOC-WAZUH. Filebeat lleva los eventos al indexer. No hay clúster multinodo ni cambios de reglas.
 
 ## Archives temporales
 

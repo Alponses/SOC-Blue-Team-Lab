@@ -1,0 +1,212 @@
+{
+  "state": "CLOSED",
+  "start_utc": "2026-10-05T19:44:39.569102+00:00",
+  "services_ready_utc": "2026-10-05T19:45:13Z",
+  "previous_configuration": {
+    "logall_json": "no",
+    "filebeat_archives_enabled": false
+  },
+  "validation_configuration": {
+    "logall_json": "yes",
+    "filebeat_archives_enabled": true,
+    "text_logall": "no"
+  },
+  "scope": "Security -> System -> Sysmon -> PowerShell -> Defender, exact event identity; no alert threshold or rule changes.",
+  "clock_observations": {
+    "windows": {
+      "guest_utc": "2026-10-05T19:52:07.3620636Z",
+      "host_start_utc": "2026-10-05T19:52:16.235441+00:00",
+      "host_end_utc": "2026-10-05T19:52:22.777675+00:00",
+      "offset_seconds_bounds": [
+        -15.416,
+        -8.873
+      ]
+    },
+    "wazuh": {
+      "guest_utc": "2026-10-05T19:52:09.637247096Z",
+      "host_start_utc": "2026-10-05T19:52:16.226542+00:00",
+      "host_end_utc": "2026-10-05T19:52:17.501302+00:00",
+      "offset_seconds_bounds": [
+        -7.864,
+        -6.589
+      ]
+    }
+  },
+  "clock_limit": "Offsets are bounded by host timestamps around each native read. Guests were behind the host; apparent receipt-event time differences are not precise ingestion latencies. Original SystemTime remains unchanged and is matched exactly. Offline lab has no external NTP route.",
+  "local_windows_zone": {
+    "id": "Pacific Standard Time",
+    "offset_minutes": -420
+  },
+  "safety_limits": {
+    "maximum_minutes": 30,
+    "minimum_free_bytes": 10737418240
+  },
+  "space_samples": [
+    {
+      "checked_utc": "2026-10-05T19:49:30.017442+00:00",
+      "free_bytes": 62100267008,
+      "archive_bytes": 4672333,
+      "counts_by_channel": {
+        "other": 489,
+        "Microsoft-Windows-Windows Defender/Operational": 8,
+        "Security": 140,
+        "Microsoft-Windows-Sysmon/Operational": 229,
+        "System": 8,
+        "Application": 12,
+        "Microsoft-Windows-PowerShell/Operational": 58
+      }
+    },
+    {
+      "checked_utc": "2026-10-05T19:55:02.466007+00:00",
+      "free_bytes": 62070775808,
+      "archive_bytes": 12816454
+    },
+    {
+      "checked_utc": "2026-10-05T20:00:16.839998+00:00",
+      "free_bytes": 62008578048,
+      "archive_bytes": 34118634,
+      "defender_events": [
+        {
+          "eventID": "5007",
+          "eventRecordID": "385",
+          "systemTime": "2026-10-05T19:44:58.4288139Z"
+        },
+        {
+          "eventID": "5007",
+          "eventRecordID": "386",
+          "systemTime": "2026-10-05T19:44:58.4621889Z"
+        },
+        {
+          "eventID": "5007",
+          "eventRecordID": "387",
+          "systemTime": "2026-10-05T19:44:58.9816781Z"
+        },
+        {
+          "eventID": "5007",
+          "eventRecordID": "388",
+          "systemTime": "2026-10-05T19:45:03.5925029Z"
+        },
+        {
+          "eventID": "5007",
+          "eventRecordID": "389",
+          "systemTime": "2026-10-05T19:45:22.6167221Z"
+        },
+        {
+          "eventID": "5007",
+          "eventRecordID": "390",
+          "systemTime": "2026-10-05T19:45:23.0772438Z"
+        },
+        {
+          "eventID": "5007",
+          "eventRecordID": "391",
+          "systemTime": "2026-10-05T19:45:37.4004288Z"
+        },
+        {
+          "eventID": "5007",
+          "eventRecordID": "392",
+          "systemTime": "2026-10-05T19:45:37.4004379Z"
+        },
+        {
+          "eventID": "1000",
+          "eventRecordID": "393",
+          "systemTime": "2026-10-05T19:56:56.4322201Z"
+        }
+      ]
+    }
+  ],
+  "free_bytes_before": 62111510528,
+  "before": {
+    "logall_json": "no",
+    "archives_enabled": false
+  },
+  "closing_started_utc": "2026-10-05T20:07:59.351301+00:00",
+  "free_bytes_after": 61975367680,
+  "archives_file_bytes": 43648252,
+  "archives_lines": 9468,
+  "closed_utc": "2026-10-05T20:08:19.175895+00:00",
+  "logall_json_after": "no",
+  "filebeat_archives_after": "false",
+  "window_duration_seconds": 1419.606793,
+  "filebeat_tests": "Config OK; TLS certificate-chain verification enabled; output handshake/talk OK before opening and after restoring",
+  "limits_after_close": "Existing indexed documents remain searchable; new non-alert events are no longer archived/indexed. Five agent channels remain enabled. No deletion scheduled; proposed 7-day retention review 2026-10-12.",
+  "space_sampling_max_gap_seconds": 462.511303,
+  "space_sampling_note": "Target was every five minutes; actual sample timestamps are preserved. The maximum observed gap exceeded five minutes; no continuous monitoring is claimed.",
+  "documents_after_close": {
+    "security": {
+      "found": true,
+      "document_id": "TFGbDaEBlMjr8RN1w4S5",
+      "checked_utc": "2026-10-05T20:09:23.111511+00:00"
+    },
+    "system": {
+      "found": true,
+      "document_id": "R1GbDaEBlMjr8RN1w4S5",
+      "checked_utc": "2026-10-05T20:09:23.176078+00:00"
+    },
+    "sysmon": {
+      "found": true,
+      "document_id": "PlGhDaEBlMjr8RN1zJIc",
+      "checked_utc": "2026-10-05T20:09:23.235247+00:00"
+    },
+    "sysmon-network": {
+      "found": true,
+      "document_id": "fVGiDaEBlMjr8RN1fJNi",
+      "checked_utc": "2026-10-05T20:09:23.286057+00:00"
+    },
+    "powershell": {
+      "found": true,
+      "document_id": "9lGjDaEBlMjr8RN16Jdi",
+      "checked_utc": "2026-10-05T20:09:23.345642+00:00"
+    },
+    "defender": {
+      "found": true,
+      "document_id": "eFGsDaEBlMjr8RN1vqo5",
+      "checked_utc": "2026-10-05T20:09:23.399751+00:00"
+    },
+    "defender-scan-start": {
+      "found": true,
+      "document_id": "DFGkDaEBlMjr8RN1wZyY",
+      "checked_utc": "2026-10-05T20:09:23.454656+00:00"
+    }
+  },
+  "indexer_total_documents": {
+    "value": 9503,
+    "relation": "eq"
+  },
+  "indexer_channel_buckets": [
+    {
+      "key": "Security",
+      "doc_count": 1803
+    },
+    {
+      "key": "Microsoft-Windows-Sysmon/Operational",
+      "doc_count": 820
+    },
+    {
+      "key": "Microsoft-Windows-PowerShell/Operational",
+      "doc_count": 404
+    },
+    {
+      "key": "Application",
+      "doc_count": 20
+    },
+    {
+      "key": "System",
+      "doc_count": 11
+    },
+    {
+      "key": "Microsoft-Windows-Windows Defender/Operational",
+      "doc_count": 10
+    }
+  ],
+  "archive_final_lines": 9503,
+  "archive_final_bytes": 43667946,
+  "archive_agent_counts_by_channel": {
+    "other": 5319,
+    "Microsoft-Windows-Windows Defender/Operational": 10,
+    "Security": 1803,
+    "Microsoft-Windows-Sysmon/Operational": 820,
+    "System": 11,
+    "Application": 20,
+    "Microsoft-Windows-PowerShell/Operational": 404
+  }
+}

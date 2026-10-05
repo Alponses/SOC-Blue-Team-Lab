@@ -1,0 +1,48 @@
+{
+  "SOC-WAZUH": [
+    {
+      "name": "SOC-WAZUH-base-install",
+      "uuid": "e0d50517-8586-4723-9224-28e68578d9ee",
+      "timestamp_utc": "2026-09-26T19:44:39Z",
+      "saved_ram": false
+    },
+    {
+      "name": "SOC-WAZUH-wazuh-operational",
+      "uuid": "914fc1c2-0c02-41c4-980e-b8c8481217ab",
+      "timestamp_utc": "2026-09-29T17:01:25Z",
+      "saved_ram": false
+    },
+    {
+      "name": "SOC-WAZUH-deliverable-1-validated",
+      "uuid": "f9610b8c-74b3-484d-88f4-c2e8a4f22f55",
+      "timestamp_utc": "2026-10-05T20:12:14Z",
+      "saved_ram": false
+    }
+  ],
+  "SOC-WIN11": [
+    {
+      "name": "SOC-WIN11-base-install",
+      "uuid": "90bb1641-7025-49a2-a5b0-5ba3ac260f2a",
+      "timestamp_utc": "2026-10-05T19:09:50Z",
+      "saved_ram": false
+    },
+    {
+      "name": "SOC-WIN11-wazuh-agent",
+      "uuid": "73e66ce8-02f9-4241-836c-414246c5d18c",
+      "timestamp_utc": "2026-10-05T19:36:16Z",
+      "saved_ram": false
+    },
+    {
+      "name": "SOC-WIN11-sysmon-configured",
+      "uuid": "3dd9edf1-8aed-42e4-81f7-dc67c669c0c2",
+      "timestamp_utc": "2026-10-05T19:44:18Z",
+      "saved_ram": false
+    },
+    {
+      "name": "SOC-WIN11-deliverable-1-validated",
+      "uuid": "29e81f5e-787a-40c0-ab72-6095b2bb8926",
+      "timestamp_utc": "2026-10-05T20:12:08Z",
+      "saved_ram": false
+    }
+  ]
+}

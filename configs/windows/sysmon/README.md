@@ -1,10 +1,10 @@
 # Sysmon para SOC-WIN11
 
-**Estado: configuración escrita; instalación y aceptación por Sysmon pendientes — REQUIRES MANUAL EXECUTION.** Se usa Microsoft Sysinternals Sysmon, con [sysmonconfig.xml](sysmonconfig.xml) propio y pequeño. No se ha importado una configuración comunitaria. La referencia es la [documentación oficial de Sysmon](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon).
+**Estado observado 2026-10-05:** Sysmon 15.22 instalado y XML original aceptado; ProcessCreate y NetworkConnect correlacionados. [Evidencia](../../../evidence/deliverable-1/sysmon.md). Se usa Microsoft Sysinternals Sysmon, con [sysmonconfig.xml](sysmonconfig.xml) propio y pequeño. No se ha importado una configuración comunitaria. La referencia es la [documentación oficial de Sysmon](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon).
 
 ## Selección de telemetría
 
-Los ID siguientes son referencias del proveedor, **no eventos observados**.
+La tabla describe la selección del XML. Los ID 1 y 3 tienen eventos correlacionados en la [ficha](../../../evidence/deliverable-1/sysmon.md); las demás categorías no quedaron validadas de extremo a extremo en esta sesión.
 
 | Categoría | ID de referencia | Selección y motivo | Límite |
 | --- | --- | --- | --- |

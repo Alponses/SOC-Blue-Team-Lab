@@ -1,0 +1,339 @@
+{
+  "evidence_origin": "Controlled Simulation; normal benign operator validation",
+  "action": "Launched cmd.exe /c echo SOC-D1-20261005-SYSMON-BENIGN; genuine Sysmon ProcessCreate event, unchanged repository configuration.",
+  "source": "sysmon",
+  "result": {
+    "local": "PASS",
+    "manager": "PASS",
+    "indexer_search": "PASS"
+  },
+  "local": {
+    "CollectedUtc": "2026-10-05T19:54:18.6289419Z",
+    "Channel": "Microsoft-Windows-Sysmon/Operational",
+    "Provider": "Microsoft-Windows-Sysmon",
+    "Computer": "SOC-WIN11",
+    "EventId": 1,
+    "RecordId": 530,
+    "SystemTime": "2026-10-05T19:54:15.6489722Z"
+  },
+  "local_event_data": {
+    "RuleName": "-",
+    "UtcTime": "2026-10-05 19:54:15.617",
+    "ProcessGuid": "{36707541-0067-6ac4-8201-000000000700}",
+    "ProcessId": "4580",
+    "Image": "C:\\Windows\\System32\\cmd.exe",
+    "CommandLine": "\"C:\\Windows\\System32\\cmd.exe\" /c echo SOC-D1-20261005-SYSMON-BENIGN ",
+    "IntegrityLevel": "System",
+    "Hashes": "SHA256=65C9EC61A5B10E7EEC76A7A961766B86BB93604EF18C5D1FE8AC53B4E53EF17A",
+    "ParentProcessGuid": "{36707541-0063-6ac4-7e01-000000000700}",
+    "ParentProcessId": "5828",
+    "ParentImage": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+  },
+  "agent_id": "001",
+  "agent_evidence": "windows-agent-checks.json",
+  "agent_collection_basis": "Effective channel subscription + Running service + exact event in manager under agent 001; no per-event agent ACK observed or claimed.",
+  "manager": {
+    "archive_path": "/var/ossec/logs/archives/archives.json",
+    "matched_count": 1,
+    "timestamp": "2026-10-05T19:54:28.419+0000",
+    "event_id": "1791230068.9563188",
+    "agent": {
+      "id": "001",
+      "name": "SOC-WIN11",
+      "ip": "10.10.10.30"
+    },
+    "location": "EventChannel",
+    "system": {
+      "providerName": "Microsoft-Windows-Sysmon",
+      "providerGuid": "{5770385f-c22a-43e0-bf4c-06f5698ffbd9}",
+      "eventID": "1",
+      "version": "5",
+      "level": "4",
+      "task": "1",
+      "opcode": "0",
+      "keywords": "0x8000000000000000",
+      "systemTime": "2026-10-05T19:54:15.6489722Z",
+      "eventRecordID": "530",
+      "processID": "3696",
+      "threadID": "4068",
+      "channel": "Microsoft-Windows-Sysmon/Operational",
+      "computer": "SOC-WIN11",
+      "severityValue": "INFORMATION"
+    },
+    "event_data": {
+      "utcTime": "2026-10-05 19:54:15.617",
+      "processGuid": "{36707541-0067-6ac4-8201-000000000700}",
+      "processId": "4580",
+      "image": "C:\\\\Windows\\\\System32\\\\cmd.exe",
+      "commandLine": "\\\"C:\\\\Windows\\\\System32\\\\cmd.exe\\\" /c echo SOC-D1-20261005-SYSMON-BENIGN",
+      "integrityLevel": "System",
+      "hashes": "SHA256=65C9EC61A5B10E7EEC76A7A961766B86BB93604EF18C5D1FE8AC53B4E53EF17A",
+      "parentProcessGuid": "{36707541-0063-6ac4-7e01-000000000700}",
+      "parentProcessId": "5828",
+      "parentImage": "C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe"
+    }
+  },
+  "indexer": {
+    "searched_utc": "2026-10-05T19:54:51.359021+00:00",
+    "pattern": "wazuh-archives-*",
+    "matched_count": 1,
+    "index": "wazuh-archives-4.x-2026.10.05",
+    "document_id": "PlGhDaEBlMjr8RN1zJIc",
+    "timestamp": "2026-10-05T19:54:28.419+0000",
+    "agent": {
+      "ip": "10.10.10.30",
+      "name": "SOC-WIN11",
+      "id": "001"
+    },
+    "system": {
+      "eventID": "1",
+      "keywords": "0x8000000000000000",
+      "providerGuid": "{5770385f-c22a-43e0-bf4c-06f5698ffbd9}",
+      "level": "4",
+      "channel": "Microsoft-Windows-Sysmon/Operational",
+      "opcode": "0",
+      "version": "5",
+      "systemTime": "2026-10-05T19:54:15.6489722Z",
+      "eventRecordID": "530",
+      "threadID": "4068",
+      "computer": "SOC-WIN11",
+      "task": "1",
+      "processID": "3696",
+      "severityValue": "INFORMATION",
+      "providerName": "Microsoft-Windows-Sysmon"
+    },
+    "event_data": {
+      "image": "C:\\\\Windows\\\\System32\\\\cmd.exe",
+      "parentProcessGuid": "{36707541-0063-6ac4-7e01-000000000700}",
+      "processGuid": "{36707541-0067-6ac4-8201-000000000700}",
+      "parentProcessId": "5828",
+      "processId": "4580",
+      "utcTime": "2026-10-05 19:54:15.617",
+      "hashes": "SHA256=65C9EC61A5B10E7EEC76A7A961766B86BB93604EF18C5D1FE8AC53B4E53EF17A",
+      "parentImage": "C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe",
+      "commandLine": "\\\"C:\\\\Windows\\\\System32\\\\cmd.exe\\\" /c echo SOC-D1-20261005-SYSMON-BENIGN",
+      "integrityLevel": "System"
+    }
+  },
+  "identity_fields_exact_match": {
+    "channel": "Microsoft-Windows-Sysmon/Operational",
+    "providerName": "Microsoft-Windows-Sysmon",
+    "computer": "SOC-WIN11",
+    "eventID": "1",
+    "eventRecordID": "530",
+    "systemTime": "2026-10-05T19:54:15.6489722Z"
+  },
+  "query": {
+    "size": 10,
+    "query": {
+      "bool": {
+        "filter": [
+          {
+            "match_phrase": {
+              "agent.name": "SOC-WIN11"
+            }
+          },
+          {
+            "match_phrase": {
+              "agent.id": "001"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.channel": "Microsoft-Windows-Sysmon/Operational"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.providerName": "Microsoft-Windows-Sysmon"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.computer": "SOC-WIN11"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.eventID": "1"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.eventRecordID": "530"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.systemTime": "2026-10-05T19:54:15.6489722Z"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "event_data_comparison": [
+    {
+      "local_field": "RuleName",
+      "manager_field": null,
+      "indexer_field": null,
+      "manager_comparison": "ABSENT",
+      "indexer_comparison": "ABSENT"
+    },
+    {
+      "local_field": "UtcTime",
+      "manager_field": "utcTime",
+      "indexer_field": "utcTime",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "ProcessGuid",
+      "manager_field": "processGuid",
+      "indexer_field": "processGuid",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "ProcessId",
+      "manager_field": "processId",
+      "indexer_field": "processId",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Image",
+      "manager_field": "image",
+      "indexer_field": "image",
+      "manager_comparison": "DIFFERS",
+      "indexer_comparison": "DIFFERS"
+    },
+    {
+      "local_field": "FileVersion",
+      "manager_field": "fileVersion",
+      "indexer_field": "fileVersion",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Description",
+      "manager_field": "description",
+      "indexer_field": "description",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Product",
+      "manager_field": "product",
+      "indexer_field": "product",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Company",
+      "manager_field": "company",
+      "indexer_field": "company",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "OriginalFileName",
+      "manager_field": "originalFileName",
+      "indexer_field": "originalFileName",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "CommandLine",
+      "manager_field": "commandLine",
+      "indexer_field": "commandLine",
+      "manager_comparison": "DIFFERS",
+      "indexer_comparison": "DIFFERS"
+    },
+    {
+      "local_field": "CurrentDirectory",
+      "manager_field": "currentDirectory",
+      "indexer_field": "currentDirectory",
+      "manager_comparison": "DIFFERS",
+      "indexer_comparison": "DIFFERS"
+    },
+    {
+      "local_field": "User",
+      "manager_field": "user",
+      "indexer_field": "user",
+      "manager_comparison": "DIFFERS",
+      "indexer_comparison": "DIFFERS"
+    },
+    {
+      "local_field": "LogonGuid",
+      "manager_field": "logonGuid",
+      "indexer_field": "logonGuid",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "LogonId",
+      "manager_field": "logonId",
+      "indexer_field": "logonId",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "TerminalSessionId",
+      "manager_field": "terminalSessionId",
+      "indexer_field": "terminalSessionId",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "IntegrityLevel",
+      "manager_field": "integrityLevel",
+      "indexer_field": "integrityLevel",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Hashes",
+      "manager_field": "hashes",
+      "indexer_field": "hashes",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "ParentProcessGuid",
+      "manager_field": "parentProcessGuid",
+      "indexer_field": "parentProcessGuid",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "ParentProcessId",
+      "manager_field": "parentProcessId",
+      "indexer_field": "parentProcessId",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "ParentImage",
+      "manager_field": "parentImage",
+      "indexer_field": "parentImage",
+      "manager_comparison": "DIFFERS",
+      "indexer_comparison": "DIFFERS"
+    },
+    {
+      "local_field": "ParentCommandLine",
+      "manager_field": "parentCommandLine",
+      "indexer_field": "parentCommandLine",
+      "manager_comparison": "DIFFERS",
+      "indexer_comparison": "DIFFERS"
+    },
+    {
+      "local_field": "ParentUser",
+      "manager_field": "parentUser",
+      "indexer_field": "parentUser",
+      "manager_comparison": "DIFFERS",
+      "indexer_comparison": "DIFFERS"
+    }
+  ],
+  "sanitization": "Field allowlist; no full_log/message/raw XML. Usernames, SIDs and unselected values omitted (omitted does not mean absent). Comparison status calculated on private originals before omission; field names normalized for matching only, values compared exactly as strings."
+}

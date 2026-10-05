@@ -1,0 +1,198 @@
+{
+  "collected_utc": "2026-10-05T20:17:54.464547+00:00",
+  "services": {
+    "wazuh-manager": "active",
+    "wazuh-indexer": "active",
+    "wazuh-dashboard": "active",
+    "filebeat": "active"
+  },
+  "agent_id": "001",
+  "agent_status": "Active",
+  "agent_version": "Wazuh v4.14.8",
+  "logall_json": "no",
+  "auth_disabled": "yes",
+  "filebeat_archives_enabled": "false",
+  "firewall": "Status: active\n\nTo                         Action      From\n--                         ------      ----\n10.10.10.10 22/tcp on lab0 ALLOW       10.10.10.1                \n10.10.10.10 443/tcp on lab0 ALLOW       10.10.10.1                \n10.10.10.10 1514/tcp on lab0 ALLOW       10.10.10.30",
+  "ipv4_routes": [
+    {
+      "dst": "10.10.10.0/24",
+      "dev": "lab0",
+      "protocol": "kernel",
+      "scope": "link",
+      "prefsrc": "10.10.10.10",
+      "flags": []
+    }
+  ],
+  "ipv6_default_routes": [],
+  "ipv4_forwarding": "0",
+  "ipv6_forwarding": "0",
+  "listening_ports": "State  Recv-Q Send-Q      Local Address:Port  Peer Address:PortProcess\nLISTEN 0      4096              0.0.0.0:22         0.0.0.0:*          \nLISTEN 0      4096           127.0.0.54:53         0.0.0.0:*          \nLISTEN 0      511               0.0.0.0:443        0.0.0.0:*          \nLISTEN 0      4096        127.0.0.53%lo:53         0.0.0.0:*          \nLISTEN 0      128               0.0.0.0:1514       0.0.0.0:*          \nLISTEN 0      2048              0.0.0.0:55000      0.0.0.0:*          \nLISTEN 0      4096                 [::]:22            [::]:*          \nLISTEN 0      4096   [::ffff:127.0.0.1]:9300             *:*          \nLISTEN 0      4096   [::ffff:127.0.0.1]:9200             *:*          \nLISTEN 0      2048                 [::]:55000         [::]:*",
+  "free_bytes": 62976192512,
+  "archive_final_lines": 9503,
+  "archive_final_bytes": 43667946,
+  "archive_agent_counts_by_channel": {
+    "other": 5319,
+    "Microsoft-Windows-Windows Defender/Operational": 10,
+    "Security": 1803,
+    "Microsoft-Windows-Sysmon/Operational": 820,
+    "System": 11,
+    "Application": 20,
+    "Microsoft-Windows-PowerShell/Operational": 404
+  },
+  "pre_snapshot_native_utc": "2026-10-05T20:11:24.779905+00:00",
+  "indexer_health": {
+    "status": "green",
+    "number_of_nodes": 1,
+    "active_shards": 34,
+    "unassigned_shards": 0
+  },
+  "dashboard_health": {
+    "since": "2026-10-05T20:17:37.054Z",
+    "state": "green",
+    "title": "Green",
+    "nickname": "Looking good",
+    "icon": "success",
+    "uiColor": "secondary"
+  },
+  "post_snapshot_restart": {
+    "windows": {
+      "CollectedUtc": "2026-10-05T20:17:02.2016584Z",
+      "Hostname": "SOC-WIN11",
+      "Services": [
+        {
+          "Name": "Sysmon64",
+          "State": "Running",
+          "StartMode": "Auto"
+        },
+        {
+          "Name": "WazuhSvc",
+          "State": "Running",
+          "StartMode": "Auto"
+        }
+      ],
+      "IPv4": [
+        {
+          "InterfaceAlias": "SOC-LAB",
+          "IPAddress": "10.10.10.30",
+          "PrefixLength": 24
+        },
+        {
+          "InterfaceAlias": "Loopback Pseudo-Interface 1",
+          "IPAddress": "127.0.0.1",
+          "PrefixLength": 8
+        }
+      ],
+      "DefaultIPv4Routes": [],
+      "DefaultIPv6Routes": [],
+      "Defender": {
+        "AMServiceEnabled": true,
+        "AntivirusEnabled": true,
+        "RealTimeProtectionEnabled": true,
+        "AMProductVersion": "4.18.26080.4",
+        "AMEngineVersion": "1.1.26080.3",
+        "AntivirusSignatureVersion": "1.459.565.0",
+        "QuickScanStartTime": "/Date(1791230529652)/",
+        "QuickScanEndTime": "/Date(1791230751371)/"
+      },
+      "ScriptBlockLogging": 1,
+      "TemporaryHelperDirectoryPresent": false,
+      "configuration_hash_note": "Hash measured in final elevated check before clean shutdown/checkpoint; not re-read by the unprivileged post-restart guest-control token."
+    },
+    "manager_agent_id": "001",
+    "manager_agent_status": "Active",
+    "connection_peer_observed": [
+      "ESTAB 10.10.10.10:1514 10.10.10.30:49669"
+    ],
+    "server_service_states": [
+      "active",
+      "active",
+      "active",
+      "active"
+    ],
+    "windows_clock_read_bracket": {
+      "guest_utc": "2026-10-05T20:17:02.2016584Z",
+      "host_start_utc": "2026-10-05T20:17:40.057785+00:00",
+      "host_end_utc": "2026-10-05T20:17:53.807178+00:00",
+      "offset_seconds_bounds": [
+        -51.606,
+        -37.856
+      ],
+      "note": "Read bracket after reboot; guest clock remains behind host. No precise synchronization or ingestion latency is claimed."
+    }
+  },
+  "cleanup": {
+    "temporary_task": {
+      "CollectedUtc": "2026-10-05T20:10:43.5523741Z",
+      "TemporaryValidationTaskPresent": false,
+      "UACEnabled": 1
+    },
+    "helper_directory": {
+      "CollectedUtc": "2026-10-05T20:10:51.2628751Z",
+      "TemporaryHelperDirectoryPresent": false
+    }
+  },
+  "SOC-WAZUH": {
+    "VMState": "running",
+    "cpus": "4",
+    "memory": "8192",
+    "nic1": "hostonlynetwork",
+    "nic2": "none",
+    "host_only_network": "SOC-LAB",
+    "cableconnected1": "on"
+  },
+  "SOC-WIN11": {
+    "VMState": "running",
+    "cpus": "2",
+    "memory": "4096",
+    "nic1": "hostonlynetwork",
+    "nic2": "none",
+    "host_only_network": "SOC-LAB",
+    "cableconnected1": "on"
+  },
+  "host_ipv4_forwarding": "0",
+  "host_ipv6_forwarding": "0",
+  "host_memory_pressure_level": "1",
+  "documents_after_restart": {
+    "security": {
+      "found": true,
+      "document_id": "TFGbDaEBlMjr8RN1w4S5",
+      "checked_utc": "2026-10-05T20:17:54.838504+00:00"
+    },
+    "system": {
+      "found": true,
+      "document_id": "R1GbDaEBlMjr8RN1w4S5",
+      "checked_utc": "2026-10-05T20:17:54.903608+00:00"
+    },
+    "sysmon": {
+      "found": true,
+      "document_id": "PlGhDaEBlMjr8RN1zJIc",
+      "checked_utc": "2026-10-05T20:17:54.968899+00:00"
+    },
+    "sysmon-network": {
+      "found": true,
+      "document_id": "fVGiDaEBlMjr8RN1fJNi",
+      "checked_utc": "2026-10-05T20:17:55.037170+00:00"
+    },
+    "powershell": {
+      "found": true,
+      "document_id": "9lGjDaEBlMjr8RN16Jdi",
+      "checked_utc": "2026-10-05T20:17:55.116400+00:00"
+    },
+    "defender": {
+      "found": true,
+      "document_id": "eFGsDaEBlMjr8RN1vqo5",
+      "checked_utc": "2026-10-05T20:17:55.173923+00:00"
+    },
+    "defender-scan-start": {
+      "found": true,
+      "document_id": "DFGkDaEBlMjr8RN1wZyY",
+      "checked_utc": "2026-10-05T20:17:55.241041+00:00"
+    }
+  },
+  "native_server_package_versions": {
+    "filebeat": "7.10.2-2",
+    "wazuh-dashboard": "4.14.8-1",
+    "wazuh-indexer": "4.14.8-1",
+    "wazuh-manager": "4.14.8-1"
+  }
+}

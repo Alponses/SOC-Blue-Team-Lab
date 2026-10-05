@@ -2,7 +2,7 @@
 
 **Evidence Origin: Controlled Simulation.** Evidencia de ingeniería del laboratorio, sin incidente ni simulación de ataque. Recopilación del **2026-09-26 al 2026-09-29**, con horas en UTC.
 
-**SOC-WAZUH instalado y comprobado en SOC-LAB, sin NAT.** Manager, indexer, dashboard y Filebeat activos; indexer y dashboard devuelven `green`. Las cinco fuentes Windows siguen **NOT EXECUTED**. Este registro no acredita ingestión Windows ni cierra el entregable.
+**SOC-WAZUH instalado y comprobado en SOC-LAB, sin NAT.** Manager, indexer, dashboard y Filebeat activos; indexer y dashboard devuelven `green`. Al cierre de esta fase A (2026-09-29), las fuentes Windows estaban **NOT EXECUTED**. Es un registro histórico. La [validación del 2026-10-05](README.md) completa las cinco cadenas y documenta el estado actual.
 
 ## Procedencia y Git
 
@@ -136,6 +136,6 @@ Se conservaron los 8 GiB de la VM. Se observaron niveles normales **1** y picos 
 
 La última muestra publicada del host, a `2026-09-29T17:12:12.276321+00:00`, mantuvo nivel **1**, con swap usado **6201.00 MiB**. Son mediciones puntuales, no una prueba de capacidad simultánea ni garantía de presión futura.
 
-Windows 11 Enterprise Evaluation 25H2 x64 ISO path still required.
+Requisito pendiente al 2026-09-29: Windows 11 Enterprise Evaluation 25H2 x64 ISO path still required. Fue resuelto en la fase B enlazada arriba.
 
-No se creó SOC-WIN11 ni se usó la ISO Consumer Editions. Security, System, Sysmon, PowerShell y Defender permanecen sin ejecutar. **DELIVERABLE 1 — IN PROGRESS**.
+Estado histórico al 2026-09-29: no se había creado SOC-WIN11 ni usado la ISO Consumer Editions; las cinco fuentes estaban sin ejecutar y el entregable IN PROGRESS. El [cierre real del 2026-10-05](../../docs/deliverables/deliverable-1.md) registra Windows y la telemetría completados.

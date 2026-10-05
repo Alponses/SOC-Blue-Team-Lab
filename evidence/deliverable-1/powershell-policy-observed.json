@@ -1,0 +1,15 @@
+{
+  "CollectedUtc": "2026-10-05T19:55:35.4223423Z",
+  "PowerShellVersion": "5.1.26100.6584",
+  "PreviousPolicy": null,
+  "EffectivePolicy": {
+    "EnableScriptBlockLogging": 1,
+    "EnableScriptBlockInvocationLogging": null
+  },
+  "Channel": {
+    "LogName": "Microsoft-Windows-PowerShell/Operational",
+    "IsEnabled": true,
+    "RecordCount": 582,
+    "MaximumSizeInBytes": 15728640
+  }
+}

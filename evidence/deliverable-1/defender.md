@@ -1,28 +1,40 @@
-# Evidencia pendiente: Defender
+# Evidencia validada: Defender
 
-**Evidence Origin: Controlled Simulation** — taxonomía del repositorio para pruebas del operador; aquí solo validación benigna, sin ataques.
+**Evidence Origin: Controlled Simulation** — actividad normal autorizada, sin ataques. **Local PASS / Wazuh PASS**, observado el 2026-10-05. Responsable: operador asistido por Codex.
 
-**REQUIRES MANUAL EXECUTION.** Host previsto: SOC-WIN11. Canal: `Microsoft-Windows-Windows Defender/Operational`. Proveedor esperado: Microsoft-Windows-Windows Defender. Evento natural o scan benigno. El estado del antivirus por consola no sustituye un evento del canal.
+Se ejecutó únicamente `Start-MpScan -ScanType QuickScan`, con Defender/Antivirus/RTP activos antes y después. Se observó inicio 1000/393 y finalización 1001/394 con el mismo Scan ID; ambos pasaron la cadena de ingestión. No se usaron malware, EICAR, exclusiones ni cambios de protección.
 
-| Etapa | Resultado observado | Referencia de evidencia |
+| Etapa | Resultado observado | Evidencia |
 | --- | --- | --- |
-| Evento local | No verificado | No recopilada |
-| Canal/configuración efectiva y agente | No verificado | No recopilada |
-| Evento correlacionado en manager | No verificado | No recopilada |
-| Documento en indexer/Discover | No verificado | No recopilada |
-| Campos comparados | Ninguno | No recopilada |
+| Windows local | PASS — evento 1001, RecordID 394 | [Extracto y comparación](defender-event.json) |
+| Wazuh Agent | PASS — ID `001`, cinco suscripciones, servicio Running; recogida respaldada por evento idéntico en manager | [Configuración y log](windows-agent-checks.json), [Dashboard](windows-agent-dashboard.png) |
+| Wazuh Manager | PASS — 1 coincidencia en JSON archives bajo el agente `001` | [Identidad y localizador](defender-event.json) |
+| Wazuh searchable document | PASS — 1 coincidencia por `_search` autenticado a través del Dashboard | [Consulta y documento](defender-event.json) |
+| Campos | Seis campos de identidad idénticos; EventData: 13 MATCH, 0 ABSENT, 0 DIFFERS | Comparación de originales privados antes de omitir datos |
 
-## Registro a completar con observaciones
+## Evento y búsqueda reproducible
 
-- Versión Windows/agente/fuente y hostname real: pendiente.
-- Event ID, EventRecordID, proveedor y canal observados: pendiente.
-- Timestamp original, zona/UTC, desfase medido e inicio/fin de ventana: pendiente.
-- Agent ID real, estado/hora, configuración aplicada y hash: pendiente.
-- Datos locales y campos presentes/ausentes (sin reconstruir los ausentes): pendiente.
-- Localizador en archives, consulta y correlación con el origen: pendiente.
-- Índice, document ID, consulta, intervalo y hora de consulta en Discover: pendiente.
-- Explicación de screenshot, si se obtiene: pendiente.
-- Archivos publicados, SHA-256, método de extracción y sanitización: pendiente.
-- Volumen/latencia observados, limitaciones, resultado y responsable: pendiente.
+- Equipo: `SOC-WIN11`; Windows Enterprise Evaluation 25H2 `26200.6584`, agente `4.14.8`.
+- Canal: `Microsoft-Windows-Windows Defender/Operational`; proveedor: `Microsoft-Windows-Windows Defender`.
+- Event ID: `1001`; EventRecordID: `394`.
+- UTC original, sin truncar: `2026-10-05T20:05:51.6382165Z`; extracción: `2026-10-05T20:05:53.6627879Z`.
+- Manager timestamp: `2026-10-05T20:06:25.393+0000`; evento archives ID `1791230785.14379963`.
+- Índice: `wazuh-archives-4.x-2026.10.05`; document ID: `eFGsDaEBlMjr8RN1vqo5`.
+- Consulta realizada: `2026-10-05T20:06:48.707918+00:00`. El JSON conserva el cuerpo `_search` real con agent name/ID, channel, provider, computer, event ID, record ID y SystemTime. No se afirma una búsqueda visual en Discover.
+- Zona original Windows: Pacific Standard Time, UTC−07:00 en esta fecha. Identidad/correlación usa `SystemTime` UTC, no la hora de pantalla ni la hora de recepción. [Ventana, relojes y cierre](telemetry-session.json).
 
-No completar campos con valores de ejemplo. Seguir la [guía](../../docs/telemetry-validation.md) y actualizar la [matriz](../../docs/deliverables/deliverable-1.md#matriz-de-validación) solo tras observar los resultados.
+## Campos y límites
+
+Ausentes en el EventData decodificado de manager e indexer: Ninguno entre los campos EventData comparados.
+
+Valores que difieren de su representación local: Ninguno.
+
+La ficha principal valida la finalización. El proveedor aporta nombre/versión de producto, Scan ID, tipo/parámetros y duración. No aporta una creación de proceso, hash o destino de red del análisis; no se reconstruyen. Usuario/dominio/SID se compararon en privado y se omiten. Se conservan los tiempos originales del evento y del estado Mp; no se sustituyen unos por otros.
+
+La recogida por el agente se infiere de su configuración efectiva, suscripción, servicio/conexión y la coincidencia del evento bajo ID `001` en manager. No se observó ni se inventa un ACK individual del agente. La consulta usa JSON archives; una ingestión PASS no demuestra una alerta ni una detección de ataque. No se cambió el umbral de alertas ni se añadieron reglas.
+
+## Extracción y publicación
+
+`Get-WinEvent` y `ToXml()` dentro de Windows conservaron XML y EventData originales en almacenamiento privado; se compararon con `/var/ossec/logs/archives/archives.json` y el `_source` indexado. Se publica una lista permitida de campos; se omiten mensajes completos, usuarios, SIDs y datos ajenos a la prueba. Omitido por sanitización no significa ausente de la fuente. El JSON identifica cada campo comparado y su resultado; las identidades y consultas se conservan reales. Hash del artefacto sanitizado en [SHA256SUMS](SHA256SUMS).
+
+[Inicio 1000/393 correlacionado](defender-scan-start-event.json), documento `DFGkDaEBlMjr8RN1wZyY`. La finalización pertenece al mismo Scan ID. [Estado nativo de protecciones tras el análisis](defender-scan-observed.json).

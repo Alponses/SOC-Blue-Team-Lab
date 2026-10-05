@@ -1,6 +1,6 @@
 # Canales del agente Windows
 
-**Estado: plantilla escrita; REQUIRES MANUAL EXECUTION.** [ossec.conf.example](ossec.conf.example) es un fragmento con raíz XML para revisión; no es una exportación de un agente instalado ni una configuración completa.
+**Estado observado 2026-10-05:** cinco canales fusionados y validados con agente 4.14.8/ID 001. [Configuración y suscripciones reales](../../../evidence/deliverable-1/windows-agent-checks.json). [ossec.conf.example](ossec.conf.example) es un fragmento con raíz XML para revisión; no es una exportación de un agente instalado ni una configuración completa.
 
 La [documentación de Wazuh](https://documentation.wazuh.com/current/user-manual/capabilities/log-data-collection/configuration.html) incluye Security, System y Application por defecto. No añadir otra entrada de los canales ya existentes. Inspeccionar primero `C:\Program Files (x86)\ossec-agent\ossec.conf` y la configuración central de los grupos asignados; verificar la ruta real con el servicio si difiere.
 

@@ -1,0 +1,195 @@
+{
+  "evidence_origin": "Controlled Simulation; normal benign operator validation",
+  "action": "New native Windows PowerShell session ran exactly: SOC-D1-20261005-POWERSHELL-BENIGN marker and Get-Date; genuine ScriptBlockLogging 4104 after observed policy enable.",
+  "source": "powershell",
+  "result": {
+    "local": "PASS",
+    "manager": "PASS",
+    "indexer_search": "PASS"
+  },
+  "local": {
+    "CollectedUtc": "2026-10-05T19:55:52.6008908Z",
+    "Channel": "Microsoft-Windows-PowerShell/Operational",
+    "Provider": "Microsoft-Windows-PowerShell",
+    "Computer": "SOC-WIN11",
+    "EventId": 4104,
+    "RecordId": 2109,
+    "SystemTime": "2026-10-05T19:55:48.1738454Z"
+  },
+  "local_event_data": {
+    "MessageNumber": "1",
+    "MessageTotal": "1",
+    "ScriptBlockText": "'SOC-D1-20261005-POWERSHELL-BENIGN'; Get-Date",
+    "ScriptBlockId": "0baf3351-e354-4116-b50c-7946ece019ef",
+    "Path": null
+  },
+  "agent_id": "001",
+  "agent_evidence": "windows-agent-checks.json",
+  "agent_collection_basis": "Effective channel subscription + Running service + exact event in manager under agent 001; no per-event agent ACK observed or claimed.",
+  "manager": {
+    "archive_path": "/var/ossec/logs/archives/archives.json",
+    "matched_count": 1,
+    "timestamp": "2026-10-05T19:56:46.293+0000",
+    "event_id": "1791230206.10379837",
+    "agent": {
+      "id": "001",
+      "name": "SOC-WIN11",
+      "ip": "10.10.10.30"
+    },
+    "location": "EventChannel",
+    "system": {
+      "providerName": "Microsoft-Windows-PowerShell",
+      "providerGuid": "{a0c1853b-5c40-4b15-8766-3cf1c58f985a}",
+      "eventID": "4104",
+      "version": "1",
+      "level": "5",
+      "task": "2",
+      "opcode": "15",
+      "keywords": "0x0",
+      "systemTime": "2026-10-05T19:55:48.1738454Z",
+      "eventRecordID": "2109",
+      "processID": "776",
+      "threadID": "3680",
+      "channel": "Microsoft-Windows-PowerShell/Operational",
+      "computer": "SOC-WIN11",
+      "severityValue": "VERBOSE"
+    },
+    "event_data": {
+      "messageNumber": "1",
+      "messageTotal": "1",
+      "scriptBlockText": "'SOC-D1-20261005-POWERSHELL-BENIGN'; Get-Date",
+      "scriptBlockId": "0baf3351-e354-4116-b50c-7946ece019ef"
+    }
+  },
+  "indexer": {
+    "searched_utc": "2026-10-05T19:57:09.490093+00:00",
+    "pattern": "wazuh-archives-*",
+    "matched_count": 1,
+    "index": "wazuh-archives-4.x-2026.10.05",
+    "document_id": "9lGjDaEBlMjr8RN16Jdi",
+    "timestamp": "2026-10-05T19:56:46.293+0000",
+    "agent": {
+      "ip": "10.10.10.30",
+      "name": "SOC-WIN11",
+      "id": "001"
+    },
+    "system": {
+      "eventID": "4104",
+      "keywords": "0x0",
+      "providerGuid": "{a0c1853b-5c40-4b15-8766-3cf1c58f985a}",
+      "level": "5",
+      "channel": "Microsoft-Windows-PowerShell/Operational",
+      "opcode": "15",
+      "version": "1",
+      "systemTime": "2026-10-05T19:55:48.1738454Z",
+      "eventRecordID": "2109",
+      "threadID": "3680",
+      "computer": "SOC-WIN11",
+      "task": "2",
+      "processID": "776",
+      "severityValue": "VERBOSE",
+      "providerName": "Microsoft-Windows-PowerShell"
+    },
+    "event_data": {
+      "messageNumber": "1",
+      "messageTotal": "1",
+      "scriptBlockText": "'SOC-D1-20261005-POWERSHELL-BENIGN'; Get-Date",
+      "scriptBlockId": "0baf3351-e354-4116-b50c-7946ece019ef"
+    }
+  },
+  "identity_fields_exact_match": {
+    "channel": "Microsoft-Windows-PowerShell/Operational",
+    "providerName": "Microsoft-Windows-PowerShell",
+    "computer": "SOC-WIN11",
+    "eventID": "4104",
+    "eventRecordID": "2109",
+    "systemTime": "2026-10-05T19:55:48.1738454Z"
+  },
+  "query": {
+    "size": 10,
+    "query": {
+      "bool": {
+        "filter": [
+          {
+            "match_phrase": {
+              "agent.name": "SOC-WIN11"
+            }
+          },
+          {
+            "match_phrase": {
+              "agent.id": "001"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.channel": "Microsoft-Windows-PowerShell/Operational"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.providerName": "Microsoft-Windows-PowerShell"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.computer": "SOC-WIN11"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.eventID": "4104"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.eventRecordID": "2109"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.systemTime": "2026-10-05T19:55:48.1738454Z"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "event_data_comparison": [
+    {
+      "local_field": "MessageNumber",
+      "manager_field": "messageNumber",
+      "indexer_field": "messageNumber",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "MessageTotal",
+      "manager_field": "messageTotal",
+      "indexer_field": "messageTotal",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "ScriptBlockText",
+      "manager_field": "scriptBlockText",
+      "indexer_field": "scriptBlockText",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "ScriptBlockId",
+      "manager_field": "scriptBlockId",
+      "indexer_field": "scriptBlockId",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Path",
+      "manager_field": null,
+      "indexer_field": null,
+      "manager_comparison": "ABSENT",
+      "indexer_comparison": "ABSENT"
+    }
+  ],
+  "sanitization": "Field allowlist; no full_log/message/raw XML. Usernames, SIDs and unselected values omitted (omitted does not mean absent). Comparison status calculated on private originals before omission; field names normalized for matching only, values compared exactly as strings."
+}

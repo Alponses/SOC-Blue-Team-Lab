@@ -1,0 +1,9 @@
+Loading configuration file with schema version 4.82
+Sysmon schema version: 4.91
+Configuration file validated.
+Sysmon64 installed.
+SysmonDrv installed.
+Starting SysmonDrv.
+SysmonDrv started.
+Starting Sysmon64..
+Sysmon64 started.

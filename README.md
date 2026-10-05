@@ -26,18 +26,18 @@ AWS IAM, CloudTrail y CloudWatch se investigarán en una cuenta propia de labora
 
 ## Avance del proyecto
 
-**Etapa actual: DELIVERABLE 1 — IN PROGRESS.** SOC-WAZUH instalado y comprobado en SOC-LAB, sin NAT, al 2026-09-29. La fase B de SOC-WIN11 comenzó el 2026-09-30: ISO Enterprise verificada y VM creada; instalación en curso. Las cinco fuentes siguen **NOT EXECUTED**. El [informe del entregable 1](docs/deliverables/deliverable-1.md) separa configuración escrita, despliegue observado y validaciones pendientes. Los entregables 0 y 0.5 siguen cerrados; la [revisión de cierre 0.5](docs/deliverables/deliverable-0.5-review.md) se conserva.
+**Etapa actual: DELIVERABLE 1 — COMPLETE.** Validación operativa del 2026-10-05 desde `main` actualizado (PR #1 conservado). SOC-WAZUH `10.10.10.10` y SOC-WIN11 `10.10.10.30/24` funcionan aislados; Windows 11 Enterprise Evaluation 25H2 `26200.6584`, TPM 2.0/Secure Boot/Defender/Firewall verificados. Agente `001`, Wazuh `4.14.8`, ACTIVE en manager/Dashboard; Security, System, Sysmon, PowerShell y Defender con Local PASS + Wazuh PASS. [Informe y límites](docs/deliverables/deliverable-1.md). Los entregables 0 y 0.5 siguen cerrados; [revisión 0.5](docs/deliverables/deliverable-0.5-review.md).
 
 | Área | Avance |
 | --- | --- |
 | Documentación | Arquitectura preservada; guías de instalación y validación de los cinco canales añadidas |
-| Infraestructura | SOC-WAZUH operativo en `10.10.10.10`, Wazuh `4.14.8-1`; SOC-WIN11 creado; instalación en curso |
+| Infraestructura | SOC-WAZUH en `10.10.10.10`, Wazuh `4.14.8-1`; SOC-WIN11 operativo en `10.10.10.30/24`, sin NAT ni gateway externo |
 | Investigaciones | SOC-001–SOC-010 controlados preservados; SOC-011–SOC-015 placeholders observados, sin investigar |
 | Detecciones | Reglas pendientes de inspeccionar eventos y validar campos |
 | Paneles y reporte | Tres especificaciones y plantilla semanal; NO DATA — DEPLOYMENT PENDING |
-| Evidencias | Despliegue y salud de SOC-WAZUH registrados con extractos sanitizados y hashes; sin telemetría Windows recopilada; originales privados |
+| Evidencias | Cinco fuentes Windows correlacionadas local/manager/indexer; extractos, consultas y hashes publicados; originales privados |
 
-**En curso: entregable 1 — Wazuh, Windows y Sysmon.** La fase A termina con [SOC-WAZUH verificado y dos snapshots confirmados](evidence/deliverable-1/wazuh-deployment.md). La [fase B de Windows](evidence/deliverable-1/windows-deployment.md) utiliza la ISO Enterprise Evaluation indicada por el propietario; hash y recursos registrados. Las guías de [Wazuh](docs/wazuh-installation.md), [Windows](docs/windows11-installation.md) y [validación por fuente](docs/telemetry-validation.md) se conservan. La [matriz Windows](docs/deliverables/deliverable-1.md#matriz-de-validación) permanece sin resultados operativos. La [guía operativa](docs/lab-operations.md) contiene el procedimiento general.
+**Entregable 1 completado — Wazuh, Windows y Sysmon.** SOC-WAZUH y SOC-WIN11 operan en SOC-LAB; agente `001` ACTIVE y cinco fuentes validadas secuencialmente con eventos benignos. [Matriz y límites](docs/deliverables/deliverable-1.md#matriz-de-validación), [evidencia y hashes](evidence/deliverable-1/README.md), [Windows](evidence/deliverable-1/windows-deployment.md). Archives temporal cerrado; snapshots finales confirmados. Deliverable 2 no se inició.
 
 El detalle está en la [arquitectura](docs/architecture.md), el [plan de implementación](docs/implementation-checklist.md), el [informe del entregable 0](docs/deliverables/deliverable-0.md) y el [cierre de 0.5](docs/deliverables/deliverable-0.5.md).
 
@@ -84,8 +84,8 @@ Suricata en SOC-LINUX solo observa el tráfico que atraviesa su interfaz; no tod
 | --- | --- | --- |
 | Cowrie en sensor público separado | Interacción SSH/Telnet emulada y JSON de actividad no solicitada | Sin desplegar |
 | Receptor de telemetría separado | Transporte autenticado y lotes revisados sin rutas al laboratorio | Infraestructura y mecanismo por decidir |
-| Wazuh todo en uno | Recopilación centralizada, alertas, investigación y reglas personalizadas | Desplegado `4.14.8-1`; servicios verificados; ingestión Windows pendiente |
-| Windows 11 Enterprise de evaluación | Telemetría de Security/System, PowerShell, Sysmon y Defender | Sin desplegar |
+| Wazuh todo en uno | Recopilación centralizada, alertas, investigación y reglas personalizadas | Desplegado `4.14.8-1`; servicios verificados; cinco fuentes Windows con Local PASS + Wazuh PASS |
+| Windows 11 Enterprise de evaluación | Telemetría de Security/System, PowerShell, Sysmon y Defender | Desplegado 25H2 / `26200.6584`; cinco fuentes: Local PASS + Wazuh PASS |
 | Ubuntu Server | SSH, autenticación, sudo, auditoría, registros del sistema e integridad de archivos | Sin desplegar |
 | Windows Server 2025 de evaluación | AD DS, DNS, usuarios y grupos de prueba, cambios de identidad | Sin desplegar |
 | Suricata / Wireshark | Eventos IDS, análisis de flujos e inspección privada de paquetes seleccionados | Sin desplegar |

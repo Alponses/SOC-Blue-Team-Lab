@@ -1,6 +1,6 @@
 # Plan de implementación y avance
 
-**Punto actual al 2026-09-30:** entregables 0 y 0.5 terminados; **DELIVERABLE 1 — IN PROGRESS**. [SOC-WAZUH instalado y comprobado](../evidence/deliverable-1/wazuh-deployment.md), con servicios activos, red privada y snapshots confirmados. [SOC-WIN11](../evidence/deliverable-1/windows-deployment.md) ya está registrada: ISO Enterprise verificada e instalación en curso. Las cinco fuentes de telemetría siguen **NOT EXECUTED**. Se conservan arquitectura y alcance de las etapas posteriores.
+**Punto actual al 2026-10-05:** entregables 0, 0.5 y **DELIVERABLE 1 — COMPLETE**. [SOC-WAZUH](../evidence/deliverable-1/wazuh-deployment.md) y [SOC-WIN11](../evidence/deliverable-1/windows-deployment.md) operativos; agente ACTIVE y Security → System → Sysmon → PowerShell → Defender con Local PASS + Wazuh PASS. [Evidencia](../evidence/deliverable-1/README.md). Deliverable 2 no se inició.
 
 Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada una se cerrará con sus archivos, pruebas, evidencias, problemas pendientes y siguiente paso documentados.
 
@@ -45,19 +45,19 @@ Las etapas pendientes **requieren ejecución manual** en el laboratorio. Cada un
 
 ## Entregable 1 — Wazuh, Windows y Sysmon
 
-**En curso, posterior a 0.5; mismo alcance operativo del entregable 1 original.** Configuraciones en Git y [guías de ejecución](deliverables/deliverable-1.md) disponibles. La fase A de SOC-WAZUH está comprobada; la fase B continúa con el medio Enterprise Evaluation recibido y verificado. Los checks que incluyen ambas VM o ingestión Windows siguen pendientes; la salud del servidor no los completa.
+**Completado el 2026-10-05.** [Informe operativo](deliverables/deliverable-1.md) y [cinco cadenas observadas](../evidence/deliverable-1/README.md). Archives y enrollment cerrados, protecciones activas y snapshots reales.
 
-- [ ] Comprobar RAM, disco y CPU disponibles, hipervisor compatible, requisitos de invitados, medios de evaluación y acceso a las máquinas. Confirmar que la subred propuesta no esté en uso.
-- [ ] Registrar versiones, descargas oficiales y sumas de verificación cuando se proporcionen, recursos, nombres de equipos y recuperación. Mantener instaladores y credenciales fuera de Git.
-- [ ] Verificar la red solo anfitrión existente o crearla si falta; revisar adaptadores, rutas IPv4/IPv6, reenvío, administración y exposición. Documentar la retirada del NAT temporal de actualización.
-- [ ] Desplegar Wazuh todo en uno en `10.10.10.10` y Windows 11 en `10.10.10.30`; comprobar servicios y crear instantáneas de referencia.
-- [ ] Registrar el agente Windows guardando las credenciales de forma privada. Configurar Security, System, PowerShell Operational, Sysmon Operational y Defender Operational.
-- [ ] Ajustar auditoría de Windows y registro de PowerShell; configurar eventos de creación de procesos, conexiones acotadas y DNS en Sysmon. Documentar filtros y motivo.
-- [ ] Verificar sincronización horaria, conversión a UTC, desfase, eventos locales, envío del agente, recepción del servidor y búsqueda en el SIEM.
-- [ ] Generar eventos inocuos: inicio de sesión normal, comando o script con un marcador y actividad local de red/DNS cuando exista el servicio necesario. Recoger un evento normal de System y Defender manteniendo la protección activa.
-- [ ] Mostrar al menos un evento de cada canal a través de toda la cadena de recopilación. Distinguir las alertas de los eventos consultados mediante una ruta de archivo temporal y limitada. Dejar pendiente cualquier cobertura de Sysmon que aún no pueda comprobarse.
-- [ ] Registrar consultas, ID de fuente/evento, tiempos, campos, retraso de ingestión observado, datos ausentes, volumen y retención.
-- [ ] Guardar fragmentos revisados, configuraciones sin secretos y unas pocas capturas con descripción. Validar enlaces y cerrar el informe de la etapa en Git.
+- [x] Comprobar RAM, disco y CPU disponibles, hipervisor compatible, requisitos de invitados, medios de evaluación y acceso a las máquinas. Confirmar que la subred propuesta no esté en uso.
+- [x] Registrar versiones, descargas oficiales y sumas de verificación cuando se proporcionen, recursos, nombres de equipos y recuperación. Mantener instaladores y credenciales fuera de Git.
+- [x] Verificar la red solo anfitrión existente o crearla si falta; revisar adaptadores, rutas IPv4/IPv6, reenvío, administración y exposición. Documentar la retirada del NAT temporal de actualización.
+- [x] Desplegar Wazuh todo en uno en `10.10.10.10` y Windows 11 en `10.10.10.30`; comprobar servicios y crear instantáneas de referencia.
+- [x] Registrar el agente Windows guardando las credenciales de forma privada. Configurar Security, System, PowerShell Operational, Sysmon Operational y Defender Operational.
+- [x] Ajustar auditoría de Windows y registro de PowerShell; configurar eventos de creación de procesos, conexiones acotadas y DNS en Sysmon. Documentar filtros y motivo.
+- [x] Verificar sincronización horaria, conversión a UTC, desfase, eventos locales, envío del agente, recepción del servidor y búsqueda en el SIEM.
+- [x] Generar eventos inocuos: inicio de sesión normal, comando o script con un marcador y actividad local de red/DNS cuando exista el servicio necesario. Recoger un evento normal de System y Defender manteniendo la protección activa.
+- [x] Mostrar al menos un evento de cada canal a través de toda la cadena de recopilación. Distinguir las alertas de los eventos consultados mediante una ruta de archivo temporal y limitada. Se documenta como pendiente la correlación DNS/FileCreate/RegistryEvent de Sysmon.
+- [x] Registrar consultas, ID de fuente/evento, tiempos, campos, retraso de ingestión observado, datos ausentes, volumen y retención.
+- [x] Guardar fragmentos revisados, configuraciones sin secretos y unas pocas capturas con descripción. Validar enlaces y cerrar el informe de la etapa en Git.
 
 **Archivos previstos:** documentación de instalación y comprobaciones en `docs/`, configuraciones en `configs/wazuh/` y `configs/windows/`, capturas seleccionadas y `docs/deliverables/deliverable-1.md`.
 

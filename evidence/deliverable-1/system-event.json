@@ -1,0 +1,164 @@
+{
+  "evidence_origin": "Controlled Simulation; normal benign operator validation",
+  "action": "Selected an existing normal Microsoft-Windows-Winlogon System event 7001 associated with console sign-in. No service failure or attack was generated.",
+  "source": "system",
+  "result": {
+    "local": "PASS",
+    "manager": "PASS",
+    "indexer_search": "PASS"
+  },
+  "local": {
+    "CollectedUtc": "2026-10-05T19:53:12.8437126Z",
+    "Channel": "System",
+    "Provider": "Microsoft-Windows-Winlogon",
+    "Computer": "SOC-WIN11",
+    "EventId": 7001,
+    "RecordId": 824,
+    "SystemTime": "2026-10-05T19:46:52.7132190Z"
+  },
+  "local_event_data": {
+    "TSId": "1"
+  },
+  "agent_id": "001",
+  "agent_evidence": "windows-agent-checks.json",
+  "agent_collection_basis": "Effective channel subscription + Running service + exact event in manager under agent 001; no per-event agent ACK observed or claimed.",
+  "manager": {
+    "archive_path": "/var/ossec/logs/archives/archives.json",
+    "matched_count": 1,
+    "timestamp": "2026-10-05T19:47:51.796+0000",
+    "event_id": "1791229671.8544282",
+    "agent": {
+      "id": "001",
+      "name": "SOC-WIN11",
+      "ip": "10.10.10.30"
+    },
+    "location": "EventChannel",
+    "system": {
+      "providerName": "Microsoft-Windows-Winlogon",
+      "providerGuid": "{dbe9b383-7cf3-4331-91cc-a3cb16a3b538}",
+      "eventID": "7001",
+      "version": "0",
+      "level": "4",
+      "task": "1101",
+      "opcode": "0",
+      "keywords": "0x2000200000000000",
+      "systemTime": "2026-10-05T19:46:52.7132190Z",
+      "eventRecordID": "824",
+      "processID": "724",
+      "threadID": "548",
+      "channel": "System",
+      "computer": "SOC-WIN11",
+      "severityValue": "INFORMATION"
+    },
+    "event_data": {
+      "tSId": "1"
+    }
+  },
+  "indexer": {
+    "searched_utc": "2026-10-05T19:53:47.845802+00:00",
+    "pattern": "wazuh-archives-*",
+    "matched_count": 1,
+    "index": "wazuh-archives-4.x-2026.10.05",
+    "document_id": "R1GbDaEBlMjr8RN1w4S5",
+    "timestamp": "2026-10-05T19:47:51.796+0000",
+    "agent": {
+      "ip": "10.10.10.30",
+      "name": "SOC-WIN11",
+      "id": "001"
+    },
+    "system": {
+      "eventID": "7001",
+      "keywords": "0x2000200000000000",
+      "providerGuid": "{dbe9b383-7cf3-4331-91cc-a3cb16a3b538}",
+      "level": "4",
+      "channel": "System",
+      "opcode": "0",
+      "version": "0",
+      "systemTime": "2026-10-05T19:46:52.7132190Z",
+      "eventRecordID": "824",
+      "threadID": "548",
+      "computer": "SOC-WIN11",
+      "task": "1101",
+      "processID": "724",
+      "severityValue": "INFORMATION",
+      "providerName": "Microsoft-Windows-Winlogon"
+    },
+    "event_data": {
+      "tSId": "1"
+    }
+  },
+  "identity_fields_exact_match": {
+    "channel": "System",
+    "providerName": "Microsoft-Windows-Winlogon",
+    "computer": "SOC-WIN11",
+    "eventID": "7001",
+    "eventRecordID": "824",
+    "systemTime": "2026-10-05T19:46:52.7132190Z"
+  },
+  "query": {
+    "size": 10,
+    "query": {
+      "bool": {
+        "filter": [
+          {
+            "match_phrase": {
+              "agent.name": "SOC-WIN11"
+            }
+          },
+          {
+            "match_phrase": {
+              "agent.id": "001"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.channel": "System"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.providerName": "Microsoft-Windows-Winlogon"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.computer": "SOC-WIN11"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.eventID": "7001"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.eventRecordID": "824"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.systemTime": "2026-10-05T19:46:52.7132190Z"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "event_data_comparison": [
+    {
+      "local_field": "TSId",
+      "manager_field": "tSId",
+      "indexer_field": "tSId",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "UserSid",
+      "manager_field": "userSid",
+      "indexer_field": "userSid",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    }
+  ],
+  "sanitization": "Field allowlist; no full_log/message/raw XML. Usernames, SIDs and unselected values omitted (omitted does not mean absent). Comparison status calculated on private originals before omission; field names normalized for matching only, values compared exactly as strings."
+}

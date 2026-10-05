@@ -1,6 +1,8 @@
 # Windows PowerShell Script Block Logging
 
-**Estado: procedimiento preparado — REQUIRES MANUAL EXECUTION.** Destino: Windows PowerShell 5.1 de SOC-WIN11 y canal `Microsoft-Windows-PowerShell/Operational`. PowerShell 7 usa otra configuración/canal y no sustituye esta comprobación.
+**Ejecución observada 2026-10-05:** Script Block Logging habilitado y 4104 benigno correlacionado. [Política](../../../evidence/deliverable-1/powershell-policy-observed.json) y [ficha](../../../evidence/deliverable-1/powershell.md). Los comandos siguientes son procedimiento de reproducción.
+
+**Estado observado:** política aplicada y evento 4104 correlacionado; procedimiento conservado para reproducción. Destino: Windows PowerShell 5.1 de SOC-WIN11 y canal `Microsoft-Windows-PowerShell/Operational`. PowerShell 7 usa otra configuración/canal y no sustituye esta comprobación.
 
 ## Configuración
 
@@ -18,7 +20,7 @@ Get-ItemProperty -LiteralPath $policyPath -Name EnableScriptBlockLogging
 wevtutil gl Microsoft-Windows-PowerShell/Operational
 ```
 
-Si el canal está deshabilitado, registrar el estado anterior y habilitarlo con `wevtutil sl Microsoft-Windows-PowerShell/Operational /e:true`. Abrir una **nueva** sesión de Windows PowerShell. Generar únicamente `Get-Date`, `Get-Process` o el marcador de la [guía de validación](../../../docs/telemetry-validation.md). Buscar el ID de referencia **4104** y el texto real; todavía no hay un 4104 observado. La salida de `Get-Date` en consola no prueba que exista el evento.
+Si el canal está deshabilitado, registrar el estado anterior y habilitarlo con `wevtutil sl Microsoft-Windows-PowerShell/Operational /e:true`. Abrir una **nueva** sesión de Windows PowerShell. Generar únicamente `Get-Date`, `Get-Process` o el marcador de la [guía de validación](../../../docs/telemetry-validation.md). Buscar el ID de referencia **4104** y el texto real; el 4104 real 2109 está documentado en la ficha. La salida de `Get-Date` en consola no prueba que exista el evento.
 
 Fuentes: [registro de Windows PowerShell](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_logging?view=powershell-5.1) y [política ADMX](https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-windowspowershell).
 

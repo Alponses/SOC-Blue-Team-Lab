@@ -1,0 +1,297 @@
+{
+  "evidence_origin": "Controlled Simulation; normal benign operator validation",
+  "action": "Normal Defender Quick Scan start, same observed Scan ID as completion event 1001/394.",
+  "source": "defender-scan-start",
+  "result": {
+    "local": "PASS",
+    "manager": "PASS",
+    "indexer_search": "PASS"
+  },
+  "local": {
+    "CollectedUtc": "2026-10-05T20:04:56.026663+00:00",
+    "CollectionClock": "Host UTC at native XML export read",
+    "Channel": "Microsoft-Windows-Windows Defender/Operational",
+    "Provider": "Microsoft-Windows-Windows Defender",
+    "Computer": "SOC-WIN11",
+    "EventId": 1000,
+    "RecordId": 393,
+    "SystemTime": "2026-10-05T19:56:56.4322201Z"
+  },
+  "local_event_data": {
+    "Product Name": "Microsoft Defender Antivirus",
+    "Product Version": "4.18.26080.4",
+    "Scan ID": "{9C1D106B-ABB8-44FC-BEA3-5B5940CF9F42}",
+    "Scan Type Index": "1",
+    "Scan Type": "Antimalware",
+    "Scan Parameters Index": "1",
+    "Scan Parameters": "Quick Scan",
+    "Scan Resources": null,
+    "Scan Trigger Index": "61",
+    "Scan Trigger": "On demand",
+    "Scan Only If Idle": "Enabled",
+    "Low CPU Priority for Scans": "Disabled",
+    "Thread Priority": "7"
+  },
+  "agent_id": "001",
+  "agent_evidence": "windows-agent-checks.json",
+  "agent_collection_basis": "Effective channel subscription + Running service + exact event in manager under agent 001; no per-event agent ACK observed or claimed.",
+  "manager": {
+    "archive_path": "/var/ossec/logs/archives/archives.json",
+    "matched_count": 1,
+    "timestamp": "2026-10-05T19:57:42.141+0000",
+    "event_id": "1791230262.10618407",
+    "agent": {
+      "id": "001",
+      "name": "SOC-WIN11",
+      "ip": "10.10.10.30"
+    },
+    "location": "EventChannel",
+    "system": {
+      "providerName": "Microsoft-Windows-Windows Defender",
+      "providerGuid": "{11cd958a-c507-4ef3-b3f2-5fd9dfbd2c78}",
+      "eventID": "1000",
+      "version": "0",
+      "level": "4",
+      "task": "0",
+      "opcode": "0",
+      "keywords": "0x8000000000000000",
+      "systemTime": "2026-10-05T19:56:56.4322201Z",
+      "eventRecordID": "393",
+      "processID": "3096",
+      "threadID": "2896",
+      "channel": "Microsoft-Windows-Windows Defender/Operational",
+      "computer": "SOC-WIN11",
+      "severityValue": "INFORMATION"
+    },
+    "event_data": {
+      "product Name": "Microsoft Defender Antivirus",
+      "product Version": "4.18.26080.4",
+      "scan ID": "{9C1D106B-ABB8-44FC-BEA3-5B5940CF9F42}",
+      "scan Type Index": "1",
+      "scan Type": "Antimalware",
+      "scan Parameters Index": "1",
+      "scan Parameters": "Quick Scan",
+      "scan Trigger Index": "61",
+      "scan Trigger": "On demand",
+      "scan Only If Idle": "Enabled",
+      "low CPU Priority for Scans": "Disabled",
+      "thread Priority": "7"
+    }
+  },
+  "indexer": {
+    "searched_utc": "2026-10-05T20:05:00.425048+00:00",
+    "pattern": "wazuh-archives-*",
+    "matched_count": 1,
+    "index": "wazuh-archives-4.x-2026.10.05",
+    "document_id": "DFGkDaEBlMjr8RN1wZyY",
+    "timestamp": "2026-10-05T19:57:42.141+0000",
+    "agent": {
+      "ip": "10.10.10.30",
+      "name": "SOC-WIN11",
+      "id": "001"
+    },
+    "system": {
+      "eventID": "1000",
+      "keywords": "0x8000000000000000",
+      "providerGuid": "{11cd958a-c507-4ef3-b3f2-5fd9dfbd2c78}",
+      "level": "4",
+      "channel": "Microsoft-Windows-Windows Defender/Operational",
+      "opcode": "0",
+      "version": "0",
+      "systemTime": "2026-10-05T19:56:56.4322201Z",
+      "eventRecordID": "393",
+      "threadID": "2896",
+      "computer": "SOC-WIN11",
+      "task": "0",
+      "processID": "3096",
+      "severityValue": "INFORMATION",
+      "providerName": "Microsoft-Windows-Windows Defender"
+    },
+    "event_data": {
+      "low CPU Priority for Scans": "Disabled",
+      "thread Priority": "7",
+      "scan Type Index": "1",
+      "scan Trigger Index": "61",
+      "scan Parameters Index": "1",
+      "product Name": "Microsoft Defender Antivirus",
+      "scan Type": "Antimalware",
+      "scan Only If Idle": "Enabled",
+      "scan ID": "{9C1D106B-ABB8-44FC-BEA3-5B5940CF9F42}",
+      "scan Parameters": "Quick Scan",
+      "scan Trigger": "On demand",
+      "product Version": "4.18.26080.4"
+    }
+  },
+  "identity_fields_exact_match": {
+    "channel": "Microsoft-Windows-Windows Defender/Operational",
+    "providerName": "Microsoft-Windows-Windows Defender",
+    "computer": "SOC-WIN11",
+    "eventID": "1000",
+    "eventRecordID": "393",
+    "systemTime": "2026-10-05T19:56:56.4322201Z"
+  },
+  "query": {
+    "size": 10,
+    "query": {
+      "bool": {
+        "filter": [
+          {
+            "match_phrase": {
+              "agent.name": "SOC-WIN11"
+            }
+          },
+          {
+            "match_phrase": {
+              "agent.id": "001"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.channel": "Microsoft-Windows-Windows Defender/Operational"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.providerName": "Microsoft-Windows-Windows Defender"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.computer": "SOC-WIN11"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.eventID": "1000"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.eventRecordID": "393"
+            }
+          },
+          {
+            "match_phrase": {
+              "data.win.system.systemTime": "2026-10-05T19:56:56.4322201Z"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "event_data_comparison": [
+    {
+      "local_field": "Product Name",
+      "manager_field": "product Name",
+      "indexer_field": "product Name",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Product Version",
+      "manager_field": "product Version",
+      "indexer_field": "product Version",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Scan ID",
+      "manager_field": "scan ID",
+      "indexer_field": "scan ID",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Scan Type Index",
+      "manager_field": "scan Type Index",
+      "indexer_field": "scan Type Index",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Scan Type",
+      "manager_field": "scan Type",
+      "indexer_field": "scan Type",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Scan Parameters Index",
+      "manager_field": "scan Parameters Index",
+      "indexer_field": "scan Parameters Index",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Scan Parameters",
+      "manager_field": "scan Parameters",
+      "indexer_field": "scan Parameters",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Domain",
+      "manager_field": "domain",
+      "indexer_field": "domain",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "User",
+      "manager_field": "user",
+      "indexer_field": "user",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "SID",
+      "manager_field": "sID",
+      "indexer_field": "sID",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Scan Resources",
+      "manager_field": null,
+      "indexer_field": null,
+      "manager_comparison": "ABSENT",
+      "indexer_comparison": "ABSENT"
+    },
+    {
+      "local_field": "Scan Trigger Index",
+      "manager_field": "scan Trigger Index",
+      "indexer_field": "scan Trigger Index",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Scan Trigger",
+      "manager_field": "scan Trigger",
+      "indexer_field": "scan Trigger",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Scan Only If Idle",
+      "manager_field": "scan Only If Idle",
+      "indexer_field": "scan Only If Idle",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Low CPU Priority for Scans",
+      "manager_field": "low CPU Priority for Scans",
+      "indexer_field": "low CPU Priority for Scans",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    },
+    {
+      "local_field": "Thread Priority",
+      "manager_field": "thread Priority",
+      "indexer_field": "thread Priority",
+      "manager_comparison": "MATCH",
+      "indexer_comparison": "MATCH"
+    }
+  ],
+  "sanitization": "Field allowlist; no full_log/message/raw XML. Usernames, SIDs and unselected values omitted (omitted does not mean absent). Comparison status calculated on private originals before omission; field names normalized for matching only, values compared exactly as strings."
+}

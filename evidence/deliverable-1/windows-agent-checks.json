@@ -1,0 +1,34 @@
+{
+  "method": "Effective ossec.conf parsed inside Windows; private key existence only, no content read or published. Selected agent log lines are plain strings.",
+  "agent_id": "001",
+  "configuration": {
+    "CollectedUtc": "2026-10-05T19:42:30.6943006Z",
+    "SHA256": "74BBB6BBC891147F076D4137FD15F1FFB36AC3C07141C544ACC75B270A66A903",
+    "Service": {
+      "Name": "WazuhSvc",
+      "State": "Running",
+      "StartMode": "Auto"
+    },
+    "Manager": "<server><address>10.10.10.10</address><port>1514</port><protocol>tcp</protocol></server>",
+    "LocalFiles": [
+      "<localfile><location>Application</location><log_format>eventchannel</log_format></localfile>",
+      "<localfile><location>Security</location><log_format>eventchannel</log_format><only-future-events>yes</only-future-events></localfile>",
+      "<localfile><location>System</location><log_format>eventchannel</log_format><only-future-events>yes</only-future-events></localfile>",
+      "<localfile><location>active-response\\active-responses.log</location><log_format>syslog</log_format></localfile>",
+      "<localfile><location>Microsoft-Windows-Sysmon/Operational</location><log_format>eventchannel</log_format><only-future-events>yes</only-future-events></localfile>",
+      "<localfile><location>Microsoft-Windows-PowerShell/Operational</location><log_format>eventchannel</log_format><only-future-events>yes</only-future-events></localfile>",
+      "<localfile><location>Microsoft-Windows-Windows Defender/Operational</location><log_format>eventchannel</log_format><only-future-events>yes</only-future-events></localfile>"
+    ],
+    "RegisteredKeyPresent": true
+  },
+  "log_observed_utc": "2026-10-05T19:42:44.1135824Z",
+  "subscription_log_lines": [
+    "2026/10/05 12:42:27 wazuh-agent: INFO: (1951): Analyzing event log: 'Application'.",
+    "2026/10/05 12:42:27 wazuh-agent: INFO: (1951): Analyzing event log: 'Security'.",
+    "2026/10/05 12:42:27 wazuh-agent: INFO: (1951): Analyzing event log: 'System'.",
+    "2026/10/05 12:42:27 wazuh-agent: INFO: (1951): Analyzing event log: 'Microsoft-Windows-Sysmon/Operational'.",
+    "2026/10/05 12:42:27 wazuh-agent: INFO: (1951): Analyzing event log: 'Microsoft-Windows-PowerShell/Operational'.",
+    "2026/10/05 12:42:27 wazuh-agent: INFO: (1951): Analyzing event log: 'Microsoft-Windows-Windows Defender/Operational'.",
+    "2026/10/05 12:42:28 wazuh-agent: INFO: (4102): Connected to the server ([10.10.10.10]:1514/tcp)."
+  ]
+}

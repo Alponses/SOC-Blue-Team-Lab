@@ -1,6 +1,6 @@
 # Instalación de SOC-WIN11
 
-**Estado al 2026-09-30: instalación iniciada.** SOC-WIN11 ya está registrada con el medio Enterprise Evaluation autorizado y los recursos previstos. El [registro de fase B](../evidence/deliverable-1/windows-deployment.md) distingue comprobaciones reales de los procedimientos pendientes. [Estado del entregable](deliverables/deliverable-1.md).
+**Estado al 2026-10-05: Windows operativo y telemetría validada.** Enterprise Evaluation 25H2, build 26200.6584, IP 10.10.10.30/24, TPM 2.0/Secure Boot/Defender/Firewall comprobados. La preparación empezó el 2026-09-30. El [registro de fase B](../evidence/deliverable-1/windows-deployment.md) distingue comprobaciones reales de los procedimientos pendientes. [Estado del entregable](deliverables/deliverable-1.md).
 
 ## Endpoint y red
 
@@ -27,11 +27,11 @@ Defender debe estar activo en modo normal y protección en tiempo real habilitad
 
 ## Instalación del agente
 
-Consultar la [guía oficial Windows](https://documentation.wazuh.com/current/installation-guide/wazuh-agent/wazuh-agent-package-windows.html) en el momento de ejecución. Referencia consultada 2026-09-25: **4.14.8-1**; versión instalada: **pendiente**. Usar el agente compatible con la release verificada del manager. Descargar MSI desde el enlace oficial, fuera de Git, durante mantenimiento. Comprobar firma, editor y hash; no ejecutar si la firma es inválida o el origen inesperado.
+Consultar la [guía oficial Windows](https://documentation.wazuh.com/current/installation-guide/wazuh-agent/wazuh-agent-package-windows.html) en el momento de ejecución. Referencia consultada 2026-09-25: **4.14.8-1**; versión instalada: **4.14.8**, MSI oficial 4.14.8-1, servicio Running y agente 001 ACTIVE (2026-10-05). Usar el agente compatible con la release verificada del manager. Descargar MSI desde el enlace oficial, fuera de Git, durante mantenimiento. Comprobar firma, editor y hash; no ejecutar si la firma es inválida o el origen inesperado.
 
 Abrir enrollment 1515 únicamente desde `10.10.10.30` en el manager. Para este único endpoint en red aislada, usar enrollment automático limitado por firewall durante la ventana inicial; documentar esta decisión y cerrar 1515 al terminar. Si el manager requiere contraseña/certificado, conservar esa protección y usar el mecanismo privado soportado; no incluir secretos en esta guía, comandos registrados o evidencias. Nunca mostrar `client.keys`.
 
-Ejemplo **pendiente de ejecución**, desde la carpeta del MSI de la release ya verificada; [variables oficiales del instalador](https://documentation.wazuh.com/current/user-manual/agent/agent-enrollment/deployment-variables/deployment-variables-windows.html):
+Ejemplo de reproducción; la ejecución efectiva está en el registro enlazado, desde la carpeta del MSI de la release ya verificada; [variables oficiales del instalador](https://documentation.wazuh.com/current/user-manual/agent/agent-enrollment/deployment-variables/deployment-variables-windows.html):
 
 ```powershell
 $msi = (Resolve-Path '.\wazuh-agent-4.14.8-1.msi').Path

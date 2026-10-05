@@ -1,6 +1,6 @@
 # Validación de telemetría Windows → Wazuh
 
-**REQUIRES MANUAL EXECUTION.** No se ha ejecutado ninguna prueba en Windows o Wazuh. [Matriz real](deliverables/deliverable-1.md#matriz-de-validación) e [inventario de evidencias](../evidence/deliverable-1/README.md). El objetivo es disponibilidad de datos; no se crean incidentes, reglas ni simulaciones de ataque.
+**Ejecución observada 2026-10-05:** las cinco fuentes pasaron local/manager/indexer en el orden indicado. Esta guía conserva el procedimiento de reproducción. [Matriz real](deliverables/deliverable-1.md#matriz-de-validación) e [inventario de evidencias](../evidence/deliverable-1/README.md). El objetivo es disponibilidad de datos; no se crean incidentes, reglas ni simulaciones de ataque.
 
 ## Preparación de la ventana
 
@@ -12,7 +12,7 @@
 
 ## Orden obligatorio y rendimiento
 
-Procesar **Security → System → Sysmon → PowerShell → Defender**, una fuente por vez. Para cada una: localizar/generar evento benigno, comprobarlo localmente, confirmar canal/configuración del agente y conectividad, encontrar el mismo evento en Wazuh y guardar evidencia/resultado. No cambiar otra fuente hasta conocer el resultado de la actual; si falla, documentar y diagnosticar una capa por vez. No marcar PASS sin evidencia. La instalación/configuración de Sysmon y la política de PowerShell se aplican al llegar a su paso.
+Procesar **Security → System → Sysmon → PowerShell → Defender**, una fuente por vez. Para cada una: localizar/generar evento benigno, comprobarlo localmente, confirmar canal/configuración del agente y conectividad, encontrar el mismo evento en Wazuh y guardar evidencia/resultado. No cambiar otra fuente hasta conocer el resultado de la actual; si falla, documentar y diagnosticar una capa por vez. No marcar PASS sin evidencia. En la ejecución del 2026-10-05, Sysmon se instaló y verificó antes de comenzar las fuentes; la política de PowerShell se habilitó después de conocer el resultado de Sysmon. Las comprobaciones por fuente conservaron este orden.
 
 En el host, observar Memory Pressure en Activity Monitor y guardar mediciones UTC de `sysctl vm.memory_pressure`, `sysctl vm.swapusage` y `vm_stat` antes de arrancar, después de cada VM y durante cada fuente. Los contadores acumulados de swap no representan por sí solos presión actual. Si la presión grave sostenida o la paginación impide validar, detener la sesión, documentar el impacto y apagar limpiamente los invitados; no reducir arbitrariamente la RAM asignada. Aún no se ha ejecutado esta prueba con ambas VM.
 
@@ -79,7 +79,7 @@ Anotar por cada selección: hostname, proveedor, canal, Event ID, EventRecordID,
 
 1. Guardar un extracto sanitizado de los cinco `localfile` efectivos, hash de configuración aplicada, servicio `WazuhSvc` activo y mensajes relevantes de `ossec.log` sobre suscripciones/conexión o errores. No exportar claves, tokens ni todo el log. El estado Active acredita conexión, no cada canal.
 2. En SOC-WAZUH ejecutar `sudo /var/ossec/bin/agent_control -l`; registrar ID, nombre, estado y versión real. Comprobar conectividad privada por 1514 y logs de recepción/error del manager. Un socket establecido por sí solo no acredita el contenido del evento.
-3. Buscar el registro correlacionado en `/var/ossec/logs/archives/archives.json`. Si la ventana cruzó rotación, revisar el archivo correspondiente a la fecha, sin asumir ausencia. Si se usa `jq`, instalarlo desde el repositorio Ubuntu durante mantenimiento. Consulta inicial, **ejemplo pendiente**:
+3. Buscar el registro correlacionado en `/var/ossec/logs/archives/archives.json`. Si la ventana cruzó rotación, revisar el archivo correspondiente a la fecha, sin asumir ausencia. Si se usa `jq`, instalarlo desde el repositorio Ubuntu durante mantenimiento. Consulta inicial, **ejemplo de consulta**:
 
    ```sh
    sudo jq -c 'select(.agent.name == "SOC-WIN11") | {timestamp, agent, location, data}' /var/ossec/logs/archives/archives.json

@@ -1,6 +1,6 @@
 # Base Windows del entregable 1
 
-Configuración escrita, aún sin aplicar: **REQUIRES MANUAL EXECUTION**.
+Configuración aplicada y cinco fuentes validadas el 2026-10-05: [estado y evidencia reales](../../evidence/deliverable-1/README.md). Las plantillas XML siguen siendo fragmentos de referencia; sus comentarios históricos no sustituyen la configuración efectiva observada.
 
 - [Agente Wazuh](wazuh-agent/README.md): fusión sin duplicar canales.
 - [Sysmon](sysmon/README.md): selección de eventos y configuración XML.

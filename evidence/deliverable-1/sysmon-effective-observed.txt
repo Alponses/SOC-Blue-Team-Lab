@@ -1,0 +1,37 @@
+Current configuration:
+ - Service name:                  Sysmon64
+ - Driver name:                   SysmonDrv
+ - Config file:                   C:\SOC-Lab\Config\sysmonconfig.xml
+ - Config hash:                   SHA256=CFBF327432A53D8EDB3F18B281E233A47E62E5C41276F4395BEE1482EA71CBDF
+
+ - HashingAlgorithms:             SHA256
+ - Network connection:            enabled
+ - Archive Directory:             -
+ - Image loading:                 disabled
+ - CRL checking:                  enabled
+ - DNS lookup:                    disabled
+
+Rule configuration (version 4.82):
+ - ProcessCreate                      onmatch: exclude   combine rules using 'Or'
+ - FileCreateTime                     onmatch: include   combine rules using 'Or'
+ - NetworkConnect                     onmatch: include   combine rules using 'Or'
+	DestinationIp                  filter: begin with   value: '10.10.10.'
+ - ProcessTerminate                   onmatch: include   combine rules using 'Or'
+ - DriverLoad                         onmatch: include   combine rules using 'Or'
+ - ImageLoad                          onmatch: include   combine rules using 'Or'
+ - CreateRemoteThread                 onmatch: include   combine rules using 'Or'
+ - RawAccessRead                      onmatch: include   combine rules using 'Or'
+ - ProcessAccess                      onmatch: include   combine rules using 'Or'
+ - FileCreate                         onmatch: include   combine rules using 'Or'
+	TargetFilename                 filter: begin with   value: 'C:\SOC-Lab\Validation\'
+ - RegistryEvent                      onmatch: include   combine rules using 'Or'
+	TargetObject                   filter: contains     value: '\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
+	TargetObject                   filter: contains     value: '\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run'
+ - FileCreateStreamHash               onmatch: include   combine rules using 'Or'
+ - PipeEvent                          onmatch: include   combine rules using 'Or'
+ - WmiEvent                           onmatch: include   combine rules using 'Or'
+ - DnsQuery                           onmatch: exclude   combine rules using 'Or'
+ - FileDelete                         onmatch: include   combine rules using 'Or'
+ - ClipboardChange                    onmatch: include   combine rules using 'Or'
+ - ProcessTampering                   onmatch: include   combine rules using 'Or'
+ - FileDeleteDetected                 onmatch: include   combine rules using 'Or'
