@@ -2,13 +2,13 @@
 
 **DELIVERABLE 1 — IN PROGRESS**
 
-Revisión: **2026-09-29**. **Fase A: SOC-WAZUH instalado y comprobado**, con versiones, servicios, red aislada y snapshots observados. SOC-WIN11 y sus cinco fuentes siguen **NOT EXECUTED / REQUIRES MANUAL EXECUTION**. No hay prueba de ingestión Windows. El entregable 0.5 sigue cerrado y su arquitectura se conserva.
+Revisión: **2026-09-30**. **Fase A: SOC-WAZUH instalado y comprobado**, con versiones, servicios, red aislada y snapshots observados. La [fase B de SOC-WIN11](../../evidence/deliverable-1/windows-deployment.md) está en ejecución: medio verificado, VM creada e instalación iniciada. Sus cinco fuentes siguen **NOT EXECUTED**. No hay prueba de ingestión Windows. El entregable 0.5 sigue cerrado y su arquitectura se conserva.
 
 **Histórico:** la [comprobación desde `23d9614`](../../evidence/deliverable-1/preflight.md#reanudación-desde-23d9614) se detuvo por falta de medios. Posteriormente, el propietario proporcionó la ISO Ubuntu y autorizó únicamente la fase A desde `858c39c`. Se creó el commit separado `e574721` para exclusiones VirtualBox y se ejecutó el [despliegue real de SOC-WAZUH](../../evidence/deliverable-1/wazuh-deployment.md). La ISO Windows Consumer Editions fue excluida; no se creó SOC-WIN11. La futura validación seguirá Security → System → Sysmon → PowerShell → Defender. No se crea el commit de cierre del entregable mientras falten esas pruebas.
 
 ## Base y alcance
 
-Al preparar el fundamento se verificaron árbol limpio, rama `feat/deliverable-1-wazuh-windows` ya existente y HEAD exacto `1e9b9f1891534727b1ef87ee3bc882f0eb4dae96`, mensaje `docs: extend SOC lab with isolated Internet honeypot architecture`. No se trabajó en main ni se reescribió historia. El fundamento quedó registrado en `23d9614`; esta continuación conserva esa historia y registra únicamente la fase A.
+Al preparar el fundamento se verificaron árbol limpio, rama `feat/deliverable-1-wazuh-windows` ya existente y HEAD exacto `1e9b9f1891534727b1ef87ee3bc882f0eb4dae96`, mensaje `docs: extend SOC lab with isolated Internet honeypot architecture`. No se trabajó en main ni se reescribió historia. El fundamento quedó registrado en `23d9614`; esta continuación conserva esa historia e incorpora la fase B desde `7124873`.
 
 Solo SOC-WAZUH + SOC-WIN11 + agente Wazuh + Sysmon + Defender + Security/System/PowerShell. No se desplegó honeypot, Linux endpoint, AD, Suricata, AWS ni Splunk. No se ejecutaron ataques, malware/EICAR, Atomic Red Team, phishing o fuerza bruta; no se añadieron detecciones ni se cerró SOC-001–SOC-015.
 
@@ -19,7 +19,7 @@ Solo SOC-WAZUH + SOC-WIN11 + agente Wazuh + Sysmon + Defender + Security/System/
 | Host | macOS x86_64, VirtualBox | VBox 7.2.14r174565; 16 GiB RAM total, 4 cores físicos/8 lógicos; 170 GiB libres al reanudar el 2026-09-29; presión normal con picos transitorios documentados |
 | SOC-LAB | Host-only `10.10.10.0/24`, host `.1` | Red reutilizada; host `bridge100=10.10.10.1/24`, Ubuntu `lab0=10.10.10.10/24`; NAT retirado, sin ruta por defecto en el invitado; forwarding IPv4/IPv6 desactivado |
 | SOC-WAZUH | `10.10.10.10`, Ubuntu Server 24.04 LTS, 4 vCPU / 8 GiB / 80 GB | Ubuntu 24.04.5 LTS instalado; 4 vCPU, 8192 MiB, VDI dinámico de 81920 MiB; IP privada verificada; servicios y checkpoints comprobados |
-| SOC-WIN11 | `10.10.10.30`, Windows 11 Enterprise evaluación, 2 vCPU / 4 GiB / 80 GB | VM no registrada; Windows/recursos/IP no aplicados ni observados |
+| SOC-WIN11 | `10.10.10.30`, Windows 11 Enterprise evaluación, 2 vCPU / 4 GiB / 80 GB | VM creada: 2 vCPU, 4096 MiB, VDI dinámico 81920 MiB, EFI64/TPM 2.0; Windows en instalación, IP nativa pendiente |
 
 Evidencia: [preflight histórico](../../evidence/deliverable-1/preflight.md) y [despliegue de SOC-WAZUH](../../evidence/deliverable-1/wazuh-deployment.md). La ISO Ubuntu proporcionada se cotejó con SHA256SUMS oficial. No se descargaron imágenes. La capacidad simultánea con Windows y sus requisitos/medio siguen pendientes; una prueba con Wazuh no valida dos VM.
 
@@ -131,8 +131,8 @@ No se han encontrado errores de ingestión Windows porque esa prueba no se ejecu
 
 ## Pendientes y siguiente paso
 
-**La fase A se detiene con SOC-WAZUH comprobado.** Windows 11 Enterprise Evaluation 25H2 x64 ISO path still required.
+**La fase B está en ejecución.** Medio Enterprise verificado antes de crear SOC-WIN11; instalación iniciada sin bypass de requisitos. [Observaciones reales](../../evidence/deliverable-1/windows-deployment.md).
 
-La continuación de Deliverable 1 requiere el medio Enterprise Evaluation correcto, comprobar requisitos/capacidad conjunta, instalar SOC-WIN11, agente, Sysmon y logging, y recoger evidencia local y Wazuh de cada fuente. No usar la ISO Consumer Editions. No hay cierre del entregable, ni merge ni push. **DELIVERABLE 1 — IN PROGRESS**.
+La continuación de Deliverable 1 requiere terminar Windows, comprobar capacidad conjunta, instalar agente, Sysmon y logging, y recoger evidencia local y Wazuh de cada fuente. No usar la ISO Consumer Editions. No hay cierre del entregable, ni merge ni push. **DELIVERABLE 1 — IN PROGRESS**.
 
 Después de cerrar 1, el alcance propuesto de **Deliverable 2** sigue siendo SOC-LINUX `10.10.10.40`: Ubuntu, OpenSSH, agente Wazuh, autenticación/sudo/sistema y baseline FIM con actividad normal. La fuerza bruta corresponde a una etapa posterior. Deliverable 2 no se ha iniciado.

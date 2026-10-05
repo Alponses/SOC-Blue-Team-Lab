@@ -1,6 +1,6 @@
 # Instalación de SOC-WIN11
 
-**Estado: REQUIRES MANUAL EXECUTION.** No hay SOC-WIN11 registrado en el hipervisor inspeccionado. No se han observado Windows, Defender, agente ni Sysmon. [Estado del entregable](deliverables/deliverable-1.md).
+**Estado al 2026-09-30: instalación iniciada.** SOC-WIN11 ya está registrada con el medio Enterprise Evaluation autorizado y los recursos previstos. El [registro de fase B](../evidence/deliverable-1/windows-deployment.md) distingue comprobaciones reales de los procedimientos pendientes. [Estado del entregable](deliverables/deliverable-1.md).
 
 ## Endpoint y red
 
@@ -8,7 +8,7 @@ Conservar **SOC-WIN11**, `10.10.10.30/24`, Windows 11 Enterprise Evaluation **25
 
 Usar la red **Host-Only Network SOC-LAB** existente. En la NIC privada: IP estática, prefijo 24, sin gateway ni DNS externo. NAT temporal solo para actualizaciones/descargas, sin port forwarding; retirarlo antes de validar. No asignar DNS `10.10.10.20` hasta que exista SOC-DC01. Comprobar `Get-NetIPConfiguration`, `Get-NetRoute -AddressFamily IPv4` y rutas IPv6. Confirmar dirección del host administrador antes de usar `10.10.10.1` como origen de firewall.
 
-Crear una cuenta ficticia del laboratorio, guardar credenciales fuera de Git y completar actualizaciones. Mantener Defender, Firewall de Windows, UAC, Secure Boot y las protecciones estándar. No añadir exclusiones antivirus para los ejercicios. Crear `SOC-WIN11-clean-install` antes del agente y del cambio de logging.
+Crear una cuenta ficticia del laboratorio, guardar credenciales fuera de Git y completar actualizaciones. Mantener Defender, Firewall de Windows, UAC, Secure Boot y las protecciones estándar. No añadir exclusiones antivirus para los ejercicios. Crear `SOC-WIN11-base-install` antes del agente y del cambio de logging.
 
 Inventario real desde Windows PowerShell elevado, guardando solo campos necesarios:
 

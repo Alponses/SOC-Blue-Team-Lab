@@ -26,18 +26,18 @@ AWS IAM, CloudTrail y CloudWatch se investigarán en una cuenta propia de labora
 
 ## Avance del proyecto
 
-**Etapa actual: DELIVERABLE 1 — IN PROGRESS.** SOC-WAZUH instalado y comprobado en SOC-LAB, sin NAT, al 2026-09-29. El endpoint Windows y sus cinco fuentes siguen **NOT EXECUTED / REQUIRES MANUAL EXECUTION**. El [informe del entregable 1](docs/deliverables/deliverable-1.md) separa configuración escrita, despliegue observado y validaciones pendientes. Los entregables 0 y 0.5 siguen cerrados; la [revisión de cierre 0.5](docs/deliverables/deliverable-0.5-review.md) se conserva.
+**Etapa actual: DELIVERABLE 1 — IN PROGRESS.** SOC-WAZUH instalado y comprobado en SOC-LAB, sin NAT, al 2026-09-29. La fase B de SOC-WIN11 comenzó el 2026-09-30: ISO Enterprise verificada y VM creada; instalación en curso. Las cinco fuentes siguen **NOT EXECUTED**. El [informe del entregable 1](docs/deliverables/deliverable-1.md) separa configuración escrita, despliegue observado y validaciones pendientes. Los entregables 0 y 0.5 siguen cerrados; la [revisión de cierre 0.5](docs/deliverables/deliverable-0.5-review.md) se conserva.
 
 | Área | Avance |
 | --- | --- |
 | Documentación | Arquitectura preservada; guías de instalación y validación de los cinco canales añadidas |
-| Infraestructura | SOC-WAZUH operativo en `10.10.10.10`, Wazuh `4.14.8-1`; SOC-WIN11 no registrado |
+| Infraestructura | SOC-WAZUH operativo en `10.10.10.10`, Wazuh `4.14.8-1`; SOC-WIN11 creado; instalación en curso |
 | Investigaciones | SOC-001–SOC-010 controlados preservados; SOC-011–SOC-015 placeholders observados, sin investigar |
 | Detecciones | Reglas pendientes de inspeccionar eventos y validar campos |
 | Paneles y reporte | Tres especificaciones y plantilla semanal; NO DATA — DEPLOYMENT PENDING |
 | Evidencias | Despliegue y salud de SOC-WAZUH registrados con extractos sanitizados y hashes; sin telemetría Windows recopilada; originales privados |
 
-**En curso: entregable 1 — Wazuh, Windows y Sysmon.** La fase A termina con [SOC-WAZUH verificado y dos snapshots confirmados](evidence/deliverable-1/wazuh-deployment.md). Falta la ruta de la ISO Windows 11 Enterprise Evaluation 25H2 x64; no utilizar Consumer Editions. Las guías de [Wazuh](docs/wazuh-installation.md), [Windows](docs/windows11-installation.md) y [validación por fuente](docs/telemetry-validation.md) se conservan. La [matriz Windows](docs/deliverables/deliverable-1.md#matriz-de-validación) permanece sin resultados operativos. La [guía operativa](docs/lab-operations.md) contiene el procedimiento general.
+**En curso: entregable 1 — Wazuh, Windows y Sysmon.** La fase A termina con [SOC-WAZUH verificado y dos snapshots confirmados](evidence/deliverable-1/wazuh-deployment.md). La [fase B de Windows](evidence/deliverable-1/windows-deployment.md) utiliza la ISO Enterprise Evaluation indicada por el propietario; hash y recursos registrados. Las guías de [Wazuh](docs/wazuh-installation.md), [Windows](docs/windows11-installation.md) y [validación por fuente](docs/telemetry-validation.md) se conservan. La [matriz Windows](docs/deliverables/deliverable-1.md#matriz-de-validación) permanece sin resultados operativos. La [guía operativa](docs/lab-operations.md) contiene el procedimiento general.
 
 El detalle está en la [arquitectura](docs/architecture.md), el [plan de implementación](docs/implementation-checklist.md), el [informe del entregable 0](docs/deliverables/deliverable-0.md) y el [cierre de 0.5](docs/deliverables/deliverable-0.5.md).
 

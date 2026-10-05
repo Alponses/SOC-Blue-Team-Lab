@@ -1,6 +1,6 @@
 # Evidencia del entregable 1
 
-**CONTROLLED TELEMETRY: validación benigna, sin incidentes ni ataques.** Se conservan el [preflight del host](preflight.md) y el [registro de despliegue de SOC-WAZUH](wazuh-deployment.md), observado del 2026-09-26 al 2026-09-29. Su [inventario de artefactos](wazuh-deployment.md#artefactos-publicados) enlaza salidas sanitizadas y hashes. Las cinco fichas Windows siguen **NOT EXECUTED**: son registros pendientes, no muestras de eventos.
+**CONTROLLED TELEMETRY: validación benigna, sin incidentes ni ataques.** Se conservan el [preflight del host](preflight.md) y el [registro de despliegue de SOC-WAZUH](wazuh-deployment.md), observado del 2026-09-26 al 2026-09-29. Su [inventario de artefactos](wazuh-deployment.md#artefactos-publicados) enlaza salidas sanitizadas y hashes. La [fase B de SOC-WIN11](windows-deployment.md) comenzó el 2026-09-30: ISO verificada, VM creada e instalación iniciada. Las cinco fichas Windows siguen **NOT EXECUTED**: son registros pendientes, no muestras de eventos.
 
 | Fuente | Ficha | Evidencia operativa |
 | --- | --- | --- |
@@ -27,7 +27,7 @@ Conservar la convención existente `SOC-<equipo>-<checkpoint>`. El [registro obs
 | VM | Nombre previsto | Momento | Nombre/UUID/UTC observado |
 | --- | --- | --- | --- |
 | SOC-WAZUH | SOC-WAZUH-base-install | Ubuntu/red actualizados, antes de Wazuh | Confirmado: `e0d50517-8586-4723-9224-28e68578d9ee`, `2026-09-26T19:44:39Z` |
-| SOC-WIN11 | SOC-WIN11-clean-install | Windows/Defender actualizados, antes del agente | Pendiente |
+| SOC-WIN11 | SOC-WIN11-base-install | Windows/Defender actualizados, antes del agente | Pendiente |
 | SOC-WAZUH | SOC-WAZUH-wazuh-operational | Servicios comprobados, antes de archives | Confirmado: `914fc1c2-0c02-41c4-980e-b8c8481217ab`, `2026-09-29T17:01:25Z` |
 | SOC-WIN11 | SOC-WIN11-wazuh-agent | Enrollment comprobado, antes de Sysmon/logging | Pendiente |
 | SOC-WIN11 | SOC-WIN11-sysmon-configured | XML aceptado y canal local disponible, antes de validar toda la cadena | Pendiente |

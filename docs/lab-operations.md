@@ -13,7 +13,7 @@ entregable 1 se verificará el entorno disponible y se reutilizará la red exist
 si cumple el diseño, sin recrearla por suposición. Véase el
 [orden de implementación](implementation-checklist.md#entregable-1--wazuh-windows-y-sysmon).
 
-**Actualización del entregable 1 (2026-09-29):** [SOC-WAZUH está instalado y comprobado](../evidence/deliverable-1/wazuh-deployment.md), con servicios activos, `10.10.10.10` en SOC-LAB y NAT retirado. SOC-WIN11 no está registrado; su medio Enterprise Evaluation sigue pendiente. El [informe actual](deliverables/deliverable-1.md) mantiene **DELIVERABLE 1 — IN PROGRESS**. Los ejemplos de esta guía siguen siendo ejemplos salvo lo respaldado por evidencia enlazada.
+**Actualización del entregable 1 (2026-09-30):** [SOC-WAZUH está instalado y comprobado](../evidence/deliverable-1/wazuh-deployment.md), con servicios activos, `10.10.10.10` en SOC-LAB y NAT retirado. [SOC-WIN11 ya está registrada](../evidence/deliverable-1/windows-deployment.md), con ISO Enterprise verificada e instalación en curso; sus comprobaciones nativas y de telemetría siguen pendientes. El [informe actual](deliverables/deliverable-1.md) mantiene **DELIVERABLE 1 — IN PROGRESS**. Los ejemplos de esta guía siguen siendo ejemplos salvo lo respaldado por evidencia enlazada.
 
 **Recuperación observada:** un estado guardado de VirtualBox falló al restaurar VGA. Se conservó una copia privada de la VM y se recuperó arrancando desde su disco, sin reinstalar. Usar apagado limpio y snapshots sin RAM mientras se investiga esa causa; los dos checkpoints registrados fueron confirmados en VirtualBox.
 
@@ -553,7 +553,7 @@ Ejemplos:
 ```text
 SOC-WAZUH-base-install
 SOC-WAZUH-wazuh-operational
-SOC-WIN11-clean-install
+SOC-WIN11-base-install
 SOC-WIN11-wazuh-agent
 SOC-WIN11-sysmon-configured
 ```
@@ -573,7 +573,7 @@ VBoxManage snapshot "SOC-WAZUH" take "SOC-WAZUH-base-install"
 Windows:
 
 ```bash
-VBoxManage snapshot "SOC-WIN11" take "SOC-WIN11-clean-install"
+VBoxManage snapshot "SOC-WIN11" take "SOC-WIN11-base-install"
 ```
 
 ---
